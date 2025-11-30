@@ -1,0 +1,71 @@
+---
+title: "Análisis de la Distribución Normal: Comando LaTeX para Secciones"
+author: "Tu Nombre o Departamento"
+date: \today  
+output:
+  pdf_document:
+    latex_engine: xelatex 
+    toc: true 
+    toc_depth: 2
+---
+
+\maketitle 
+\setcounter{secnumdepth}{3}  \label{inicio}
+
+Este documento utiliza la estructura de un archivo R Markdown (`.Rmd`) pero define la jerarquía del documento usando \textbf{comandos de LaTeX} puros (`\section`, `\subsection`), en lugar de la sintaxis Markdown (`#`, `##`).
+
+---
+
+\section{Teoría: La Distribución Normal \label{sec:teoria}}
+
+La **distribución normal** es la distribución de probabilidad continua más importante en estadística. Su forma es simétrica y es descrita por dos parámetros clave: la media ($\mu$) y la desviación estándar ($\sigma$).
+
+\subsection{Propiedades Clave (con Matemáticas LaTeX)}
+
+Se define por la función de densidad de probabilidad $f(x)$:
+
+\[
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+\]
+
+\section{Ejemplo Práctico en R Markdown \label{sec:ejemplo}}
+
+Usaremos un **chunk de R** para simular 1000 puntos de datos que siguen una distribución normal estándar ($\mu=0, \sigma=1$) y visualizaremos su distribución con un histograma.
+
+```{r simulacion_normal, echo=TRUE, message=FALSE, warning=FALSE, fig.align='center'}
+# Simular datos
+set.seed(42)
+datos_normales <- rnorm(n = 1000, mean = 0, sd = 1)
+
+# Crear el histograma
+hist(datos_normales,
+     main = "Histograma de Datos Normales Simulados",
+     xlab = "Valor",
+     ylab = "Frecuencia",
+     col = "#0072B2",
+     border = "white")
+```
+
+\[
+  \pi \approx 3.14159
+\]
+
+
+\section{Conclusión \label{sec:conclusion}}
+
+\subsection{Análisis Estadístico: Prueba de Normalidad \label{sec:shapiro}}
+
+Vamos a aplicar la prueba de **Shapiro-Wilk** a los datos simulados en la Sección \ref{sec:ejemplo} para evaluar formalmente la hipótesis nula ($H_0$) de que los datos provienen de una población distribuida normalmente.
+
+\subsubsection{Resultado de la Prueba}
+El valor clave a observar es el **valor p**. Si el valor p es $\mathbf{> 0.05}$ (usando un nivel de significancia $\alpha=0.05$), no tenemos evidencia suficiente para rechazar la hipótesis nula, lo que significa que los datos **son consistentes con una distribución normal**.
+
+```{r shapiro_test, echo=TRUE, message=FALSE, warning=FALSE}
+# Aplicar la prueba de Shapiro-Wilk a los datos simulados
+prueba_shapiro <- shapiro.test(datos_normales)
+
+# Imprimir los resultados de forma concisa
+cat(sprintf("Estadístico W: %.4f\n", prueba_shapiro$statistic))
+cat(sprintf("Valor p (p-value): %.4f\n", prueba_shapiro$p.value))
+```
+
