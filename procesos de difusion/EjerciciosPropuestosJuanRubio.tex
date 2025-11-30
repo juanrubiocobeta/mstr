@@ -1,0 +1,299 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+
+% Configuración de márgenes
+\geometry{top=3cm, bottom=3cm, left=2cm, right=2cm}
+
+% Cabecera personalizada
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Ejercicios Propuestos}
+\fancyhead[C]{Juan Rubio Cobeta}
+\fancyhead[R]{\today}
+
+\title{Ejercicios Propuestos}
+\author{Juan Rubio Cobeta}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\section*{Ejercicio 1:}
+
+Sean $\{X_i\}_{i=1}^n$, $\{Y_i\}_{i=1}^n$ variables aleatorias tales que $\mathbb{E}[X_i] = \mathbb{E}[Y_i] = 0$, $\forall i = 1, \dots, n$, $\text{Var}[X_i] = \text{Var}[Y_i] = \sigma_i^2 < \infty$, $\mathbb{E}[X_i X_j] = \mathbb{E}[Y_i Y_j] = \mathbb{E}[X_i Y_j] = 0$, $\forall i \neq j$. Sea el proceso $\{Z(t) : t \ge 0\}$ definido por
+\[Z(t) = \sum_{j=1}^{n} \left[ X_j \cos(\lambda_j t) + Y_j \sin(\lambda_j t) \right] \ , \quad \lambda_j \in \mathbb{R}\]
+
+\begin{itemize}
+    \item Calcular las funciones media y covarianza.
+    \item Proporcionar una condición suficiente sobre las variables $X_i$ e $Y_i$ para que el proceso sea débilmente estacionario.
+\end{itemize}
+
+\subsection*{Solución}
+
+\section*{Cálculo de la Función Media}
+
+La función media $\mu_Z(t) = \mathbb{E}[Z(t)]$ se calcula por linealidad de la esperanza.
+\begin{align*}
+    \mu_Z(t) &= \mathbb{E} \left[ \sum_{j=1}^{n} \left( X_j \cos(\lambda_j t) + Y_j \sin(\lambda_j t) \right) \right] \\
+    &= \sum_{j=1}^{n} \left( \mathbb{E}[X_j] \cos(\lambda_j t) + \mathbb{E}[Y_j] \sin(\lambda_j t) \right) \\
+    &= \sum_{j=1}^{n} \left( (0) \cos(\lambda_j t) + (0) \sin(\lambda_j t) \right) = 0
+\end{align*}
+\textbf{La función media del proceso es constante e igual a cero: $\boldsymbol{\mu_Z(t) = 0}$}.
+
+\section*{Cálculo de la Función de Covarianza}
+
+Dado que la media es cero, la función de covarianza es $K_Z(t, s) = \mathbb{E}[Z(t)Z(s)]$.
+$$ K_Z(t, s) = \mathbb{E} \left[ \left( \sum_{j=1}^{n} [X_j \cos(\lambda_j t) + Y_j \sin(\lambda_j t)] \right) \left( \sum_{k=1}^{n} [X_k \cos(\lambda_k s) + Y_k \sin(\lambda_k s)] \right) \right] $$
+Expandiendo el producto y aplicando la linealidad de la esperanza, obtenemos:
+$$ K_Z(t, s) = \sum_{j=1}^{n} \sum_{k=1}^{n} \left( \mathbb{E}[X_j X_k] \cos(\lambda_j t) \cos(\lambda_k s) + \mathbb{E}[X_j Y_k] \cos(\lambda_j t) \sin(\lambda_k s) + \dots \right) $$
+Los términos de la suma son nulos cuando $\boldsymbol{j \neq k}$ debido a las condiciones de incorrelación dadas. Por lo tanto, solo sobreviven los términos donde $\boldsymbol{j = k}$. La doble sumatoria se reduce a una suma simple:
+$$ K_Z(t, s) = \sum_{j=1}^{n} \mathbb{E} \left[ (X_j \cos(\lambda_j t) + Y_j \sin(\lambda_j t)) (X_j \cos(\lambda_j s) + Y_j \sin(\lambda_j s)) \right] $$
+Expandiendo el producto para $j=k$:
+\begin{align*}
+    K_Z(t, s) = \sum_{j=1}^{n} \Big( &\mathbb{E}[X_j^2] \cos(\lambda_j t) \cos(\lambda_j s) + \mathbb{E}[X_j Y_j] \cos(\lambda_j t) \sin(\lambda_j s) \\
+    &+ \mathbb{E}[Y_j X_j] \sin(\lambda_j t) \cos(\lambda_j s) + \mathbb{E}[Y_j^2] \sin(\lambda_j t) \sin(\lambda_j s) \Big)
+\end{align*}
+Sabemos que $\mathbb{E}[X_j^2] = \text{Var}(X_j) = \sigma_j^2$ y $\mathbb{E}[Y_j^2] = \text{Var}(Y_j) = \sigma_j^2$. El término $\mathbb{E}[X_j Y_j]$ no es necesariamente cero. Agrupando términos:
+\begin{align*}
+    K_Z(t, s) = \sum_{j=1}^{n} \Big[ &\sigma_j^2 \left( \cos(\lambda_j t) \cos(\lambda_j s) + \sin(\lambda_j t) \sin(\lambda_j s) \right) \\
+    &+ \mathbb{E}[X_j Y_j] \left( \cos(\lambda_j t) \sin(\lambda_j s) + \sin(\lambda_j t) \cos(\lambda_j s) \right) \Big]
+\end{align*}
+Utilizando las identidades trigonométricas para $\cos(A-B)$ y $\sin(A+B)$, la expresión se simplifica a:
+$$ K_Z(t, s) = \sum_{j=1}^{n} \left[ \sigma_j^2 \cos(\lambda_j (t-s)) + \mathbb{E}[X_j Y_j] \sin(\lambda_j (t+s)) \right] $$
+\textbf{Esta es la función de covarianza del proceso}.
+
+\section*{Condición Suficiente para Estacionariedad Débil}
+
+Un proceso es débilmente estacionario si su media es constante y su función de covarianza $K_Z(t, s)$ depende únicamente de la diferencia $\tau = t-s$.
+
+\begin{enumerate}
+    \item \textbf{Media:} $\mu_Z(t) = 0$, que es constante. Esta condición se cumple.
+    \item \textbf{Covarianza:} La función $K_Z(t, s)$ que hemos calculado tiene dos componentes:
+    \begin{itemize}
+        \item Un término $\sum \sigma_j^2 \cos(\lambda_j(t-s))$, que sí depende solo de $t-s$.
+        \item Un término $\sum \mathbb{E}[X_j Y_j] \sin(\lambda_j(t+s))$, que depende de la suma $t+s$.
+    \end{itemize}
+\end{enumerate}
+Para que el proceso sea débilmente estacionario, el segundo término, que viola la condición, debe ser cero para todo $t$ y $s$. La única manera de asegurar esto es que los coeficientes sean nulos.
+Por lo tanto, la condición adicional requerida es:
+$$ \mathbb{E}[X_j Y_j] = 0, \quad \forall j \in \{1, \dots, n\} $$
+Esto significa que $X_j$ y $Y_j$ deben ser incorrelacionadas para el mismo índice $j$.
+
+\paragraph{Conclusión:}
+Una condición suficiente para que el proceso $Z(t)$ sea débilmente estacionario es que se cumplan las hipótesis del enunciado y, adicionalmente, que $\boldsymbol{\mathbb{E}[X_j Y_j] = 0}$ para todo $j$. En otras palabras, la condición $\mathbb{E}[X_j Y_k] = 0$ debe ser cierta para todos los pares de índices $(j, k)$, sin excepción.
+
+Si esta condición se cumple, la función de covarianza se convierte en:
+$$ K_Z(t,s) = C(t-s) = \sum_{j=1}^{n} \sigma_j^2 \cos(\lambda_j (t-s)) $$
+y el proceso es, en efecto, débilmente estacionario.
+
+\newpage
+
+\section*{Ejercicio 2:}
+Sean $X_1$ y $X_2$ dos variables aleatorias independientes e idénticamente distribuidas según una normal de media cero y varianza uno. Sea $\{Z(t); t>0\}$ el proceso estocástico definido por $Z(t)=(X_1+X_2)t$. Se pide estudiar sus propiedades.
+
+\subsection*{Solución}
+Definimos la variable aleatoria $Y = X_1 + X_2$. Siendo $X_1, X_2 \sim \mathcal{N}(0,1)$ i.i.d., la suma es también normal, con $\mathbb{E}[Y] = 0$ y $\text{Var}(Y) = 1+1=2$. Así, $Y \sim \mathcal{N}(0,2)$ y el proceso es $Z(t)=Yt$.
+
+\subsection*{Funciones de media y covarianza}
+\paragraph{Media.}
+$$ \mu_Z(t) = \mathbb{E}[Z(t)] = \mathbb{E}[Yt] = t\,\mathbb{E}[Y] = t \cdot 0 = 0 $$
+\paragraph{Covarianza.} Como la media es cero, $C_Z(s, t) = \mathbb{E}[Z(s)Z(t)]$.
+$$ C_Z(s, t) = \mathbb{E}[(Ys)(Yt)] = st\,\mathbb{E}[Y^2] $$
+Dado que $\text{Var}(Y) = \mathbb{E}[Y^2] - (\mathbb{E}[Y])^2$, tenemos $\mathbb{E}[Y^2] = \text{Var}(Y) = 2$.
+$$ C_Z(s, t) = 2st $$
+
+\subsection*{Funciones características, de momentos y cumulantes}
+Para un $t$ fijo, $Z(t)=Yt$ se distribuye como una $\mathcal{N}(t\cdot 0, t^2\cdot 2)$, es decir, $Z(t) \sim \mathcal{N}(0, 2t^2)$.
+\begin{itemize}
+    \item \textbf{Función Característica:} $\phi_{Z(t)}(u) = \exp\left(i\mu u - \frac{1}{2}\sigma^2 u^2\right) = e^{-t^2u^2}$.
+    \item \textbf{Función Generadora de Momentos:} $M_{Z(t)}(u) = \exp\left(\mu u + \frac{1}{2}\sigma^2 u^2\right) = e^{t^2u^2}$.
+    \item \textbf{Función Generadora de Cumulantes:} $K_{Z(t)}(u) = \ln(M_{Z(t)}(u)) = t^2u^2$.
+    \item \textbf{Momentos de orden k:} Para $\mathcal{N}(0, \sigma^2=2t^2)$, los momentos $\mu_k = \mathbb{E}[Z(t)^k]$ son:
+    $$ \mu_k = \begin{cases} 0 & \text{si } k \text{ es impar} \\ (2t^2)^{k/2}(k-1)!! & \text{si } k \text{ es par} \end{cases} $$
+\end{itemize}
+
+\subsection*{Proceso Gaussiano y distribuciones finito-dimensionales}
+El vector $(Z(t_1), \dots, Z(t_n)) = Y \cdot (t_1, \dots, t_n)$ es una transformación lineal de una variable aleatoria normal $Y$. Por tanto, el vector tiene una distribución normal multivariante y el proceso es Gaussiano.
+
+\subsection*{Densidades de transición}
+Dado $Z(s)=z_s$, tenemos $Y = z_s/s$. Entonces $Z(t) = Yt = (z_s/s)t$. El valor futuro está determinado. La distribución condicional es una delta de Dirac, $\delta(z_t - z_s t/s)$. Por tanto, no existen densidades de transición en el sentido de funciones ordinarias.
+
+\subsection*{Continuidad}
+\paragraph{Continuidad Estocástica.} Se cumple si $\lim_{s\to t} P(|Z(t)-Z(s)| > \epsilon) = 0$.
+$$ P(|Yt-Ys| > \epsilon) = P\left(|Y| > \frac{\epsilon}{|t-s|}\right) \xrightarrow[s\to t]{} 0 $$
+El proceso es estocásticamente continuo.
+\paragraph{Continuidad Muestral.} Una trayectoria es $z(t)=(x_1+x_2)t$, que es una función lineal y, por tanto, continua. El proceso tiene trayectorias continuas.
+
+\subsection*{Proceso de Markov}
+Un proceso Gaussiano es de Markov si su covarianza $C(s,t)$ es factorizable para $s \le t$. Aquí, $C(s,t) = 2st = (2s)(t)$. Se factoriza con $f(s)=2s$ y $g(t)=t$. Por lo tanto, el proceso es de Markov.
+
+\subsection*{Proceso de incrementos independientes}
+Consideremos dos incrementos en intervalos no solapados, $I_1 = Z(t_2)-Z(t_1) = Y(t_2-t_1)$ y $I_2 = Z(t_4)-Z(t_3) = Y(t_4-t_3)$, con $t_1<t_2<t_3<t_4$. Su covarianza es:
+$$ \text{Cov}(I_1, I_2) = \mathbb{E}[I_1 I_2] = (t_2-t_1)(t_4-t_3)\mathbb{E}[Y^2] = 2(t_2-t_1)(t_4-t_3) \ne 0 $$
+Como la covarianza no es nula, los incrementos no son independientes. El proceso no es de incrementos independientes.
+
+\newpage
+
+\section*{Ejercicio 3:}
+
+Sea \(\{W(t): t \ge 0\}\) un proceso de Wiener. Para \(t_1 < t_2 < t_3\) demostrar que
+\[
+\mathbb{E}\left[ W(t_2) \mid W(t_1) = x_1, W(t_3) = x_3 \right]
+= x_1 + \frac{x_3 - x_1}{t_3 - t_1} (t_2 - t_1).
+\]
+
+\subsection*{Solución:}
+
+Para resolver este ejercicio, vamos a utilizar la teoría de procesos gaussianos y la proyección ortogonal en el espacio \(L^2\). El vector \((W(t_1), W(t_2), W(t_3))\) sigue una distribución normal multivariante, con la matriz de covarianza \(\Sigma_{ij} = \min\{t_i, t_j\}\).
+
+Sabemos que la esperanza condicional de un proceso gaussiano dado otros valores es una función lineal de las variables condicionadas. Por lo tanto, se puede escribir:
+\[
+\mathbb{E}\left[ W(t_2) \mid W(t_1), W(t_3) \right] = a W(t_1) + b W(t_3),
+\]
+donde \(a\) y \(b\) son constantes que se determinan a partir de las covarianzas.
+
+A partir de las propiedades de los procesos de Wiener, tenemos que la covarianza entre \(W(t_1)\), \(W(t_2)\), y \(W(t_3)\) es:
+\[
+\mathbb{E}[W(t_1) W(t_2)] = t_1, \quad \mathbb{E}[W(t_2) W(t_3)] = t_2, \quad \mathbb{E}[W(t_1) W(t_3)] = t_1.
+\]
+
+El error de la proyección debe ser ortogonal a las componentes \(W(t_1)\) y \(W(t_3)\), lo que lleva a las siguientes ecuaciones:
+\[
+\begin{aligned}
+0 &= \mathbb{E}[W(t_2) W(t_1)] - a \mathbb{E}[W(t_1)^2] - b \mathbb{E}[W(t_3) W(t_1)] = t_1 - a t_1 - b t_1, \\
+0 &= \mathbb{E}[W(t_2) W(t_3)] - a \mathbb{E}[W(t_1) W(t_3)] - b \mathbb{E}[W(t_3)^2] = t_2 - a t_1 - b t_3.
+\end{aligned}
+\]
+
+De la primera ecuación obtenemos que \(a + b = 1\). Sustituyendo esta relación en la segunda ecuación, obtenemos:
+\[
+t_2 - (1 - b)t_1 - b t_3 = 0 \quad \Rightarrow \quad b = \frac{t_2 - t_1}{t_3 - t_1}, \quad a = \frac{t_3 - t_2}{t_3 - t_1}.
+\]
+
+Por lo tanto, la esperanza condicional es:
+\[
+\mathbb{E}\left[ W(t_2) \mid W(t_1), W(t_3) \right] = \frac{t_3 - t_2}{t_3 - t_1} W(t_1) + \frac{t_2 - t_1}{t_3 - t_1} W(t_3).
+\]
+
+Finalmente, sustituyendo \(W(t_1) = x_1\) y \(W(t_3) = x_3\), obtenemos la solución:
+\[
+\mathbb{E}\left[ W(t_2) \mid W(t_1) = x_1, W(t_3) = x_3 \right]
+= x_1 + \frac{x_3 - x_1}{t_3 - t_1} (t_2 - t_1),
+\]
+lo que completa la demostración.
+
+\newpage
+
+\section*{Ejercicio 4:}
+
+Sea \( \{B(t) : t \in [0,1]\} \) un proceso puente Browniano y definimos
+\[
+Y(t) = \left(1 + t\right) B\left(\frac{t}{1+t}\right), \quad t \geq 0.
+\]
+Demostrar que \( \{Y(t) : t \geq 0\} \) es un proceso Wiener.
+
+\subsection*{Solución}
+Para demostrar que $\{Y(t) : t \ge 0\}$ es un proceso de Wiener, debemos verificar las tres propiedades que lo definen:
+\begin{enumerate}
+    \item $Y(0) = 0$.
+    \item $\{Y(t)\}$ es un proceso Gaussiano.
+    \item Su función de media es $\mathbb{E}[Y(t)] = 0$ y su función de covarianza es $\text{Cov}(Y(s), Y(t)) = \min(s, t)$.
+\end{enumerate}
+Para esta demostración, utilizaremos las propiedades conocidas de un puente Browniano $\{B(t) : t \in [0,1]\}$: es un proceso Gaussiano con $\mathbb{E}[B(t)] = 0$ y $\text{Cov}(B(s), B(t)) = \min(s, t) - st$. Además, $B(0)=0$.
+
+\subsection*{Verificación de las propiedades}
+
+\paragraph{1. Condición inicial.}
+Evaluamos el proceso en $t=0$:
+$$ Y(0) = (1+0)B\left(\frac{0}{1+0}\right) = 1 \cdot B(0) $$
+Dado que $B(t)$ es un puente Browniano, sabemos que $B(0)=0$. Por lo tanto, $Y(0)=0$.
+
+\paragraph{2. Proceso Gaussiano.}
+Un puente Browniano $\{B(t)\}$ es un proceso Gaussiano. El proceso $\{Y(t)\}$ se define mediante una transformación de $B(t)$. Para cualquier conjunto finito de tiempos $t_1, \dots, t_n$, las variables aleatorias $Y(t_1), \dots, Y(t_n)$ son una transformación lineal de las variables $B(u_1), \dots, B(u_n)$ (donde $u_i = t_i/(1+t_i)$), las cuales tienen una distribución normal multivariante. Una transformación lineal de un vector Gaussiano es también un vector Gaussiano. Por lo tanto, $\{Y(t)\}$ es un proceso Gaussiano.
+
+\paragraph{3. Media y Covarianza.}
+\subparagraph{Media.} Calculamos el valor esperado de $Y(t)$:
+$$ \mathbb{E}[Y(t)] = \mathbb{E}\left[(1+t)B\left(\frac{t}{1+t}\right)\right] = (1+t)\mathbb{E}\left[B\left(\frac{t}{1+t}\right)\right] $$
+La media de un puente Browniano es cero para todo $t \in [0,1]$. Así,
+$$ \mathbb{E}[Y(t)] = (1+t) \cdot 0 = 0 $$
+
+\subparagraph{Covarianza.} Calculamos la covarianza de $Y(s)$ y $Y(t)$. Como la media es cero, $\text{Cov}(Y(s), Y(t)) = \mathbb{E}[Y(s)Y(t)]$.
+\begin{align*}
+    \text{Cov}(Y(s), Y(t)) &= \mathbb{E}\left[ (1+s)B\left(\frac{s}{1+s}\right) (1+t)B\left(\frac{t}{1+t}\right) \right] \\
+    &= (1+s)(1+t) \mathbb{E}\left[ B\left(\frac{s}{1+s}\right) B\left(\frac{t}{1+t}\right) \right]
+\end{align*}
+Sean $u = \frac{s}{1+s}$ y $v = \frac{t}{1+t}$. La expresión en la esperanza es la covarianza del puente Browniano:
+$$ \mathbb{E}[B(u)B(v)] = \text{Cov}(B(u),B(v)) = \min(u,v) - uv $$
+Sin pérdida de generalidad, asumamos que $s \le t$. La función $f(x) = \frac{x}{1+x}$ es creciente para $x \ge 0$, por lo que $s \le t \implies u \le v$. Entonces, $\min(u,v) = u = \frac{s}{1+s}$.
+Sustituyendo esto:
+$$ \mathbb{E}[B(u)B(v)] = \frac{s}{1+s} - \left(\frac{s}{1+s}\right)\left(\frac{t}{1+t}\right) = \frac{s}{1+s} - \frac{st}{(1+s)(1+t)} $$
+Ahora, sustituimos este resultado en la expresión de la covarianza de $Y$:
+\begin{align*}
+    \text{Cov}(Y(s), Y(t)) &= (1+s)(1+t) \left[ \frac{s}{1+s} - \frac{st}{(1+s)(1+t)} \right] \\
+    &= (1+s)(1+t)\frac{s}{1+s} - (1+s)(1+t)\frac{st}{(1+s)(1+t)} \\
+    &= s(1+t) - st \\
+    &= s + st - st \\
+    &= s
+\end{align*}
+Dado que asumimos $s \le t$, este resultado es $s = \min(s, t)$.
+
+\subsection*{Conclusión}
+El proceso $\{Y(t) : t \ge 0\}$ satisface las tres propiedades requeridas: $Y(0)=0$, es un proceso Gaussiano, tiene media nula y su función de covarianza es $\min(s, t)$. Por lo tanto, $\{Y(t)\}$ es un proceso de Wiener.
+
+\newpage
+
+\section*{Ejercicio 5}
+Sean $m(t), h_1(t), h_2(t)$ funciones continuas en $\mathbb{R}$. Supongamos que $h_i(t)$, $i=1,2$ son funciones positivas y $h_2(t) \ne 0, \forall t \in \mathbb{R}$. Sea $\{X(t): t \in \mathbb{R}\}$ un proceso gaussiano con media $m(t)$ y función de covarianza dada por $C_X(s, t) = h_1(s \wedge t)h_2(s \vee t)$, donde $s \vee t = \max(s, t)$ y $s \wedge t = \min(s, t)$. Demostrar que ese proceso puede escribirse en la forma $X(t) = m(t) + h_2(t)W(r(t))$ donde $r(t) = h_1(t)/h_2(t)$ y $\{W(t) : t \ge 0\}$ es un proceso de Wiener estándar. ¿Es de Markov? Aplicar este resultado al proceso de Ornstein-Uhlenbeck.
+
+\subsection*{Solución}
+
+\subsection*{Parte 1: Representación del Proceso}
+Para demostrar que $X(t)$ puede representarse como $Y(t) = m(t) + h_2(t)W(r(t))$, debemos verificar que ambos procesos, al ser Gaussianos, tienen la misma función de media y de covarianza.
+
+\paragraph{Media.} La media de $X(t)$ es $\mathbb{E}[X(t)] = m(t)$. La media de $Y(t)$ es:
+$$ \mathbb{E}[Y(t)] = \mathbb{E}[m(t) + h_2(t)W(r(t))] = m(t) + h_2(t)\mathbb{E}[W(r(t))] $$
+Como $\mathbb{E}[W(u)] = 0$ para un proceso de Wiener estándar, tenemos $\mathbb{E}[Y(t)] = m(t)$. Las medias coinciden.
+
+\paragraph{Covarianza.} La covarianza de $X(t)$ es $C_X(s, t) = h_1(s \wedge t)h_2(s \vee t)$. Para $Y(t)$, la covarianza es:
+\begin{align*}
+    \text{Cov}(Y(s), Y(t)) &= \mathbb{E}[(Y(s) - m(s))(Y(t) - m(t))] \\
+    &= \mathbb{E}[h_2(s)W(r(s)) \cdot h_2(t)W(r(t))] \\
+    &= h_2(s)h_2(t)\mathbb{E}[W(r(s))W(r(t))]
+\end{align*}
+Usando $\mathbb{E}[W(u)W(v)] = \min(u,v)$, obtenemos:
+$$ \text{Cov}(Y(s), Y(t)) = h_2(s)h_2(t)\min(r(s), r(t)) $$
+Para que esta representación sea válida, la función $r(t) = h_1(t)/h_2(t)$ debe ser creciente. Asumiendo esto, tomemos $s \le t$. Entonces $s \wedge t = s$, $s \vee t = t$ y $\min(r(s), r(t)) = r(s)$. La igualdad de covarianzas requiere:
+$$ h_1(s)h_2(t) = h_2(s)h_2(t)r(s) $$
+Dividiendo por $h_2(t) \ne 0$, obtenemos $h_1(s) = h_2(s)r(s)$, lo que confirma que $r(s) = h_1(s)/h_2(s)$. Por lo tanto, la representación es correcta, condicionada a que $r(t)$ sea creciente.
+
+\subsection*{Parte 2: Propiedad de Markov}
+Un proceso Gaussiano es de Markov si para $s \le t$, su función de covarianza puede ser factorizada como $C(s,t)=f(s)g(t)$.
+Para el proceso $X(t)$, si tomamos $s \le t$:
+$$ C_X(s,t) = h_1(s \wedge t)h_2(s \vee t) = h_1(s)h_2(t) $$
+Esta expresión se ajusta a la forma requerida con $f(s)=h_1(s)$ y $g(t)=h_2(t)$. Por lo tanto, \textbf{el proceso es de Markov}.
+
+\subsection*{Parte 3: Aplicación al Proceso de Ornstein-Uhlenbeck}
+El proceso de Ornstein-Uhlenbeck (O-U) estacionario de media cero tiene una función de covarianza:
+$$ C_{OU}(s, t) = \frac{\sigma^2}{2\theta} e^{-\theta|t-s|} $$
+Para $s \le t$, tenemos $|t-s|=t-s$, por lo que:
+$$ C_{OU}(s, t) = \frac{\sigma^2}{2\theta} e^{-\theta(t-s)} = \left(\frac{\sigma^2}{2\theta} e^{\theta s}\right) \left(e^{-\theta t}\right) $$
+Esta expresión coincide con la forma $h_1(s)h_2(t)$ si definimos:
+$$ h_1(t) = \frac{\sigma^2}{2\theta} e^{\theta t} \quad \text{y} \quad h_2(t) = e^{-\theta t} $$
+Ahora, definimos y verificamos la función $r(t)$:
+$$ r(t) = \frac{h_1(t)}{h_2(t)} = \frac{(\sigma^2/2\theta) e^{\theta t}}{e^{-\theta t}} = \frac{\sigma^2}{2\theta} e^{2\theta t} $$
+Para verificar si es creciente, calculamos su derivada:
+$$ r'(t) = \frac{\sigma^2}{2\theta} \cdot (2\theta) e^{2\theta t} = \sigma^2 e^{2\theta t} $$
+Dado que $\sigma^2 > 0$, la derivada $r'(t)$ es siempre positiva, por lo que $r(t)$ es estrictamente creciente.
+La condición se cumple, y podemos aplicar la representación de la Parte 1 (con $m(t)=0$):
+$$ X_{OU}(t) = h_2(t)W(r(t)) = e^{-\theta t} W\left(\frac{\sigma^2}{2\theta} e^{2\theta t}\right) $$
+Esta es la representación del proceso de Ornstein-Uhlenbeck como un movimiento Browniano con cambio de tiempo.
+
+
+
+\end{document}

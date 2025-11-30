@@ -1,0 +1,6 @@
+nombre sexo edad peso altura
+Juan H 26 81 179
+Andres H 21 77 176
+Yolanda M 22 56 167
+Eva M 22 53 165
+Antonio H 27 76 179

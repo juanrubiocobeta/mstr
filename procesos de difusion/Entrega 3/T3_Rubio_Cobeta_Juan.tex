@@ -1,0 +1,284 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+
+% Configuración de márgenes
+\geometry{top=3cm, bottom=3cm, left=2cm, right=2cm}
+
+% Cabecera personalizada
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Ejercicios Propuestos 3}
+\fancyhead[C]{Juan Rubio Cobeta}
+\fancyhead[R]{\today}
+
+\title{Ejercicios Propuestos}
+\author{Juan Rubio Cobeta}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\maketitle
+
+\section{Apartado a)}
+
+Suponiendo que la distribución inicial en $t_1$ es degenerada, dar la expresión de la función de verosimilitud de la muestra. ¿Qué cambios se producirían en ella si la distribución fuera lognormal $\Lambda_1(\mu_1, \sigma_1^2)$?
+
+\subsection{Contexto del proceso}
+
+Sea $\{X(t); t \ge t_0 > 0\}$ el proceso de difusión lognormal homogéneo con espacio de estados $I=\mathbb{R}^+$ y momentos infinitesimales dados por:
+\begin{equation}
+    A_1(x) = mx \quad \text{y} \quad A_2(x) = \sigma^2 x^2
+\end{equation}
+donde $m \in \mathbb{R}$ y $\sigma^2 > 0$.
+
+Para construir la función de verosimilitud, primero debemos determinar la función de densidad de transición. Sabemos que este proceso es solución de la Ecuación Diferencial Estocástica (EDE):
+\begin{equation}
+    dX_t = m X_t dt + \sigma X_t dW_t
+\end{equation}
+
+Aplicando el Lema de Itô con la transformación $Y_t = \ln(X_t)$, obtenemos que $X(t)$ sigue una distribución lognormal condicionada. Específicamente, la densidad de transición $f(y, t | x, s)$ para $s < t$ corresponde a una variable aleatoria lognormal $\Lambda_1$ con parámetros:
+
+\begin{itemize}
+    \item \textbf{Media logarítmica:} $\ln(x) + (m - \frac{\sigma^2}{2})(t - s)$
+    \item \textbf{Varianza logarítmica:} $\sigma^2(t - s)$
+\end{itemize}
+
+Por tanto, la función de densidad de transición es:
+\begin{equation}
+    f(x_{ij}, t_{ij} | x_{i,j-1}, t_{i,j-1}) = \frac{1}{x_{ij} \sqrt{2\pi \sigma^2 \Delta_{ij}}} \exp \left( - \frac{\left[ \ln\left(\frac{x_{ij}}{x_{i,j-1}}\right) - (m - \frac{\sigma^2}{2})\Delta_{ij} \right]^2}{2\sigma^2 \Delta_{ij}} \right)
+\end{equation}
+donde hemos denotado el incremento de tiempo como $\Delta_{ij} = t_{ij} - t_{i,j-1}$.
+
+\subsection{Resolución del Apartado a)}
+
+El ejercicio solicita la función de verosimilitud para una muestra de $d$ trayectorias observadas en los instantes $\{t_{ij}\}$. La estructura general de la verosimilitud para múltiples trayectorias se basa en la propiedad de Markov.
+
+\subsection*{1. Caso: Distribución inicial degenerada en $t_1$}
+
+Supongamos que la distribución en $t_1$ es degenerada, es decir, $P(X(t_{i1}) = x_{i1}) = 1$. Esto implica que los valores iniciales son constantes conocidas.
+
+La función de verosimilitud $\mathbb{L}_x(m, \sigma^2)$ se construye multiplicando las densidades de transición de todas las observaciones $j=2, \dots, n_i$ para todas las trayectorias $i=1, \dots, d$:
+
+\begin{equation}
+    \mathbb{L}_x(m, \sigma^2) = \prod_{i=1}^{d} \prod_{j=2}^{n_i} f(x_{ij}, t_{ij} | x_{i,j-1}, t_{i,j-1})
+\end{equation}
+
+Sustituyendo la expresión de la densidad de transición del proceso lognormal:
+
+\begin{equation}
+    \mathbb{L}_x(m, \sigma^2) = \prod_{i=1}^{d} \prod_{j=2}^{n_i} \left[ \frac{1}{x_{ij} \sqrt{2\pi \sigma^2 \Delta_{ij}}} \exp \left( - \frac{\left[ \ln(x_{ij}) - \ln(x_{i,j-1}) - (m - \frac{\sigma^2}{2})\Delta_{ij} \right]^2}{2\sigma^2 \Delta_{ij}} \right) \right]
+\end{equation}
+
+Esta expresión depende únicamente de los parámetros $m$ y $\sigma^2$.
+
+\subsection*{2. Caso: Distribución inicial Lognormal $\Lambda_1(\mu_1, \sigma_1^2)$}
+
+Ahora suponemos que el valor inicial no es determinista, sino que $X(t_{i1})$ sigue una distribución lognormal con parámetros $\mu_1$ y $\sigma_1^2$. La densidad inicial para el primer dato de cada trayectoria $x_{i1}$ es:
+
+\begin{equation}
+    f_1(x_{i1}) = \frac{1}{x_{i1} \sqrt{2\pi \sigma_1^2}} \exp \left( - \frac{(\ln(x_{i1}) - \mu_1)^2}{2\sigma_1^2} \right)
+\end{equation}
+
+Según la teoría expuesta, cuando la distribución inicial no es degenerada, la función de verosimilitud debe incluir el producto de las densidades iniciales de las $d$ trayectorias. La nueva función de verosimilitud $\mathbb{L}^*_x(\mu_1, \sigma_1^2, m, \sigma^2)$ será:
+
+\begin{equation}
+    \mathbb{L}^*_x = \left( \prod_{i=1}^{d} f_1(x_{i1}) \right) \times \mathbb{L}_x(m, \sigma^2)
+\end{equation}
+
+Expandiendo la expresión completa:
+
+\begin{align}
+    \mathbb{L}^*_x = &\underbrace{\left[ \prod_{i=1}^{d} \frac{1}{x_{i1} \sqrt{2\pi \sigma_1^2}} \exp \left( - \frac{(\ln x_{i1} - \mu_1)^2}{2\sigma_1^2} \right) \right]}_{\text{Contribución Inicial}} 
+    \times \underbrace{\left[ \prod_{i=1}^{d} \prod_{j=2}^{n_i} \frac{1}{x_{ij} \sqrt{2\pi \sigma^2 \Delta_{ij}}} \exp \left( - \frac{\left[ \ln\left(\frac{x_{ij}}{x_{i,j-1}}\right) - (m - \frac{\sigma^2}{2})\Delta_{ij} \right]^2}{2\sigma^2 \Delta_{ij}} \right) \right]}_{\text{Contribución de Transición}}
+\end{align}
+
+\textbf{Cambios producidos:}
+\begin{enumerate}
+    \item \textbf{Dimensionalidad del espacio paramétrico:} Pasamos de estimar 2 parámetros $(m, \sigma^2)$ a estimar 4 parámetros $(\mu_1, \sigma_1^2, m, \sigma^2)$.
+    \item \textbf{Separabilidad:} La maximización del logaritmo de la verosimilitud se puede realizar de forma independiente para ambos grupos de parámetros, ya que los términos están factorizados.
+\end{enumerate}
+
+\newpage
+
+\section{Apartado b)}
+Para los dos casos anteriores plantear las ecuaciones de verosimilitud y resolverlas (si es factible de forma explícita).
+
+\subsection{Planteamiento General}
+
+Para resolver las ecuaciones de verosimilitud de forma explícita, es fundamental simplificar la estructura de la función de densidad de transición.
+
+Sabemos que si $X(t)$ es un proceso lognormal homogéneo con parámetros $m$ y $\sigma^2$, la transformación $Y(t) = \ln(X(t))$ convierte el proceso en un proceso de Wiener con tendencia (Movimiento Browniano Aritmético) $Y(t) \sim N(\mu_{W}t, \sigma^2 t)$, donde los parámetros del proceso transformado son:
+\begin{equation}
+    \mu_{W} = m - \frac{\sigma^2}{2} \quad \text{y} \quad \sigma_{W}^2 = \sigma^2
+\end{equation}
+
+Esta reparametrización permite utilizar los resultados directos de la estimación del proceso Wiener (vistos en los ejemplos de la teoría) para estimar $\mu_{W}$ y $\sigma^2$, y posteriormente recuperar $\hat{m}$ mediante el Teorema de Zehna.
+
+Definimos las siguientes variables transformadas para la muestra:
+\begin{itemize}
+    \item $y_{ij} = \ln(x_{ij})$: Logaritmos de las observaciones.
+    \item $\Delta_{ij} = t_{ij} - t_{i,j-1}$: Incrementos de tiempo.
+    \item $N = \sum_{i=1}^d (n_i - 1)$: Número total de transiciones observadas.
+\end{itemize}
+
+\subsection{Caso 1: Distribución inicial degenerada}
+
+En este caso, la función de log-verosimilitud $\ell(m, \sigma^2) = \ln \mathbb{L}_x$ depende únicamente de las transiciones.
+
+\subsection*{1. Función de Log-Verosimilitud}
+
+A partir de la expresión obtenida en el Apartado a, y aplicando la transformación logarítmica:
+\begin{equation}
+    \ell(m, \sigma^2) = -\frac{N}{2}\ln(2\pi) - \frac{N}{2}\ln(\sigma^2) - \sum_{i=1}^d \sum_{j=2}^{n_i} \ln(x_{ij}) - \frac{1}{2\sigma^2} \sum_{i=1}^d \sum_{j=2}^{n_i} \frac{\left[ (y_{ij} - y_{i,j-1}) - (m - \frac{\sigma^2}{2})\Delta_{ij} \right]^2}{\Delta_{ij}}
+\end{equation}
+
+Para facilitar la resolución, sustituimos $\alpha = m - \frac{\sigma^2}{2}$ (tendencia del Wiener subyacente). La función a maximizar respecto a $\alpha$ y $\sigma^2$ es:
+\begin{equation}
+    \ell^*(\alpha, \sigma^2) \propto -\frac{N}{2}\ln(\sigma^2) - \frac{1}{2\sigma^2} \sum_{i=1}^d \sum_{j=2}^{n_i} \frac{\left[ y_{ij} - y_{i,j-1} - \alpha \Delta_{ij} \right]^2}{\Delta_{ij}}
+\end{equation}
+
+\subsection*{2. Ecuaciones de Verosimilitud}
+
+Derivamos $\ell^*$ respecto a $\alpha$ y $\sigma^2$ e igualamos a cero:
+
+\begin{align}
+    \frac{\partial \ell^*}{\partial \alpha} &= \frac{1}{\sigma^2} \sum_{i=1}^d \sum_{j=2}^{n_i} \left( y_{ij} - y_{i,j-1} - \alpha \Delta_{ij} \right) = 0 \\
+    \frac{\partial \ell^*}{\partial \sigma^2} &= -\frac{N}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i=1}^d \sum_{j=2}^{n_i} \frac{\left( y_{ij} - y_{i,j-1} - \alpha \Delta_{ij} \right)^2}{\Delta_{ij}} = 0
+\end{align}
+
+\subsection*{3. Resolución Explícita}
+
+De la primera ecuación, despejamos $\hat{\alpha}$:
+\begin{equation}
+    \sum_{i=1}^d \sum_{j=2}^{n_i} (y_{ij} - y_{i,j-1}) = \hat{\alpha} \sum_{i=1}^d \sum_{j=2}^{n_i} \Delta_{ij}
+\end{equation}
+Dado que la suma de incrementos es la diferencia total, obtenemos:
+\begin{equation}
+    \hat{\alpha} = \frac{\sum_{i=1}^d (y_{i,n_i} - y_{i,1})}{\sum_{i=1}^d (t_{i,n_i} - t_{i,1})} = \frac{\sum_{i=1}^d (\ln x_{i,n_i} - \ln x_{i,1})}{\sum_{i=1}^d (t_{i,n_i} - t_{i,1})}
+\end{equation}
+
+De la segunda ecuación, despejamos $\hat{\sigma}^2$:
+\begin{equation}
+    \hat{\sigma}^2 = \frac{1}{N} \sum_{i=1}^d \sum_{j=2}^{n_i} \frac{\left[ \ln x_{ij} - \ln x_{i,j-1} - \hat{\alpha} (t_{ij} - t_{i,j-1}) \right]^2}{t_{ij} - t_{i,j-1}}
+\end{equation}
+
+Finalmente, por la propiedad de invarianza de los estimadores de máxima verosimilitud (Teorema de Zehna), recuperamos el estimador de $m$:
+\begin{equation}
+    \hat{m} = \hat{\alpha} + \frac{\hat{\sigma}^2}{2}
+\end{equation}
+
+\subsection{Caso 2: Distribución inicial Lognormal $\Lambda_1(\mu_1, \sigma_1^2)$}
+
+En este caso, el espacio paramétrico es $\Theta = (\mu_1, \sigma_1^2, m, \sigma^2)$. La log-verosimilitud se descompone en dos partes independientes:
+
+\begin{equation}
+    \ell_{total} = \ell_{inicial}(\mu_1, \sigma_1^2) + \ell_{transicion}(m, \sigma^2)
+\end{equation}
+
+\subsection*{1. Estimación de los parámetros del proceso $(m, \sigma^2)$}
+Dado que $\ell_{transicion}$ es idéntica a la función del Caso 1, los estimadores $\hat{m}$ y $\hat{\sigma}^2$ son exactamente los mismos que los obtenidos anteriormente.
+
+\subsection*{2. Estimación de los parámetros iniciales $(\mu_1, \sigma_1^2)$}
+Consideramos los datos iniciales de las $d$ trayectorias: $\{x_{1,1}, x_{2,1}, \dots, x_{d,1}\}$.
+Sabemos que $X(t_{i1}) \sim \Lambda_1(\mu_1, \sigma_1^2)$, lo que implica que sus logaritmos $u_i = \ln(x_{i,1})$ siguen una distribución Normal $N(\mu_1, \sigma_1^2)$.
+
+La función de log-verosimilitud para la parte inicial es:
+\begin{equation}
+    \ell_{inicial} = -\frac{d}{2}\ln(2\pi) - \frac{d}{2}\ln(\sigma_1^2) - \sum_{i=1}^d \ln(x_{i,1}) - \frac{1}{2\sigma_1^2} \sum_{i=1}^d (\ln x_{i,1} - \mu_1)^2
+\end{equation}
+
+Las ecuaciones de verosimilitud son las estándar para una distribución normal:
+\begin{align}
+    \frac{\partial \ell_{inicial}}{\partial \mu_1} &= \frac{1}{\sigma_1^2} \sum_{i=1}^d (\ln x_{i,1} - \mu_1) = 0 \\
+    \frac{\partial \ell_{inicial}}{\partial \sigma_1^2} &= -\frac{d}{2\sigma_1^2} + \frac{1}{2\sigma_1^4} \sum_{i=1}^d (\ln x_{i,1} - \mu_1)^2 = 0
+\end{align}
+
+\subsection*{3. Solución Explícita}
+Resolviendo el sistema, obtenemos los estimadores muestrales clásicos sobre los logaritmos iniciales:
+
+\begin{equation}
+    \hat{\mu}_1 = \frac{1}{d} \sum_{i=1}^d \ln(x_{i,1})
+\end{equation}
+
+\begin{equation}
+    \hat{\sigma}_1^2 = \frac{1}{d} \sum_{i=1}^d (\ln x_{i,1} - \hat{\mu}_1)^2
+\end{equation}
+
+\newpage
+
+\section{Apartado c)}
+
+Dar la expresión de la función media del proceso y su correspondiente estimación máximo verosímil.
+
+\subsection{Obtención de la Función Media Teórica}
+
+Para determinar la función media (tendencia) del proceso $X(t)$, partimos de la definición de sus momentos infinitesimales dada en el enunciado:
+\begin{equation}
+    A_1(x) = \lim_{h \to 0} \frac{1}{h} E[X(t+h) - X(t) | X(t)=x] = mx
+\end{equation}
+
+Tomando esperanzas a ambos lados de la ecuación diferencial $d(E[X(t)]) = E[dX(t)]$, obtenemos la ecuación diferencial ordinaria (EDO) para la media $\mu_X(t) = E[X(t)]$:
+\begin{equation}
+    \frac{d}{dt}\mu_X(t) = m \mu_X(t)
+\end{equation}
+
+La solución general de esta EDO es una función exponencial. Dependiendo de la condición inicial en $t_1$, distinguimos dos casos:
+
+\subsection*{1. Caso: Distribución inicial degenerada en $t_1$}
+Si $P(X(t_1) = x_1) = 1$, el valor inicial es una constante determinista $x_1$. La función media condicionada al instante inicial es:
+\begin{equation}
+    E[X(t) | X(t_1) = x_1] = x_1 e^{m(t - t_1)}, \quad \text{para } t \ge t_1
+\end{equation}
+
+\subsection*{2. Caso: Distribución inicial Lognormal $\Lambda_1(\mu_1, \sigma_1^2)$}
+Si $X(t_1)$ es una variable aleatoria con distribución $\Lambda_1(\mu_1, \sigma_1^2)$, utilizamos la propiedad de la esperanza iterada:
+\begin{equation}
+    E[X(t)] = E[ E[X(t) | X(t_1)] ] = E[ X(t_1) e^{m(t - t_1)} ] = e^{m(t - t_1)} E[X(t_1)]
+\end{equation}
+
+Recordando que la media de una distribución lognormal $\Lambda_1(\mu_1, \sigma_1^2)$ es $e^{\mu_1 + \frac{\sigma_1^2}{2}}$, la función media del proceso es:
+\begin{equation}
+    E[X(t)] = \exp\left( \mu_1 + \frac{\sigma_1^2}{2} \right) e^{m(t - t_1)} = \exp\left( \mu_1 + \frac{\sigma_1^2}{2} + m(t - t_1) \right)
+\end{equation}
+
+\subsection{Estimación Máximo Verosímil (EMV)}
+
+Para obtener los estimadores de la función media, usamos el Teorema de Invarianza de Zehna, el cual establece que si $\hat{\theta}$ es el EMV de $\theta$, entonces para cualquier función paramétrica $\psi(\theta)$, su EMV es $\psi(\hat{\theta})$.\\
+
+Utilizamos los estimadores $\hat{m}, \hat{\sigma}^2, \hat{\mu}_1, \hat{\sigma}_1^2$ obtenidos explícitamente en el Apartado b.
+
+\subsection*{1. Estimación con inicio degenerado}
+La función paramétrica de interés es $\psi(m) = x_1 e^{m(t - t_1)}$. Sustituyendo el parámetro por su estimador:
+
+\begin{equation}
+    \widehat{E[X(t)]} = x_1 \exp\left( \hat{m}(t - t_1) \right)
+\end{equation}
+
+Donde $\hat{m} = \hat{\alpha} + \frac{\hat{\sigma}^2}{2}$, siendo $\hat{\alpha}$ la pendiente estimada de la transformación logarítmica del proceso.
+
+\subsection*{2. Estimación con inicio Lognormal}
+La función paramétrica depende ahora del vector $\theta = (\mu_1, \sigma_1^2, m)$. El estimador máximo verosímil es:
+
+\begin{equation}
+    \widehat{E[X(t)]} = \exp\left( \hat{\mu}_1 + \frac{\hat{\sigma}_1^2}{2} + \hat{m}(t - t_1) \right)
+\end{equation}
+
+Sustituyendo las expresiones obtenidas en el apartado anterior:
+\begin{itemize}
+    \item $\hat{\mu}_1 = \frac{1}{d}\sum \ln x_{i,1}$ (Media muestral de los logaritmos iniciales).
+    \item $\hat{\sigma}_1^2$ (Varianza muestral de los logaritmos iniciales).
+    \item $\hat{m}$ (Estimador de la deriva del proceso basado en las transiciones).
+\end{itemize}
+
+\end{document}

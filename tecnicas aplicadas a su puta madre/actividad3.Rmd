@@ -1,0 +1,122 @@
+---
+title: "Entrega 3"
+author: "Rubio Cobeta, Juan"
+date: "`r format(Sys.time(), '%d de %B de %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+# Configuración inicial del documento
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+```
+
+## EJERCICIO 1:
+
+Efectuar MDS métrico usando SMACOF par los datos eurodist. Compara los resultados con los obtenidos mediante el procedimiento clásico. 
+
+### 1. Código de la función
+
+Para hacer este ejercicio, primero hacemos el plot del MDS clásico con 'eurodist', y a continuación, creamos el plot del MDS métrico usando SMACOF con los mismos datos para poder compararlos.
+
+```{r funcion_ejercicio_1, fig.width=8}
+datos <- eurodist
+res.clasico <- cmdscale(datos, k = 2, eig = TRUE)
+plot(res.clasico$points[, 1], -res.clasico$points[, 2], 
+     type = "n",
+     main = "MDS Clásico", 
+     asp = 1)
+text(res.clasico$points[, 1], -res.clasico$points[, 2],
+     labels = labels(datos), 
+     cex = 0.8)
+
+
+library(smacof)
+res.smacof <- smacofSym(datos, ndim = 2)
+plot(res.smacof$conf[, 1], -res.smacof$conf[, 2], 
+     type = "n", 
+     main = "MDS Métrico", 
+     asp = 1)
+text(res.smacof$conf[, 1], -res.smacof$conf[, 2], 
+     labels = labels(datos), 
+     cex = 0.8)
+```
+
+
+### 2. Interpretación
+
+Como se observa, ambos métodos llegan practicamente a la misma solución: la configuración espacial de las ciudades es idéntica en ambos gráficos.
+
+Que la solución sea idéntica tiene sentido. Esto ocurre porque los datos de eurodist son de alta calidad al ser distancias reales, casi Euclídeas. El MDS Clásico es un método directo que encuentra la solución matemática óptima. SMACOF, por su parte, es un método iterativo que minimiza el error STRESS. Con datos tan "buenos", el algoritmo de SMACOF simplemente converge a la misma solución óptima que el método clásico ya había calculado.
+
+La única diferencia real es la escala de los ejes:
+
+MDS Clásico: Preserva la escala original de los datos (ejes en miles de kilómetros).
+
+MDS Métrico (SMACOF): Normaliza el resultado (ejes de -2 a 2), ya que su objetivo es encontrar la configuración con mínimo error (STRESS) en un espacio estandarizado.
+
+\newpage
+
+
+## EJERCICIO 2:
+
+Efectuar un análisis no métrico de los datos eurocitis de la Tabla 1 usando SMACOF. Compara los resultados obtenidos con los de la solución métrica.
+
+### 1. Código de la función
+
+Para este ejercicio, operamos de forma parecida; Primero creamos la solución métrica para la tabla 1, y luego la no métrica, para poder apreciar ambas gráficas y compararlas. 
+
+Aunque en el enunciado no se entiende muy bien, entiendo que es comparar las dos soluciones respecto a los mismos datos, no el mds no métrico de eurocities con el mds métrico de la solución del ejercicio 1 de eurodist, ya que entonces sería con datos diferentes y es menos coherente. 
+
+Además, me tomo la libertad de cambiar ligeramente la matriz de la tabla1, ya que no es simétrica del todo, cambiando una distancia de 569 por 570 para que sea igual que la recíproca.
+
+```{r funcion_ejercicio_2, fig.width=8}
+library(smacof)
+
+datos_df <- data.frame(
+  c1 = c(0, 569, 667, 530, 141, 140, 357, 396, 570, 190),
+  c2 = c(569, 0, 1212, 1043, 617, 446, 325, 423, 787, 648),
+  c3 = c(667, 1212, 0, 201, 596, 768, 923, 882, 714, 714),
+  c4 = c(530, 1043, 201, 0, 431, 608, 740, 690, 516, 622),
+  c5 = c(141, 617, 596, 431, 0, 177, 340, 337, 436, 320),
+  c6 = c(140, 446, 768, 608, 177, 0, 218, 272, 519, 302),
+  c7 = c(357, 325, 923, 740, 340, 218, 0, 114, 472, 514),
+  c8 = c(396, 423, 882, 690, 337, 272, 114, 0, 364, 573),
+  c9 = c(570, 787, 714, 516, 436, 519, 472, 364, 0, 755),
+  c10 = c(190, 648, 714, 622, 320, 302, 514, 573, 755, 0)
+)
+
+city_names <- c("Londres", "Estocolmo", "Lisboa", "Madrid", "Paris", 
+                "Amsterdam", "Berlin", "Praga", "Roma", "Dublin")
+
+rownames(datos_df) <- city_names
+colnames(datos_df) <- city_names
+
+datos_dist <- as.dist(datos_df)
+
+res.metrico <- smacofSym(datos_dist, ndim = 2, type = "ratio")
+
+res.nometrico <- smacofSym(datos_dist, ndim = 2, type = "ordinal")
+
+plot(res.metrico$conf[, 1], -res.metrico$conf[, 2], 
+     type = "n", main = "MDS Métrico", asp = 1)
+text(res.metrico$conf[, 1], -res.metrico$conf[, 2], 
+     labels = city_names, cex = 0.8)
+
+plot(res.nometrico$conf[, 1], -res.nometrico$conf[, 2], 
+     type = "n", main = "MDS No Métrico", asp = 1)
+text(res.nometrico$conf[, 1], -res.nometrico$conf[, 2], 
+     labels = city_names, cex = 0.8)
+```
+
+### 2. Interpretación
+
+Al comparar los dos gráficos, observamos que la solución métrica y la no métrica son visualmente idénticas.
+
+La razón es que nuestros datos de partida (eurocitis) ya son métricos al ser distancias reales.
+
+El MDS Métrico (type = "ratio") asume que la relación entre las distancias del mapa y las reales debe ser una línea recta.
+
+El MDS No Métrico (type = "ordinal") es más flexible y solo asume que el orden de las distancias debe preservarse.
+
+Como los datos ya eran métricos, el modelo no métrico "descubre" que la mejor forma de preservar el orden es, de hecho, la misma línea recta que usa el modelo métrico. Por lo tanto, ambos métodos convergen a la misma solución.

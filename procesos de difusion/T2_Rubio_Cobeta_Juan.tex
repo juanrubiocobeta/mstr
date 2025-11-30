@@ -1,0 +1,739 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+
+% Configuración de márgenes
+\geometry{top=3cm, bottom=3cm, left=2cm, right=2cm}
+
+% Cabecera personalizada
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Ejercicios Propuestos 2}
+\fancyhead[C]{Juan Rubio Cobeta}
+\fancyhead[R]{\today}
+
+\title{Ejercicios Propuestos}
+\author{Juan Rubio Cobeta}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Ejercicio 1:}
+
+Demostrar que el proceso de Ornstein-Uhlenbeck $\{Y(t) : t \ge 0\}$ es un proceso de difusión homogéneo.
+
+\subsection*{Solución:}
+
+Para demostrar que el proceso de Ornstein-Uhlenbeck (O-U) es un proceso de difusión homogéneo, utilizaremos las condiciones suficientes establecidas en el Teorema 2.3.1.
+
+Dicho teorema establece que un proceso de Markov con trayectorias continuas es un proceso de difusión si:
+\begin{enumerate}
+    \item Existe $\delta > 0$ tal que $\lim_{h \to 0^+} \frac{1}{h} \int |y-x|^{2+\delta} F(dy, t+h | x, t) = 0$.
+    \item Existe $\lim_{h \to 0^+} \frac{1}{h} \int (y-x) F(dy, t+h | x, t) = A_1(x, t)$.
+    \item Existe $\lim_{h \to 0^+} \frac{1}{h} \int (y-x)^2 F(dy, t+h | x, t) = A_2(x, t)$.
+\end{enumerate}
+La indicación del enunciado de tomar $k=4$ sugiere verificar la condición 1 para $\delta=2$ (ya que $2+\delta = 4$). Si esta condición se cumple, los momentos infinitesimales truncados de la Definición 2.3.1 coinciden con los momentos no truncados de este teorema.
+
+Además, el proceso será homogéneo si los momentos infinitesimales $A_1$ y $A_2$ no dependen del tiempo $t$.
+
+El proceso de Ornstein-Uhlenbeck viene dado por la SDE (ecuación diferencial estocástica en inglés):
+$$dY(t) = \theta(\mu - Y(t)) dt + \sigma dW(t), \quad \theta > 0, \sigma > 0$$
+La distribución condicional $Y(t+h) | Y(t) = x$ es Normal (Gaussiana):
+$$Y(t+h) | Y(t) = x \sim N( m(x, h), V(h) )$$
+donde la media y la varianza condicionales son:
+\begin{itemize}
+    \item $m(x, h) = E[Y(t+h) | Y(t)=x] = x e^{-\theta h} + \mu(1 - e^{-\theta h})$
+    \item $V(h) = \text{Var}(Y(t+h) | Y(t)=x) = \frac{\sigma^2}{2\theta} (1 - e^{-2\theta h})$
+\end{itemize}
+Notamos que ni $m(x, h)$ ni $V(h)$ dependen de $t$. Esto ya implica que la densidad de transición es $f(y, h | x)$, lo que confirma la homogeneidad temporal.
+
+Para verificar las condiciones del teorema, calcularemos los límites de los momentos condicionales $M_k(x, h) = E[ (Y(t+h) - x)^k | Y(t)=x ]$.
+Usamos las expansiones de Taylor para $h \to 0$:
+\begin{itemize}
+    \item $e^{-\theta h} = 1 - \theta h + O(h^2)$
+    \item $1 - e^{-\theta h} = \theta h + O(h^2)$
+    \item $1 - e^{-2\theta h} = 2\theta h + O(h^2)$
+\end{itemize}
+
+\subsection{Cálculo de $A_1(x)$}
+Buscamos $A_1(x) = \lim_{h \to 0^+} \frac{1}{h} M_1(x, h)$.
+$$M_1(x, h) = E[Y(t+h) - x | Y(t)=x] = m(x, h) - x$$
+$$M_1(x, h) = (x e^{-\theta h} + \mu(1 - e^{-\theta h})) - x = x(e^{-\theta h} - 1) + \mu(1 - e^{-\theta h})$$
+$$M_1(x, h) = (\mu - x)(1 - e^{-\theta h})$$
+Sustituyendo la expansión de Taylor:
+$$M_1(x, h) = (\mu - x)(\theta h + O(h^2)) = \theta(\mu - x)h + O(h^2)$$
+$$A_1(x, t) = \lim_{h \to 0^+} \frac{1}{h} [\theta(\mu - x)h + O(h^2)] = \theta(\mu - x)$$
+El coeficiente $A_1(x) = \theta(\mu - x)$ existe y no depende de $t$.
+
+\subsection{Cálculo de $A_2(x)$}
+Buscamos $A_2(x) = \lim_{h \to 0^+} \frac{1}{h} M_2(x, h)$.
+$$M_2(x, h) = E[(Y(t+h) - x)^2 | Y(t)=x]$$
+Relacionamos $M_2$ con la varianza: $E[X^2] = \text{Var}(X) + (E[X])^2$.
+$$M_2(x, h) = \text{Var}(Y(t+h) | Y(t)=x) + (E[Y(t+h) - x | Y(t)=x])^2$$
+$$M_2(x, h) = V(h) + (M_1(x, h))^2$$
+Sustituimos las expansiones de Taylor para $V(h)$ y $M_1(x, h)$:
+$$V(h) = \frac{\sigma^2}{2\theta} (1 - e^{-2\theta h}) = \frac{\sigma^2}{2\theta} (2\theta h + O(h^2)) = \sigma^2 h + O(h^2)$$
+$$(M_1(x, h))^2 = (\theta(\mu - x)h + O(h^2))^2 = O(h^2)$$
+Sustituyendo en $M_2$:
+$$M_2(x, h) = (\sigma^2 h + O(h^2)) + O(h^2) = \sigma^2 h + O(h^2)$$
+$$A_2(x, t) = \lim_{h \to 0^+} \frac{1}{h} [\sigma^2 h + O(h^2)] = \sigma^2$$
+El coeficiente $A_2(x) = \sigma^2$ existe y no depende de $t$.
+
+\subsection{Verificación de la Condición 1 del Teorema 2.3.1 con k=4}
+Usamos la indicación del enunciado ($k=4$) para verificar la condición 1 del teorema con $\delta=2$.
+Buscamos $\lim_{h \to 0^+} \frac{1}{h} M_4(x, h) = 0$.
+$$M_4(x, h) = E[(Y - x)^4] = \int (y-x)^4 f(y, h|x) dy$$
+Seguimos la indicación: $m = m(x, h)$ es la media de $Y \equiv Y(t+h)|(Y(t)=x)$.
+Definimos $Z = Y - m$, donde $Z \sim N(0, V(h))$.
+Definimos $\delta = m - x = M_1(x, h)$.
+$$M_4 = E[ ( (Y - m) + (m - x) )^4 ] = E[ (Z + \delta)^4 ]$$
+Expandimos el binomio y usamos la linealidad de la esperanza:
+$$M_4 = E[Z^4] + 4\delta E[Z^3] + 6\delta^2 E[Z^2] + 4\delta^3 E[Z] + \delta^4$$
+Usamos los momentos centrados de una distribución normal $N(0, V(h))$:
+\begin{itemize}
+    \item $E[Z] = 0$
+    \item $E[Z^2] = V(h)$
+    \item $E[Z^3] = 0$
+    \item $E[Z^4] = 3 (E[Z^2])^2 = 3 (V(h))^2$
+\end{itemize}
+Sustituyendo:
+$$M_4(x, h) = 3(V(h))^2 + 6\delta^2 V(h) + \delta^4$$
+Analizamos el orden de magnitud (en $h$) de cada término:
+\begin{itemize}
+    \item $V(h) = \sigma^2 h + O(h^2) \implies V(h) = O(h)$
+    \item $\delta = M_1(x, h) = \theta(\mu - x)h + O(h^2) \implies \delta = O(h)$
+\end{itemize}
+Sustituimos los órdenes:
+$$M_4(x, h) = 3 \cdot (O(h))^2 + 6 \cdot (O(h))^2 \cdot O(h) + (O(h))^4$$
+$$M_4(x, h) = O(h^2) + O(h^3) + O(h^4) = O(h^2)$$
+Calculamos el límite:
+$$\lim_{h \to 0^+} \frac{1}{h} M_4(x, h) = \lim_{h \to 0^+} \frac{O(h^2)}{h} = \lim_{h \to 0^+} O(h) = 0$$
+La condición 1 del Teorema 2.3.1 se satisface.
+
+\subsection*{Conclusión}
+Hemos verificado las tres condiciones del Teorema 2.3.1. Los momentos infinitesimales existen y son:
+$$A_1(x, t) = a(x) = \theta(\mu - x)$$
+$$A_2(x, t) = b(x) = \sigma^2$$
+Dado que ambos coeficientes existen, son continuos y no dependen del tiempo $t$, el proceso de Ornstein-Uhlenbeck es un proceso de difusión homogéneo.
+
+\newpage
+
+\section{Ejercicio 2: }
+
+Comprobar si existe un proceso de difusión con momentos infinitesimales $A_1(x,t)$ y $A_2(x,t)$ para el cual las ecuaciones de Kolmogorov tengan solución única, siendo
+
+$$ A_1(x,t) = xg(t) + \frac{a\sigma^2 x^{a+1} h(t)}{1+x^a h(t)}, \quad A_2(x) = \sigma^2 x^2 $$
+
+donde $a \in \mathbb{Z} \ (a \ne 0)$, $\sigma > 0$ y $x > 0$. $g$ es una función continua en $t \in [t_0, T]$ o bien lo es en $t \ge t_0 > 0$, siendo en este caso acotada, y
+
+$$ h(t) = \exp \left( -a \left[ \frac{(a-1)\sigma^2}{2} t + \int^t g(s) ds \right] \right). $$
+
+\subsection*{Solución: }
+
+La existencia y unicidad de la solución para las ecuaciones de Kolmogorov está vinculada a la existencia y unicidad de la solución de la Ecuación Diferencial Estocástica (SDE) asociada. Un proceso $X(t)$ es un proceso de difusión con momentos $A_1$ y $A_2$ si es solución de la SDE:
+$$dX(t) = a(X(t),t)dt + b(X(t),t)dW(t)$$
+donde $a(x,t) = A_1(x,t)$ y $b(x,t)^2 = A_2(x,t)$.
+
+A partir de los datos del problema, tenemos:
+$$A_2(x) = \sigma^2 x^2 \implies b(x,t) = \sqrt{\sigma^2 x^2} = \sigma x \quad (\text{dado que } \sigma > 0, x > 0)$$
+$$a(x,t) = A_1(x,t) = xg(t) + \frac{a\sigma^2 x^{a+1} h(t)}{1+x^a h(t)}$$
+
+La forma de $A_1(x,t)$ sugiere una construcción mediante el método de factorización de densidades. Consideremos un proceso "base" $Y(t)$ con momentos infinitesimales $\alpha_1(x,t)$ y $\alpha_2(x,t)$.
+
+La estrategia será:
+1.  Definir un proceso base $Y(t)$ que sepamos que existe y tiene solución única.
+2.  Demostrar que el proceso $X(t)$ (con momentos $A_1, A_2$) se puede construir a partir de $Y(t)$ mediante una transformación de factorización válida.
+
+\subsection{Proceso Base $Y(t)$}
+Elijamos un proceso $Y(t)$ con el mismo coeficiente de difusión que $X(t)$:
+$$\alpha_2(x,t) = A_2(x) = \sigma^2 x^2$$
+Y como parte de la deriva:
+$$\alpha_1(x,t) = xg(t)$$
+Este proceso $Y(t)$ es un Movimiento Browniano Geométrico con deriva $g(t)$ dependiente del tiempo, y es la solución de la SDE:
+$$dY(t) = Y(t)g(t) dt + \sigma Y(t) dW(t)$$
+Los coeficientes $a_Y(y,t) = yg(t)$ y $b_Y(y,t) = \sigma y$ son continuos y $C^1$ en $y$ (para $y>0$), por lo que satisfacen las condiciones de Lipschitz local y de crecimiento lineal. Por lo tanto, el proceso base $Y(t)$ existe y es un proceso de difusión único.
+
+\subsection{Factorización}
+Según el método de factorización, si la densidad de transición $f_X$ de $X(t)$ se relaciona con la densidad $\phi_Y$ de $Y(t)$ mediante una función $k(x,t)$, los momentos están relacionados por:
+$$A_2(x,t) = \alpha_2(x,t)$$
+$$A_1(x,t) = \alpha_1(x,t) + \frac{\alpha_2(x,t)}{k(x,t)} \frac{\partial k(x,t)}{\partial x}$$
+Sustituimos los momentos conocidos:
+$$xg(t) + \frac{a\sigma^2 x^{a+1} h(t)}{1+x^a h(t)} = xg(t) + \frac{\sigma^2 x^2}{k(x,t)} \frac{\partial k(x,t)}{\partial x}$$
+Simplificando, buscamos $k(x,t)$ tal que:
+$$\frac{a\sigma^2 x^{a+1} h(t)}{1+x^a h(t)} = \frac{\sigma^2 x^2}{k(x,t)} \frac{\partial k(x,t)}{\partial x}$$
+$$\frac{a x^{a-1} h(t)}{1+x^a h(t)} = \frac{1}{k(x,t)} \frac{\partial k(x,t)}{\partial x}$$
+Esta es una Ecuación Diferencial Ordinaria en $x$ (tratando $t$ como constante), que es separable:
+$$\int \frac{1}{k} dk = \int \frac{a x^{a-1} h(t)}{1+x^a h(t)} dx$$
+Usamos la sustitución $u = 1+x^a h(t)$, $du = a x^{a-1} h(t) dx$:
+$$\ln(k) = \int \frac{1}{u} du = \ln(u) + C(t) = \ln(1+x^a h(t)) + C(t)$$
+Eligiendo la constante de integración $C(t) = 0$, obtenemos la función de factorización:
+$$k(x,t) = 1 + x^a h(t)$$
+
+\subsection{Verificación de $k(x,t)$}
+Para que esta transformación sea válida, la función $k(x,t)$ debe ser una solución de la ecuación atrasada de Kolmogorov asociada al proceso base $Y(t)$:
+$$\frac{\partial k}{\partial t} + \alpha_1(x,t) \frac{\partial k}{\partial x} + \frac{1}{2} \alpha_2(x,t) \frac{\partial^2 k}{\partial x^2} = 0$$
+Calculamos las derivadas parciales de $k(x,t) = 1 + x^a h(t)$:
+\begin{itemize}
+    \item $\frac{\partial k}{\partial t} = x^a h'(t)$
+    \item $\frac{\partial k}{\partial x} = a x^{a-1} h(t)$
+    \item $\frac{\partial^2 k}{\partial x^2} = a(a-1) x^{a-2} h(t)$
+\end{itemize}
+Sustituimos en la ecuación de Kolmogorov:
+$$[x^a h'(t)] + [xg(t)] \cdot [a x^{a-1} h(t)] + \frac{1}{2} [\sigma^2 x^2] \cdot [a(a-1) x^{a-2} h(t)] = 0$$
+Simplificamos la expresión:
+$$x^a h'(t) + a x^a g(t) h(t) + \frac{a(a-1)\sigma^2}{2} x^a h(t) = 0$$
+Dado que $x > 0$ y $h(t)$ (como exponencial) no es cero, podemos dividir toda la ecuación por $x^a h(t)$:
+$$\frac{h'(t)}{h(t)} + a g(t) + \frac{a(a-1)\sigma^2}{2} = 0$$
+Esta ecuación debe cumplirse para la $h(t)$ dada. Despejamos la derivada logarítmica:
+$$\frac{h'(t)}{h(t)} = -a g(t) - \frac{a(a-1)\sigma^2}{2}$$
+
+\subsection{Verificación de $h(t)$}
+Ahora, comprobamos si la función $h(t)$ dada en el enunciado satisface esta EDO.
+$$h(t) = \exp \left( -a \left[ \frac{(a-1)\sigma^2}{2} t + \int^t g(s) ds \right] \right)$$
+Tomamos el logaritmo natural:
+$$\ln(h(t)) = -a \left[ \frac{(a-1)\sigma^2}{2} t + \int^t g(s) ds \right]$$
+Derivamos respecto a $t$:
+$$\frac{d}{dt} \ln(h(t)) = \frac{h'(t)}{h(t)} = -a \left[ \frac{d}{dt} \left( \frac{(a-1)\sigma^2}{2} t \right) + \frac{d}{dt} \left( \int^t g(s) ds \right) \right]$$
+$$\frac{h'(t)}{h(t)} = -a \left[ \frac{(a-1)\sigma^2}{2} + g(t) \right]$$
+$$\frac{h'(t)}{h(t)} = - \frac{a(a-1)\sigma^2}{2} - a g(t)$$
+Esta es exactamente la EDO que obtuvimos en el paso 3.
+
+\subsection*{Conclusión}
+Hemos demostrado que los momentos $A_1$ y $A_2$ dados se obtienen de un proceso de difusión base $Y(t)$ (que existe y tiene solución única) a través de una transformación de factorización válida $k(x,t) = 1 + x^a h(t)$.
+Dado que $x>0$ y $h(t) > 0$ (es una exponencial), la función $k(x,t)$ es continua, diferenciable y estrictamente positiva, garantizando que la transformación está bien definida.
+
+Por lo tanto, sí existe un proceso de difusión con los momentos infinitesimales dados, y las ecuaciones de Kolmogorov asociadas tienen solución única.
+
+\newpage
+
+\section{Ejercicio 3: }
+
+Sea $\{X(t) : t \ge t_0\}$ un proceso de difusión con momentos infinitesimales $A_1(x,t) = g(t)x$ y $A_2(x,t) = \sigma^2 x^2$, donde $\sigma > 0$, $x \in \mathbb{R}^+$ y $g$ es una función continua acotada. Si además suponemos que la distribución inicial es constante, o sea $X(t_0) = x_{t_0}$ casi seguramente, demostrar que este proceso coincide con el proceso dado por
+$$ Y(t) = x_{t_0} \exp \left( \sigma W(t-t_0) + \int_{t_0}^t g(u) du - \frac{\sigma^2}{2} (t-t_0) \right), \quad t \ge t_0, $$
+donde $\{W(t) : t \ge 0\}$ es el proceso de Wiener estándar, o sea, con momentos infinitesimales $A_1(x,t) = 0$ y $A_2(x,t) = 1$.
+
+\subsection*{Solución:}
+
+El objetivo es demostrar que el proceso $\{X(t)\}$, definido por sus momentos infinitesimales, y el proceso $\{Y(t)\}$, definido por su fórmula explícita, son idénticos.
+
+La estrategia más directa es demostrar que el proceso $Y(t)$ es un proceso de difusión y que sus momentos infinitesimales $A_1^Y(x,t)$ y $A_2^Y(x,t)$ son idénticos a los de $X(t)$. Si además coinciden en la condición inicial, por la unicidad de la solución, los procesos son el mismo.
+
+\subsection{Hallar la SDE del proceso $Y(t)$}
+Partimos de la definición de $Y(t)$:
+$$ Y(t) = x_{t_0} \exp \left( \sigma W(t-t_0) + \int_{t_0}^t g(u) du - \frac{\sigma^2}{2} (t-t_0) \right) $$
+Para encontrar la SDE que gobierna $Y(t)$, aplicamos la Fórmula de Itô.
+Definamos un proceso auxiliar $Z(t)$ como el exponente (sin el $x_{t_0}$):
+$$ Z(t) = \sigma W(t-t_0) + \int_{t_0}^t g(u) du - \frac{\sigma^2}{2} (t-t_0) $$
+La diferencial de $Z(t)$ es:
+$$ dZ(t) = \sigma dW(t-t_0) + g(t) dt - \frac{\sigma^2}{2} dt $$
+Notando que $dW(t-t_0)$ tiene las mismas propiedades de incremento que $dW(t)$, podemos escribir:
+$$ dZ(t) = \left( g(t) - \frac{\sigma^2}{2} \right) dt + \sigma dW(t) $$
+Esta es una SDE de la forma $dZ(t) = a_Z(t) dt + b_Z(t) dW(t)$, donde los coeficientes son:
+$$ a_Z(t) = g(t) - \frac{\sigma^2}{2} \quad \text{y} \quad b_Z(t) = \sigma $$
+
+Ahora, $Y(t)$ se escribe como $Y(t) = f(Z(t))$, donde $f(z) = x_{t_0} e^z$.
+Aplicamos la Fórmula de Itô a $Y(t) = f(Z(t))$, notando que $f$ no depende explícitamente de $t$:
+$$ dY(t) = \left( a_Z(t) \frac{\partial f}{\partial z} + \frac{b_Z(t)^2}{2} \frac{\partial^2 f}{\partial z^2} \right) dt + \left( b_Z(t) \frac{\partial f}{\partial z} \right) dW(t) $$
+Calculamos las derivadas de $f(z)$:
+$$ \frac{\partial f}{\partial z} = x_{t_0} e^z = Y(t) $$
+$$ \frac{\partial^2 f}{\partial z^2} = x_{t_0} e^z = Y(t) $$
+Sustituimos todo en la fórmula de Itô:
+$$ dY(t) = \left( \left( g(t) - \frac{\sigma^2}{2} \right) Y(t) + \frac{\sigma^2}{2} Y(t) \right) dt + \left( \sigma \cdot Y(t) \right) dW(t) $$
+Simplificamos el término de deriva:
+$$ dY(t) = \left( g(t)Y(t) - \frac{\sigma^2}{2}Y(t) + \frac{\sigma^2}{2}Y(t) \right) dt + \sigma Y(t) dW(t) $$
+$$ dY(t) = g(t)Y(t) dt + \sigma Y(t) dW(t) $$
+
+\subsection{Conclusión}
+Hemos demostrado que $Y(t)$ es un proceso de difusión (ya que es solución de una SDE) gobernado por la ecuación:
+$$ dY(t) = a_Y(Y,t) dt + b_Y(Y,t) dW(t) $$
+donde $a_Y(y,t) = g(t)y$ y $b_Y(y,t) = \sigma y$.
+
+Los momentos infinitesimales de $Y(t)$ son:
+$$ A_1^Y(y,t) = a_Y(y,t) = g(t)y $$
+$$ A_2^Y(y,t) = [b_Y(y,t)]^2 = (\sigma y)^2 = \sigma^2 y^2 $$
+Estos momentos son idénticos a los momentos $A_1(x,t)$ y $A_2(x,t)$ dados para el proceso $X(t)$.
+
+Finalmente, verificamos la condición inicial de $Y(t)$ en $t=t_0$:
+$$ Y(t_0) = x_{t_0} \exp \left( \sigma W(0) + \int_{t_0}^{t_0} g(u) du - \frac{\sigma^2}{2} (0) \right) $$
+$$ Y(t_0) = x_{t_0} \exp(0 + 0 - 0) = x_{t_0} $$
+El proceso $Y(t)$ tiene la misma condición inicial $x_{t_0}$ que $X(t)$.
+
+Dado que el proceso de difusión $X(t)$ (definido por $A_1, A_2$ y $X(t_0)$) y el proceso $Y(t)$ (definido explícitamente) tienen los mismos momentos infinitesimales y la misma condición inicial, por la unicidad de la solución de la ecuación diferencial estocástica, ambos procesos son el mismo.
+$$ X(t) = Y(t), \quad \forall t \ge t_0 $$
+(Las indicaciones (a), (b) y (c) se cumplen: $Y(t)$ es Lognormal porque $\ln(Y(t))$ es Gaussiano (el proceso $Z(t)$ más una constante), es Markoviano por ser solución de una SDE, y su densidad de transición es la de una Lognormal, que se deriva del cambio de variable sobre la densidad Normal de $Z(t)$).
+
+\newpage
+
+\section{Ejercicio 4: }
+
+Sea $\{W(t) : t \ge 0\}$ el proceso Wiener con momentos infinitesimales $A_1(x) = \mu$ y $A_2(x) = \sigma^2$ y definido en $I = (r_1, r_2)$. Estudiar la naturaleza de las barreras del espacio de estados.
+
+\subsection*{Solución: }
+
+Para estudiar la naturaleza de las barreras del espacio de estados $I = (r_1, r_2)$, debemos asumir que el proceso está definido en el dominio más amplio posible para estos coeficientes, que es $I = (-\infty, +\infty)$. Por lo tanto, estudiaremos las barreras $r_1 = -\infty$ y $r_2 = +\infty$.
+
+Utilizamos el criterio de clasificación de Feller, que requiere el análisis de la integrabilidad de las siguientes funciones:
+$$ f(x) = \exp\left(-\int_{x'}^{x} \frac{2A_1(z)}{A_2(z)} dz\right) $$
+$$ g(x) = \frac{2}{A_2(x) f(x)} $$
+Y, si es necesario, de $h(x) = f(x) \int^x g(z) dz$ y $k(x) = g(x) \int^x f(z) dz$.
+
+Los momentos infinitesimales dados son $A_1(x) = \mu$ y $A_2(x) = \sigma^2$.
+Elegimos un punto de referencia $x' = 0$.
+
+\subsection{Cálculo de $f(x)$ y $g(x)$}
+Calculamos $f(x)$:
+$$ f(x) = \exp\left(-\int_{0}^{x} \frac{2\mu}{\sigma^2} dz\right) = \exp\left( -\frac{2\mu}{\sigma^2} [z]_0^x \right) = \exp\left( -\frac{2\mu}{\sigma^2} x \right) $$
+Calculamos $g(x)$:
+$$ g(x) = \frac{2}{\sigma^2 f(x)} = \frac{2}{\sigma^2} \exp\left( \frac{2\mu}{\sigma^2} x \right) $$
+
+\subsection{Análisis de la barrera $r_2 = +\infty$}
+Debemos analizar la integrabilidad de $f$ y $g$ en el intervalo $I_2 = (x', r_2) = (0, +\infty)$.
+Para ello, distinguimos tres casos según el valor de $\mu$.
+
+\subsubsection*{Caso 1: $\mu = 0$ (Wiener estándar)}
+$$ f(x) = e^0 = 1 $$
+$$ g(x) = \frac{2}{\sigma^2} $$
+Ambas funciones son constantes.
+$$ \int_0^\infty f(x) dx = \int_0^\infty 1 dx = \infty \implies f \notin \mathcal{L}(I_2) $$
+$$ \int_0^\infty g(x) dx = \int_0^\infty \frac{2}{\sigma^2} dx = \infty \implies g \notin \mathcal{L}(I_2) $$
+Calculamos $h(x)$ y $k(x)$:
+$$ h(x) = f(x) \int_0^x g(z) dz = 1 \cdot \int_0^x \frac{2}{\sigma^2} dz = \frac{2x}{\sigma^2} $$
+$$ k(x) = g(x) \int_0^x f(z) dz = \frac{2}{\sigma^2} \cdot \int_0^x 1 dz = \frac{2x}{\sigma^2} $$
+Analizamos su integrabilidad:
+$$ \int_0^\infty h(x) dx = \int_0^\infty \frac{2x}{\sigma^2} dx = \infty \implies h \notin \mathcal{L}(I_2) $$
+$$ \int_0^\infty k(x) dx = \int_0^\infty \frac{2x}{\sigma^2} dx = \infty \implies k \notin \mathcal{L}(I_2) $$
+Como $f, g, h, k$ no son integrables en $I_2$, la barrera $r_2 = +\infty$ es natural.
+
+\subsubsection*{Caso 2: $\mu > 0$}
+$$ \int_0^\infty f(x) dx = \int_0^\infty \exp\left( -\frac{2\mu}{\sigma^2} x \right) dx $$
+Como $\mu > 0$, el exponente es negativo. La integral converge: $f \in \mathcal{L}(I_2)$.
+$$ \int_0^\infty g(x) dx = \int_0^\infty \frac{2}{\sigma^2} \exp\left( \frac{2\mu}{\sigma^2} x \right) dx $$
+Como $\mu > 0$, el exponente es positivo. La integral diverge: $g \notin \mathcal{L}(I_2)$.
+Debemos revisar $h(x)$ y $k(x)$:
+$$ h(x) = f(x) \int_0^x g(z) dz = e^{-\frac{2\mu}{\sigma^2} x} \left[ \frac{1}{\mu} e^{\frac{2\mu}{\sigma^2} z} \right]_0^x = \frac{1}{\mu} e^{-\frac{2\mu}{\sigma^2} x} (e^{\frac{2\mu}{\sigma^2} x} - 1) = \frac{1}{\mu} (1 - e^{-\frac{2\mu}{\sigma^2} x}) $$
+La integral $\int_0^\infty h(x) dx = \int_0^\infty \frac{1}{\mu} (1 - e^{-kx}) dx$ (con $k>0$) diverge por el término $\int 1 dx$. $h \notin \mathcal{L}(I_2)$.
+$$ k(x) = g(x) \int_0^x f(z) dz = \frac{2}{\sigma^2} e^{\frac{2\mu}{\sigma^2} x} \left[ -\frac{\sigma^2}{2\mu} e^{-\frac{2\mu}{\sigma^2} z} \right]_0^x = \frac{1}{(-\mu)} e^{\frac{2\mu}{\sigma^2} x} (e^{-\frac{2\mu}{\sigma^2} x} - 1) = \frac{1}{\mu} (e^{\frac{2\mu}{\sigma^2} x} - 1) $$
+La integral $\int_0^\infty k(x) dx = \int_0^\infty \frac{1}{\mu} (e^{kx} - 1) dx$ (con $k>0$) diverge por el término $e^{kx}$. $k \notin \mathcal{L}(I_2)$.
+La barrera $r_2 = +\infty$ es natural.
+
+\subsubsection*{Caso 3: $\mu < 0$}
+$$ \int_0^\infty f(x) dx = \int_0^\infty \exp\left( -\frac{2\mu}{\sigma^2} x \right) dx $$
+Como $\mu < 0$, el exponente es positivo. La integral diverge: $f \notin \mathcal{L}(I_2)$.
+$$ \int_0^\infty g(x) dx = \int_0^\infty \frac{2}{\sigma^2} \exp\left( \frac{2\mu}{\sigma^2} x \right) dx $$
+Como $\mu < 0$, el exponente es negativo. La integral converge: $g \in \mathcal{L}(I_2)$.
+Debemos revisar $h(x)$ y $k(x)$:
+$$ h(x) = \frac{1}{\mu} (1 - e^{-\frac{2\mu}{\sigma^2} x}) $$
+El exponente $-\frac{2\mu}{\sigma^2}$ es positivo. La integral $\int_0^\infty h(x) dx$ diverge. $h \notin \mathcal{L}(I_2)$.
+$$ k(x) = \frac{1}{\mu} (e^{\frac{2\mu}{\sigma^2} x} - 1) $$
+El exponente $\frac{2\mu}{\sigma^2}$ es negativo. La integral $\int_0^\infty k(x) dx$ diverge por el término $\int (-1) dx$. $k \notin \mathcal{L}(I_2)$.
+La barrera $r_2 = +\infty$ es natural.
+
+\subsection{Análisis de la barrera $r_1 = -\infty$}
+Debemos analizar la integrabilidad de $f$ y $g$ en el intervalo $I_1 = (r_1, x') = (-\infty, 0)$. El análisis es simétrico.
+
+\subsubsection*{Caso 1: $\mu = 0$}
+$f(x) = 1$ y $g(x) = 2/\sigma^2$.
+$$ \int_{-\infty}^0 f(x) dx = \int_{-\infty}^0 1 dx = \infty \implies f \notin \mathcal{L}(I_1) $$
+$$ \int_{-\infty}^0 g(x) dx = \int_{-\infty}^0 \frac{2}{\sigma^2} dx = \infty \implies g \notin \mathcal{L}(I_1) $$
+El cálculo de $h(x)$ y $k(x)$ es $h(x)=k(x)=\frac{2x}{\sigma^2}$.
+$$ \int_{-\infty}^0 h(x) dx = \int_{-\infty}^0 \frac{2x}{\sigma^2} dx = \left[ \frac{x^2}{\sigma^2} \right]_{-\infty}^0 = 0 - (-\infty) = -\infty $$
+La integral diverge. $h \notin \mathcal{L}(I_1)$ y $k \notin \mathcal{L}(I_1)$.
+La barrera $r_1 = -\infty$ es natural.
+
+\subsubsection*{Caso 2: $\mu > 0$}
+$$ \int_{-\infty}^0 f(x) dx = \int_{-\infty}^0 \exp\left( -\frac{2\mu}{\sigma^2} x \right) dx $$
+$x \in (-\infty, 0)$. Sea $y = -x \implies y \in (0, \infty)$. $dx = -dy$.
+$\int_\infty^0 e^{ky} (-dy) = \int_0^\infty e^{ky} dy$ donde $k = 2\mu/\sigma^2 > 0$. La integral diverge. $f \notin \mathcal{L}(I_1)$.
+$$ \int_{-\infty}^0 g(x) dx = \int_{-\infty}^0 \frac{2}{\sigma^2} \exp\left( \frac{2\mu}{\sigma^2} x \right) dx $$
+El exponente es positivo. La integral $\int_{-\infty}^0 e^{kx} dx$ (con $k = 2\mu/\sigma^2 > 0$) converge. $g \in \mathcal{L}(I_1)$.
+El análisis de $h(x)$ y $k(x)$ es idéntico al de $r_2$. Ambas integrales divergen.
+La barrera $r_1 = -\infty$ es natural.
+
+\subsubsection*{Caso 3: $\mu < 0$}
+$$ \int_{-\infty}^0 f(x) dx = \int_{-\infty}^0 \exp\left( -\frac{2\mu}{\sigma^2} x \right) dx $$
+El exponente $-\frac{2\mu}{\sigma^2}$ es positivo. La integral $\int_{-\infty}^0 e^{kx} dx$ (con $k>0$) converge. $f \in \mathcal{L}(I_1)$.
+$$ \int_{-\infty}^0 g(x) dx = \int_{-\infty}^0 \frac{2}{\sigma^2} \exp\left( \frac{2\mu}{\sigma^2} x \right) dx $$
+El exponente $\frac{2\mu}{\sigma^2}$ es negativo. La integral $\int_{-\infty}^0 e^{-kx} dx$ (con $k>0$) diverge. $g \notin \mathcal{L}(I_1)$.
+El análisis de $h(x)$ y $k(x)$ es idéntico al de $r_2$. Ambas integrales divergen.
+La barrera $r_1 = -\infty$ es natural.
+
+\subsection*{Conclusión}
+Independientemente del valor de la deriva $\mu$, en todos los casos $(\mu=0, \mu>0, \mu<0)$, ni $f$, $g$, $h$ ni $k$ cumplen los requisitos de integrabilidad para ser barreras regulares, de entrada o de salida.
+
+Por lo tanto, para el proceso Wiener con deriva constante, ambas barreras $r_1 = -\infty$ y $r_2 = +\infty$ son barreras naturales.
+
+\newpage
+
+\section{Ejercicio 5:}
+
+Consideremos $\{X(t) : t \ge t_0\}$ el proceso de Ornstein-Uhlenbeck con factores exógenos, en el cual $A_1(x,t) = h(t)x$, $A_2(x) = \sigma^2$, $x \in \mathbb{R}$, siendo $h$ una función continua y $\sigma^2 > 0$. Estudiar si este proceso verifica la condición para ser transformado al proceso Wiener estándar. En caso afirmativo, obtener dicha transformación, así como la densidad de transición correspondiente.
+
+\subsection*{Solución:}
+
+Para estudiar la transformabilidad al proceso Wiener estándar, usamos la condición del Teorema 2.6.1. Un proceso con momentos $A_1(x,t)$ y $A_2(x,t)$ puede ser transformado si $A_1(x,t)$ satisface:
+$$ A_1(x,t) = \frac{1}{4} \frac{\partial A_2(x,t)}{\partial x} + \frac{[A_2(x,t)]^{1/2}}{2} \left\{ C_1(t) + \int_z^x \frac{C_2(t)A_2(y,t) + \frac{\partial A_2(y,t)}{\partial t}}{[A_2(y,t)]^{3/2}} dy \right\} $$
+para algunas funciones $C_1(t)$ y $C_2(t)$.
+
+\subsection{Verificación de la condición}
+Disponemos de los momentos:
+$$ A_1(x,t) = h(t)x $$
+$$ A_2(x,t) = \sigma^2 $$
+Calculamos las componentes necesarias para la condición, notando que $A_2$ es constante:
+\begin{itemize}
+    \item $\frac{\partial A_2}{\partial x} = 0$
+    \item $\frac{\partial A_2}{\partial t} = 0$
+    \item $[A_2(x,t)]^{1/2} = \sigma$
+    \item $[A_2(x,t)]^{3/2} = \sigma^3$
+\end{itemize}
+Sustituimos estos valores en la ecuación de condición, eligiendo un punto $z$ arbitrario:
+$$ A_1(x,t) = \frac{1}{4}(0) + \frac{\sigma}{2} \left\{ C_1(t) + \int_z^x \frac{C_2(t)\sigma^2 + 0}{\sigma^3} dy \right\} $$
+$$ A_1(x,t) = \frac{\sigma}{2} \left\{ C_1(t) + \int_z^x \frac{C_2(t)}{\sigma} dy \right\} $$
+$$ A_1(x,t) = \frac{\sigma}{2} \left\{ C_1(t) + \frac{C_2(t)}{\sigma} [y]_z^x \right\} $$
+$$ A_1(x,t) = \frac{\sigma}{2} C_1(t) + \frac{C_2(t)}{2} (x - z) $$
+$$ A_1(x,t) = \left( \frac{C_2(t)}{2} \right) x + \left( \frac{\sigma C_1(t) - z C_2(t)}{2} \right) $$
+Esta es la forma general que debe tener $A_1(x,t)$ para que el proceso sea transformable. El $A_1$ que nos da el problema es:
+$$ A_1(x,t) = h(t)x $$
+Comparando ambas expresiones (igualando coeficientes de $x$ y términos independientes):
+\begin{enumerate}
+    \item $h(t) = \frac{C_2(t)}{2} \implies C_2(t) = 2h(t)$
+    \item $0 = \frac{\sigma C_1(t) - z C_2(t)}{2} \implies \sigma C_1(t) = z C_2(t) \implies C_1(t) = \frac{z C_2(t)}{\sigma} = \frac{2z h(t)}{\sigma}$
+\end{enumerate}
+Dado que podemos encontrar $C_1(t)$ y $C_2(t)$ que solo dependen de $t$, el proceso sí verifica la condición para ser transformado.
+
+\subsection{Obtención de la transformación}
+Las transformaciones $x' = \psi(x,t)$ y $t' = \phi(t)$ vienen dadas por:
+$$ \psi(x,t) = (k_1)^{1/2} \exp\left(-\frac{1}{2}\int_{t_0}^t C_2(s)ds\right) \int_z^x \frac{dy}{[A_2(y,t)]^{1/2}} - \frac{(k_1)^{1/2}}{2} \int_{t_2}^t C_1(s) \exp\left(-\frac{1}{2}\int_{t_0}^s C_2(\theta)d\theta\right) ds + k_2 $$
+$$ \phi(t) = k_1 \int_{t_1}^t \exp\left(-\int_{t_0}^s C_2(\theta)d\theta\right) ds + k_3 $$
+Para simplificar, elegimos $z=0$, lo que implica $C_1(t) = 0$.
+También elegimos las constantes $k_1=1$, $k_2=0$, $k_3=0$ y $t_1=t_0$.
+Definimos $H(t) = \int_{t_0}^t h(s) ds$. Con esto, $C_2(t) = 2h(t)$ y $\int_{t_0}^t C_2(s)ds = 2H(t)$.
+
+\subsubsection*{Cálculo de $x' = \psi(x,t)$}
+Como $C_1=0$ y $k_2=0$, el segundo término de la integral se anula.
+$$ \psi(x,t) = \exp\left(-\frac{1}{2}\int_{t_0}^t 2h(s)ds\right) \int_0^x \frac{dy}{\sigma} $$
+$$ \psi(x,t) = \exp(-H(t)) \left[ \frac{y}{\sigma} \right]_0^x $$
+$$ \psi(x,t) = \frac{x}{\sigma} \exp\left(-\int_{t_0}^t h(s) ds\right) $$
+
+\subsubsection*{Cálculo de $t' = \phi(t)$}
+$$ \phi(t) = \int_{t_0}^t \exp\left(-\int_{t_0}^s 2h(\theta)d\theta\right) ds $$
+$$ \phi(t) = \int_{t_0}^t \exp(-2H(s)) ds = \int_{t_0}^t \exp\left(-2\int_{t_0}^s h(\theta) d\theta\right) ds $$
+
+\subsection{Obtención de la densidad de transición}
+La transformación $x' = \psi(x,t)$ y $t' = \phi(t)$ convierte el proceso $X(t)$ en un proceso Wiener estándar $W'(t')$, cuya densidad de transición $f_{W'}(x', t' | x'_0, t'_0)$ es conocida.
+Calculamos las condiciones iniciales transformadas:
+$$ x'_0 = \psi(x_0, t_0) = \frac{x_0}{\sigma} \exp(-H(t_0)) = \frac{x_0}{\sigma} \exp(0) = \frac{x_0}{\sigma} $$
+$$ t'_0 = \phi(t_0) = \int_{t_0}^{t_0} \exp(-2H(s)) ds = 0 $$
+El proceso $W'(t')$ es un Wiener $N(x'_0, t' - t'_0) = N(x'_0, t')$. Su densidad es:
+$$ f_{W'}(x', t' | x'_0, 0) = \frac{1}{\sqrt{2\pi t'}} \exp\left( -\frac{(x' - x'_0)^2}{2t'} \right) $$
+La densidad de $X(t)$ se obtiene revirtiendo la transformación:
+$$ f_X(x, t | x_0, t_0) = f_{W'}(\psi(x,t), \phi(t) | x'_0, 0) \cdot \left| \frac{\partial \psi(x,t)}{\partial x} \right| $$
+Calculamos el Jacobiano de la transformación espacial:
+$$ \frac{\partial \psi}{\partial x} = \frac{\partial}{\partial x} \left( \frac{x}{\sigma} e^{-H(t)} \right) = \frac{1}{\sigma} e^{-H(t)} $$
+Sustituimos todos los elementos:
+$$ f_X(x, t | x_0, t_0) = \frac{1}{\sqrt{2\pi \phi(t)}} \exp\left( -\frac{(\psi(x,t) - x'_0)^2}{2\phi(t)} \right) \cdot \left( \frac{1}{\sigma} e^{-H(t)} \right) $$
+Sustituyendo $\psi(x,t)$, $\phi(t)$ y $x'_0$:
+$$ f_X(x, t | x_0, t_0) = \frac{1}{\sqrt{2\pi \int_{t_0}^t e^{-2H(s)} ds}} \exp\left( -\frac{\left( \frac{x}{\sigma} e^{-H(t)} - \frac{x_0}{\sigma} \right)^2}{2\int_{t_0}^t e^{-2H(s)} ds} \right) \cdot \frac{e^{-H(t)}}{\sigma} $$
+Esta expresión se puede simplificar. Sea:
+$$ \mu(t) = x_0 e^{H(t)} = x_0 \exp\left(\int_{t_0}^t h(s)ds\right) $$
+$$ V(t) = \sigma^2 e^{2H(t)} \phi(t) = \sigma^2 \exp\left(2\int_{t_0}^t h(s)ds\right) \int_{t_0}^t \exp\left(-2\int_{t_0}^s h(\theta)d\theta\right) ds $$
+La densidad es la de una distribución Normal $N(\mu(t), V(t))$:
+$$ f_X(x, t | x_0, t_0) = \frac{1}{\sqrt{2\pi V(t)}} \exp\left( -\frac{(x - \mu(t))^2}{2V(t)} \right) $$
+
+\newpage
+
+\section{Ejercicio 6:}
+
+Sea $\{X(t) : t \ge t_0 > 0\}$ el proceso de difusión considerado en el ejercicio 2 e $\{Y(t) : t \ge t_0 > 0\}$ el proceso de difusión lognormal con factores exógenos introducido en el ejercicio 3. Comprobar que el proceso $X(t)$ no puede ser construido mediante una transformación del proceso Wiener pero su función de densidad de transición sí puede obtenerse a partir de la de $\{Y(t)\}$ por el método de la factorización de las densidades. En caso afirmativo, obtener tal densidad de transición.
+
+\subsection*{Solución:}
+
+Este ejercicio consta de tres partes:
+1.  Comprobar que $X(t)$ no es transformable al Wiener estándar.
+2.  Comprobar que $X(t)$ se puede obtener de $Y(t)$ por factorización.
+3.  Obtener la densidad de $X(t)$.
+
+Recordamos los momentos infinitesimales de los procesos:
+\begin{itemize}
+    \item \textbf{Proceso $X(t)$ (Ej. 2):}
+        $A_1^X(x,t) = xg(t) + \frac{a\sigma^2 x^{a+1} h(t)}{1+x^a h(t)}$
+        $A_2^X(x) = \sigma^2 x^2$
+    \item \textbf{Proceso $Y(t)$ (Ej. 3):}
+        $A_1^Y(x,t) = g(t)x$
+        $A_2^Y(x,t) = \sigma^2 x^2$
+    \item \textbf{Proceso Wiener Estándar $W(t)$:}
+        $A_1^W(x,t) = 0$
+        $A_2^W(x,t) = 1$
+\end{itemize}
+
+\subsection{Transformación de $X(t)$ al Wiener Estándar}
+Para que $X(t)$ pueda ser transformado al Wiener estándar, sus momentos $A_1^X$ y $A_2^X$ deben satisfacer la condición del Teorema 2.6.1. La forma general que debe tener $A_1$ es:
+$$ A_1(x,t) = \frac{1}{4} \frac{\partial A_2}{\partial x} + \frac{[A_2]^{1/2}}{2} \left\{ C_1(t) + \int_z^x \frac{C_2(t)A_2 + \frac{\partial A_2}{\partial t}}{[A_2]^{3/2}} dy \right\} $$
+Sustituimos los momentos de $X(t)$, $A_2 = \sigma^2 x^2$:
+\begin{itemize}
+    \item $\frac{\partial A_2}{\partial x} = 2\sigma^2 x$
+    \item $\frac{\partial A_2}{\partial t} = 0$
+    \item $[A_2]^{1/2} = \sigma x$
+    \item $[A_2]^{3/2} = \sigma^3 x^3$
+\end{itemize}
+Sustituyendo en la fórmula (RHS):
+$$ \text{RHS} = \frac{1}{4} (2\sigma^2 x) + \frac{\sigma x}{2} \left\{ C_1(t) + \int_z^x \frac{C_2(t)(\sigma^2 y^2) + 0}{\sigma^3 y^3} dy \right\} $$
+$$ \text{RHS} = \frac{\sigma^2 x}{2} + \frac{\sigma x}{2} \left\{ C_1(t) + \frac{C_2(t)}{\sigma} \int_z^x \frac{1}{y} dy \right\} $$
+$$ \text{RHS} = \frac{\sigma^2 x}{2} + \frac{\sigma x}{2} \left\{ C_1(t) + \frac{C_2(t)}{\sigma} (\ln(x) - \ln(z)) \right\} $$
+$$ \text{RHS} = \left( \frac{\sigma^2 + \sigma C_1(t) - C_2(t) \ln(z)}{2} \right) x + \left( \frac{C_2(t)}{2} \right) x \ln(x) $$
+La forma funcional requerida para $A_1$ es $K_1(t) \cdot x + K_2(t) \cdot x \ln(x)$.
+
+El momento $A_1^X(x,t)$ dado es:
+$$ A_1^X(x,t) = xg(t) + \frac{a\sigma^2 x^{a+1} h(t)}{1+x^a h(t)} $$
+Esta expresión es una función racional de $x^a$ (multiplicada por $x$), la cual no es de la forma $K_1(t)x + K_2(t)x\ln(x)$ (dado que $a \ne 0$).
+Por lo tanto, el proceso $X(t)$ no cumple la condición y no puede ser construido mediante una transformación del proceso Wiener estándar.
+
+\subsection{Factorización de $X(t)$ a partir de $Y(t)$}
+Comprobamos si $f_X$ puede obtenerse de $\phi_Y$ mediante factorización. Las condiciones son:
+\begin{enumerate}
+    \item $A_2^X(x,t) = A_2^Y(x,t)$
+    \item $A_1^X(x,t) = A_1^Y(x,t) + \frac{A_2^Y(x,t)}{k(x,t)} \frac{\partial k(x,t)}{\partial x}$
+    \item $k(x,t)$ satisface la Ecuación Atrasada de Kolmogorov para $Y(t)$.
+\end{enumerate}
+En el ejercicio 2 ya realizamos esta comprobación.
+\begin{enumerate}
+    \item $\sigma^2 x^2 = \sigma^2 x^2$. La condición 1 se cumple.
+    \item Como se vio en el ejercicio 2, la condición 2 se cumple si $k(x,t) = 1 + x^a h(t)$.
+    \item Como se vio en el ejercicio 2, la función $k(x,t) = 1 + x^a h(t)$ con la $h(t)$ dada \textbf{es} solución de la ecuación $\frac{\partial k}{\partial t} + A_1^Y \frac{\partial k}{\partial x} + \frac{1}{2} A_2^Y \frac{\partial^2 k}{\partial x^2} = 0$.
+\end{enumerate}
+Concluimos que sí se puede obtener $f_X$ a partir de $\phi_Y$ por el método de factorización.
+
+\subsection{Obtención de la Densidad de Transición $f_X$}
+La fórmula de factorización es:
+$$ f_X(x, t | x_0, t_0) = \frac{k(x,t)}{k(x_0, t_0)} \phi_Y(x, t | x_0, t_0) $$
+Donde:
+\begin{enumerate}
+    \item $k(x,t) = 1 + x^a h(t)$
+    \item $k(x_0, t_0) = 1 + x_0^a h(t_0)$
+    \item $\phi_Y(x, t | x_0, t_0)$ es la densidad de transición del proceso $Y(t)$ del ejercicio 3.
+\end{enumerate}
+Primero, obtenemos $\phi_Y$. El proceso $Y(t)$ es Lognormal, $Y(t) = e^{Z(t)}$, donde $Z(t) = \ln(Y(t))$.
+Del ejercicio 3, $Y(t_0) = x_0$ y
+$$ Y(t) = x_0 \exp \left( \sigma W(t-t_0) + \int_{t_0}^t g(u) du - \frac{\sigma^2}{2} (t-t_0) \right) $$
+Tomando logaritmos, el proceso $Z(t) = \ln(Y(t))$ es Gaussiano:
+$$ Z(t) = \ln(x_0) + \int_{t_0}^t g(u) du - \frac{\sigma^2}{2} (t-t_0) + \sigma W(t-t_0) $$
+La media y varianza de $Z(t)$ son:
+$$ \mu_Z(t) = E[Z(t)] = \ln(x_0) + \int_{t_0}^t g(u) du - \frac{\sigma^2}{2} (t-t_0) $$
+$$ \Sigma_Z^2(t) = \text{Var}(Z(t)) = \text{Var}(\sigma W(t-t_0)) = \sigma^2 (t-t_0) $$
+La densidad $\phi_Y$ es la de una Lognormal $LN(\mu_Z(t), \Sigma_Z^2(t))$:
+$$ \phi_Y(x, t | x_0, t_0) = \frac{1}{x \sqrt{2\pi \Sigma_Z^2(t)}} \exp\left( - \frac{(\ln(x) - \mu_Z(t))^2}{2 \Sigma_Z^2(t)} \right) $$
+Sustituyendo $\mu_Z(t)$ y $\Sigma_Z^2(t)$:
+$$ \phi_Y(x, t | x_0, t_0) = \frac{1}{x \sigma \sqrt{2\pi(t-t_0)}} \exp\left( - \frac{\left(\ln(x/x_0) - \int_{t_0}^t g(u) du + \frac{\sigma^2}{2}(t-t_0)\right)^2}{2\sigma^2(t-t_0)} \right) $$
+Las funciones $h(t)$ y $h(t_0)$ son:
+$$ h(t) = \exp \left( -a \left[ \frac{(a-1)\sigma^2}{2} t + \int_{t_0}^t g(s) ds \right] \right) $$
+$$ h(t_0) = \exp \left( -a \frac{(a-1)\sigma^2}{2} t_0 \right) $$
+La densidad de transición buscada $f_X$ es:
+$$ f_X(x, t | x_0, t_0) = \frac{1 + x^a h(t)}{1 + x_0^a h(t_0)} \cdot \phi_Y(x, t | x_0, t_0) $$
+Donde $\phi_Y$ y $h(t), h(t_0)$ son las funciones definidas previamente.
+
+
+\newpage
+
+\section{Ejercicio 7:}
+
+(Proceso logarítmico-normal con factores exógenos). Consideremos la ecuación diferencial estocástica
+$$ dX(t) = h(t)X(t)dt + \sigma X(t)dW(t) $$
+$$ X(t_0) = x_0, $$
+donde $h$ es una función continua, $\sigma > 0$, $t \ge t_0 > 0$ y $x_0$ es una variable lognormal $\Lambda_1[\mu_0, \sigma_0^2]$. Comprobar que se verifican las condiciones de existencia y unicidad de solución para esta ecuación y resolverla. ¿Cómo se pueden obtener las distribuciones finito dimensionales? ¿A qué familia de distribuciones pertenecen las distribuciones finito-dimensionales así como las transiciones?
+
+\subsection*{Solución:}
+
+\subsection{Comprobación de Existencia y Unicidad}
+La ecuación diferencial estocástica (SDE) es:
+$$ dX(t) = a(X(t),t)dt + b(X(t),t)dW(t) $$
+con los coeficientes $a(x,t) = h(t)x$ y $b(x,t) = \sigma x$.
+Para comprobar la existencia y unicidad de la solución, verificamos las condiciones de Lipschitz y de crecimiento lineal.
+
+1.  Condición de Lipschitz (Global):
+    Para $x, y \in \mathbb{R}$ y $t \in [t_0, T]$, existe una constante $K$ tal que:
+    $$ |a(x,t) - a(y,t)| + |b(x,t) - b(y,t)| \le K |x-y| $$
+    Calculamos:
+    $$ |h(t)x - h(t)y| + |\sigma x - \sigma y| = |h(t)| |x-y| + \sigma |x-y| = (|h(t)| + \sigma) |x-y| $$
+    Dado que $h$ es continua en el intervalo compacto $[t_0, T]$, está acotada, es decir, $\sup_{t \in [t_0, T]} |h(t)| = K_h < \infty$.
+    Tomando $K = K_h + \sigma$, se cumple la condición de Lipschitz global.
+
+2.  Condición de Crecimiento Lineal:
+    Existe una constante $K'$ tal que:
+    $$ |a(x,t)|^2 + |b(x,t)|^2 \le K'(1 + |x|^2) $$
+    Calculamos:
+    $$ |h(t)x|^2 + |\sigma x|^2 = (h(t)^2 + \sigma^2) x^2 $$
+    Usando la misma acotación $K_h$ para $h(t)$, tenemos $h(t)^2 \le K_h^2$.
+    Sea $K' = K_h^2 + \sigma^2$. Entonces:
+    $$ (h(t)^2 + \sigma^2) x^2 \le (K_h^2 + \sigma^2) x^2 = K' x^2 \le K'(1 + x^2) $$
+    La condición de crecimiento lineal también se cumple.
+
+Dado que ambas condiciones se satisfacen, la SDE admite una solución única y continua.
+
+\subsection{Resolución de la SDE (Indicación b)}
+Seguimos la indicación y consideramos la transformación $Y(t) = f(X(t))$, con $f(x) = \log(x)$. Aplicamos la fórmula de Itô para $dY(t)$:
+$$ dY(t) = \left( a(x,t)\frac{\partial f}{\partial x} + \frac{b(x,t)^2}{2}\frac{\partial^2 f}{\partial x^2} \right) dt + \left( b(x,t)\frac{\partial f}{\partial x} \right) dW(t) $$
+Las derivadas de $f(x) = \log(x)$ son:
+$$ \frac{\partial f}{\partial x} = \frac{1}{x} \quad \text{y} \quad \frac{\partial^2 f}{\partial x^2} = -\frac{1}{x^2} $$
+Sustituimos $a(x,t) = h(t)x$ y $b(x,t) = \sigma x$:
+$$ dY(t) = \left( (h(t)x) \left( \frac{1}{x} \right) + \frac{(\sigma x)^2}{2} \left( -\frac{1}{x^2} \right) \right) dt + \left( (\sigma x) \left( \frac{1}{x} \right) \right) dW(t) $$
+$$ dY(t) = \left( h(t) - \frac{\sigma^2 x^2}{2x^2} \right) dt + \sigma dW(t) $$
+$$ dY(t) = \left( h(t) - \frac{\sigma^2}{2} \right) dt + \sigma dW(t) $$
+Esta es una SDE con coeficientes determinísticos (del tipo estudiado en el Teorema 2.8.1). Su solución se obtiene por integración directa:
+$$ Y(t) = Y(t_0) + \int_{t_0}^t \left( h(s) - \frac{\sigma^2}{2} \right) ds + \int_{t_0}^t \sigma dW(s) $$
+$$ Y(t) = \log(x_0) + \int_{t_0}^t h(s) ds - \frac{\sigma^2}{2}(t-t_0) + \sigma (W(t) - W(t_0)) $$
+Deshacemos el cambio de variable $X(t) = \exp(Y(t))$:
+$$ X(t) = \exp\left( \log(x_0) + \int_{t_0}^t h(s) ds - \frac{\sigma^2}{2}(t-t_0) + \sigma (W(t) - W(t_0)) \right) $$
+La solución es:
+$$ X(t) = x_0 \exp\left( \int_{t_0}^t h(s) ds - \frac{\sigma^2}{2}(t-t_0) + \sigma (W(t) - W(t_0)) \right) $$
+
+\subsection{Distribuciones (Indicación c)}
+1.  Proceso $Y(t)$:
+    La solución $Y(t)$ es:
+    $$ Y(t) = \underbrace{\log(x_0)}_{Y(t_0)} + \underbrace{\left( \int_{t_0}^t h(s) ds - \frac{\sigma^2}{2}(t-t_0) \right)}_{\text{Determinista}} + \underbrace{\sigma (W(t) - W(t_0))}_{\text{Gaussiano}} $$
+    La condición inicial $x_0 \sim \Lambda_1[\mu_0, \sigma_0^2]$, por definición, $Y(t_0) = \log(x_0) \sim N(\mu_0, \sigma_0^2)$.
+    El término $\sigma(W(t) - W(t_0))$ es $N(0, \sigma^2(t-t_0))$ y es independiente de $Y(t_0)$.
+    $Y(t)$ es la suma de una variable Gaussiana $Y(t_0)$, un término determinista (que solo desplaza la media) y otra variable Gaussiana independiente. La suma de Gaussianos es Gaussiana.
+    Por lo tanto, el proceso $\{Y(t)\}$ es Gaussiano.
+
+2.  Distribuciones Unidimensionales:
+    La distribución de $Y(t)$ es $N(\mu_Y(t), \sigma_Y^2(t))$, donde:
+    $$ \mu_Y(t) = E[Y(t_0)] + \int_{t_0}^t h(s) ds - \frac{\sigma^2}{2}(t-t_0) = \mu_0 + \int_{t_0}^t h(s) ds - \frac{\sigma^2}{2}(t-t_0) $$
+    $$ \sigma_Y^2(t) = \text{Var}(Y(t_0)) + \text{Var}(\sigma(W(t)-W(t_0))) = \sigma_0^2 + \sigma^2(t-t_0) $$
+    Dado que $X(t) = \exp(Y(t))$, la distribución unidimensional de $X(t)$ es Lognormal:
+    $$ X(t) \sim \Lambda_1[ \mu_Y(t), \sigma_Y^2(t) ] $$
+
+3.  Distribuciones Finito-Dimensionales (DFD):
+    Para obtener las DFD de $X(t)$, $(X(t_1), \dots, X(t_n))$, primero consideramos el vector $(Y(t_1), \dots, Y(t_n))$.
+    Dado que $Y(t)$ es un proceso Gaussiano, cualquier vector $(Y(t_1), \dots, Y(t_n))$ sigue una distribución Normal Multivariante.
+    El vector $(X(t_1), \dots, X(t_n)) = (\exp(Y(t_1)), \dots, \exp(Y(t_n)))$ sigue, por definición, una distribución Lognormal Multivariante.
+
+4.  Distribuciones de Transición:
+    La transición $f(x, t | y, s)$ (con $t>s$) es la distribución de $X(t)$ dado $X(s)=y$.
+    $Y(t) | Y(s)=\log(y)$ es:
+    $$ Y(t) = \log(y) + \int_s^t h(u) du - \frac{\sigma^2}{2}(t-s) + \sigma(W(t)-W(s)) $$
+    Esta es una $N\left( \log(y) + \int_s^t h(u) du - \frac{\sigma^2}{2}(t-s), \sigma^2(t-s) \right)$.
+    Por lo tanto, la distribución de transición $X(t)|X(s)=y$ es Lognormal.
+
+\subsection*{Nota: Confrontación con el Ejercicio 3}
+La solución obtenida para $X(t)$ es:
+$$ X(t) = x_0 \exp\left( \int_{t_0}^t h(s) ds - \frac{\sigma^2}{2}(t-t_0) + \sigma (W(t) - W(t_0)) \right) $$
+El proceso $Y(t)$ del ejercicio 3 (con $Y(t_0)=x_{t_0}$) se definió como:
+$$ Y(t) = x_{t_0} \exp \left( \sigma W(t-t_0) + \int_{t_0}^t g(u) du - \frac{\sigma^2}{2} (t-t_0) \right) $$
+Si identificamos $h(t) = g(t)$ y $x_0 = x_{t_0}$, y usamos la propiedad de que $W(t)-W(t_0)$ es idéntico en distribución a $W(t-t_0)$, los procesos son el mismo.
+El ejercicio 3 definió un proceso mediante sus momentos $A_1=g(t)x, A_2=\sigma^2 x^2$ y demostró que coincidía con la forma explícita. Este ejercicio parte de la SDE $dX = h(t)X dt + \sigma X dW$ (cuyos momentos son $A_1=h(t)x, A_2=\sigma^2 x^2$) y encuentra la solución explícita.
+Ambos ejercicios establecen la equivalencia entre la SDE (o sus momentos) y la solución explícita Lognormal.
+
+
+\newpage
+
+\section{Ejercicio 8:}
+
+Sean $m(t), h_1(t), h_2(t)$ funciones continuas y derivables en $\mathbb{R}$, siendo $h_i(t)$, $i=1, 2$ positivas con $h_2(t) \ne 0, \forall t \in \mathbb{R}$. Sea $\{X(t) : t \in \mathbb{R}\}$ un proceso gaussiano con media $m(t)$ y función de covarianza dada por $C_X(s,t) = h_1(s \wedge t) h_2(s \vee t)$, donde $s \vee t = \text{Max}(s,t)$ y $s \wedge t = \text{Min}(s,t)$. Supuesto que $\{X(t) : t \in \mathbb{R}\}$ tiene trayectorias continuas, demostrar que el proceso es de difusión.
+
+\subsection*{Solución:}
+
+Para demostrar que el proceso $\{X(t)\}$ es un proceso de difusión, debemos verificar las dos condiciones fundamentales:
+\begin{enumerate}
+    \item Que $\{X(t)\}$ es un proceso de Markov.
+    \item Que $\{X(t)\}$ satisface las condiciones de Kolmogorov sobre sus momentos infinitesimales (dado que el enunciado ya nos da la continuidad de las trayectorias).
+\end{enumerate}
+
+\subsection{Verificación de la Propiedad de Markov}
+Un proceso Gaussiano es un proceso de Markov si y sólo si su función de covarianza $C(s,t)$ satisface la siguiente condición para $s < \tau < t$:
+$$ C(s,t) C(\tau,\tau) = C(s,\tau) C(\tau,t) $$
+Vamos a verificar esta identidad para la covarianza dada: $C(s,t) = h_1(s \wedge t) h_2(s \vee t)$.
+
+Sea $s < \tau < t$. Evaluamos cada término de la identidad:
+\begin{itemize}
+    \item $C(s,t) = h_1(s \wedge t) h_2(s \vee t) = h_1(s) h_2(t)$
+    \item $C(\tau,\tau) = h_1(\tau \wedge \tau) h_2(\tau \vee \tau) = h_1(\tau) h_2(\tau)$
+    \item $C(s,\tau) = h_1(s \wedge \tau) h_2(s \vee \tau) = h_1(s) h_2(\tau)$
+    \item $C(\tau,t) = h_1(\tau \wedge t) h_2(\tau \vee t) = h_1(\tau) h_2(t)$
+\end{itemize}
+Ahora, comprobamos la identidad:
+$$ C(s,t) C(\tau,\tau) = (h_1(s) h_2(t)) \cdot (h_1(\tau) h_2(\tau)) = h_1(s) h_2(t) h_1(\tau) h_2(\tau) $$
+$$ C(s,\tau) C(\tau,t) = (h_1(s) h_2(\tau)) \cdot (h_1(\tau) h_2(t)) = h_1(s) h_2(\tau) h_1(\tau) h_2(t) $$
+Ambos lados son idénticos. Por lo tanto, el proceso Gaussiano $\{X(t)\}$ es un proceso de Markov.
+
+\subsection{Verificación de las Condiciones de Kolmogorov}
+Dado que el proceso es Gaussiano y de Markov, la distribución condicional $X(t+h) | X(t)=x$ es Normal (Gaussiana) para $h > 0$. Debemos calcular su media y varianza condicionales para encontrar los momentos infinitesimales.
+
+La media y varianza condicionales son:
+$$ E[X(t+h) | X(t)=x] = m(t+h) + \frac{C(t, t+h)}{C(t, t)} (x - m(t)) $$
+$$ \text{Var}(X(t+h) | X(t)=x) = C(t+h, t+h) - \frac{C(t, t+h)^2}{C(t, t)} $$
+Calculamos las covarianzas necesarias (para $h>0$):
+\begin{itemize}
+    \item $C(t, t+h) = h_1(t \wedge (t+h)) h_2(t \vee (t+h)) = h_1(t) h_2(t+h)$
+    \item $C(t, t) = h_1(t) h_2(t)$
+    \item $C(t+h, t+h) = h_1(t+h) h_2(t+h)$
+\end{itemize}
+Sustituimos:
+$$ E[X(t+h) | X(t)=x] = m(t+h) + \frac{h_1(t) h_2(t+h)}{h_1(t) h_2(t)} (x - m(t)) = m(t+h) + \frac{h_2(t+h)}{h_2(t)} (x - m(t)) $$
+$$ \text{Var}(X(t+h) | X(t)=x) = h_1(t+h) h_2(t+h) - \frac{(h_1(t) h_2(t+h))^2}{h_1(t) h_2(t)} $$
+$$ \text{Var}(X(t+h) | X(t)=x) = h_2(t+h) \left( h_1(t+h) - \frac{h_1(t) h_2(t+h)}{h_2(t)} \right) = \frac{h_2(t+h)}{h_2(t)} (h_1(t+h)h_2(t) - h_1(t)h_2(t+h)) $$
+Ahora, calculamos los límites de los momentos $M_k(x, h) = E[ (X(t+h) - x)^k | X(t)=x ]$ cuando $h \to 0^+$.
+
+\subsubsection*{Cálculo de $A_1(x,t)$}
+$$ M_1(x, h) = E[X(t+h) - x | X(t)=x] = E[X(t+h) | X(t)=x] - x $$
+$$ M_1(x, h) = m(t+h) + \frac{h_2(t+h)}{h_2(t)} (x - m(t)) - x $$
+$$ M_1(x, h) = (m(t+h) - m(t)) + (x - m(t)) \left( \frac{h_2(t+h)}{h_2(t)} - 1 \right) $$
+Usamos las expansiones de Taylor (dado que $m, h_2$ son derivables):
+$$ m(t+h) = m(t) + m'(t)h + O(h^2) $$
+$$ h_2(t+h) = h_2(t) + h_2'(t)h + O(h^2) $$
+Sustituimos:
+$$ M_1(x, h) = (m'(t)h + O(h^2)) + (x - m(t)) \left( \frac{h_2(t) + h_2'(t)h + O(h^2)}{h_2(t)} - 1 \right) $$
+$$ M_1(x, h) = m'(t)h + (x - m(t)) \left( 1 + \frac{h_2'(t)}{h_2(t)}h + O(h^2) - 1 \right) + O(h^2) $$
+$$ M_1(x, h) = m'(t)h + (x - m(t)) \frac{h_2'(t)}{h_2(t)}h + O(h^2) $$
+$$ A_1(x,t) = \lim_{h \to 0^+} \frac{M_1(x, h)}{h} = m'(t) + (x - m(t)) \frac{h_2'(t)}{h_2(t)} $$
+El límite existe.
+
+\subsubsection*{Cálculo de $A_2(x,t)$}
+$$ M_2(x, h) = E[(X(t+h) - x)^2 | X(t)=x] $$
+$$ M_2(x, h) = \text{Var}(X(t+h) | X(t)=x) + (M_1(x, h))^2 $$
+Analizamos la varianza $\sigma_c^2 = \text{Var}(...)$ usando Taylor para $h_1(t+h) = h_1(t) + h_1'(t)h + O(h^2)$:
+$$ \sigma_c^2 = \left(\frac{h_2(t) + h_2'(t)h + O(h^2)}{h_2(t)}\right) \left( (h_1(t)+h_1'(t)h)h_2(t) - h_1(t)(h_2(t)+h_2'(t)h) + O(h^2) \right) $$
+$$ \sigma_c^2 = (1 + O(h)) \left( h_1(t)h_2(t) + h_1'(t)h_2(t)h - h_1(t)h_2(t) - h_1(t)h_2'(t)h + O(h^2) \right) $$
+$$ \sigma_c^2 = (1 + O(h)) \left( (h_1'(t)h_2(t) - h_1(t)h_2'(t))h + O(h^2) \right) $$
+$$ \sigma_c^2 = (h_1'(t)h_2(t) - h_1(t)h_2'(t))h + O(h^2) $$
+Ahora, $M_2(x,h)$:
+$$ M_2(x, h) = \sigma_c^2 + (M_1(x, h))^2 = \left[ (h_1'(t)h_2(t) - h_1(t)h_2'(t))h + O(h^2) \right] + (O(h))^2 $$
+$$ M_2(x, h) = (h_1'(t)h_2(t) - h_1(t)h_2'(t))h + O(h^2) $$
+$$ A_2(x,t) = \lim_{h \to 0^+} \frac{M_2(x, h)}{h} = h_1'(t)h_2(t) - h_1(t)h_2'(t) $$
+El límite existe (y no depende de $x$).
+
+\subsubsection*{Cálculo de momentos superiores (k=4)}
+Verificamos la condición del Teorema 2.3.1 para $k=4$: $\lim_{h \to 0^+} \frac{1}{h} M_4(x, h) = 0$.
+La variable $Z = X(t+h) - x$ sigue una distribución $N(\mu_Z, \sigma_Z^2)$, donde:
+$$ \mu_Z = M_1(x,h) = O(h) $$
+$$ \sigma_Z^2 = \sigma_c^2 = O(h) $$
+El cuarto momento $M_4 = E[Z^4]$ de una normal es $E[Z^4] = 3(\sigma_Z^2)^2 + 6\mu_Z^2 \sigma_Z^2 + \mu_Z^4$.
+Sustituimos los órdenes de magnitud:
+$$ M_4(x, h) = 3(O(h))^2 + 6(O(h))^2 (O(h)) + (O(h))^4 $$
+$$ M_4(x, h) = O(h^2) + O(h^3) + O(h^4) = O(h^2) $$
+Calculamos el límite:
+$$ \lim_{h \to 0^+} \frac{M_4(x, h)}{h} = \lim_{h \to 0^+} \frac{O(h^2)}{h} = \lim_{h \to 0^+} O(h) = 0 $$
+La condición de momentos superiores se satisface.
+
+\subsection*{Conclusión}
+El proceso $\{X(t)\}$:
+\begin{enumerate}
+    \item Es un proceso de Markov.
+    \item Tiene trayectorias continuas (por hipótesis).
+    \item Satisface las condiciones de Kolmogorov (existencia de $A_1, A_2$ y $\lim \frac{M_4}{h} = 0$).
+\end{enumerate}
+Por lo tanto, $\{X(t)\}$ es un proceso de difusión.
+
+
+
+
+
+\end{document}

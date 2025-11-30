@@ -1,0 +1,273 @@
+# 1. Definir los datos de entrada
+ciudades <- c("Londres", "Estocolmo", "Lisboa", "Madrid", "Paris", 
+              "Amsterdam", "Berlin", "Praga", "Roma", "Dublin")
+distancias <- as.matrix(
+  data.frame(
+    c1 = c(0, 569, 667, 530, 141, 140, 357, 396, 570, 190),
+    c2 = c(569, 0, 1212, 1043, 617, 446, 325, 423, 787, 648),
+    c3 = c(667, 1212, 0, 201, 596, 768, 923, 882, 714, 714),
+    c4 = c(530, 1043, 201, 0, 431, 608, 740, 690, 516, 622),
+    c5 = c(141, 617, 596, 431, 0, 177, 340, 337, 436, 320),
+    c6 = c(140, 446, 768, 608, 177, 0, 218, 272, 519, 302),
+    c7 = c(357, 325, 923, 740, 340, 218, 0, 114, 472, 514),
+    c8 = c(396, 423, 882, 690, 337, 272, 114, 0, 364, 573),
+    c9 = c(570, 787, 714, 516, 436, 519, 472, 364, 0, 755),
+    c10 = c(190, 648, 714, 622, 320, 302, 514, 573, 755, 0)
+  )
+)
+
+# 2. Aplicar el algoritmo de MDS Clasico
+n <- nrow(distancias)
+A <- -0.5 * distancias^2
+I <- diag(n) # Matriz identidad
+ones <- matrix(1, nrow = n, ncol = n)
+H <- I - (1/n) * ones
+B <- H %*% A %*% H
+
+
+# 3. Obtener los valores y vectores propios de B
+descomposicion_B <- eigen(B)
+valores_propios <- descomposicion_B$values
+vectores_propios_norm1 <- descomposicion_B$vectors
+
+# 4. Normalizar los vectores propios segun la condicion v_i' * v_i = lambda_i
+Lambda_sqrt <- diag(sqrt(pmax(valores_propios, 0)))
+
+vectores_propios_normalizados <- vectores_propios_norm1 %*% Lambda_sqrt
+
+
+# 5. Mostrar el resultado final
+colnames(vectores_propios_normalizados) <- paste0("v", 1:n)
+rownames(vectores_propios_normalizados) <- ciudades
+cat("--- Matriz B de productos escalares centrados ---\n")
+print(round(B, 2))
+cat("\n--- Vectores propios normalizados (v_i' * v_i = lambda_i) para la matriz B ---\n")
+print(round(vectores_propios_normalizados, 2))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dimnames(distancias) <- list(ciudades, ciudades)
+
+# --- PASO 1: Realizar el MDS Clásico ---.
+mds_resultado <- cmdscale(distancias, k = length(ciudades) - 1, eig = TRUE)
+
+# --- PASO 2: Determinar la dimensión adecuada ---
+valores_propios <- mds_resultado$eig
+# Imprimimos los valores propios para inspeccionarlos
+# Vemos que los dos primeros son mucho más grandes que el resto.
+cat("--- Valores Propios (Eigenvalues) ---\n")
+print(valores_propios)
+
+varianza_explicada <- valores_propios[valores_propios > 0] / sum(valores_propios[valores_propios > 0])
+varianza_acumulada <- cumsum(varianza_explicada)
+bondad_ajuste <- data.frame(
+  Dimension = 1:length(varianza_explicada),
+  Varianza_Explicada = round(varianza_explicada * 100, 2),
+  Varianza_Acumulada = round(varianza_acumulada * 100, 2)
+)
+print(bondad_ajuste)
+# Observación: Con 2 dimensiones ya explicamos más del 90% de la varianza,
+# lo que indica que una representación en 2D es muy adecuada.
+barplot(valores_propios,
+        main = "Gráfico de Sedimentación (Scree Plot)",
+        xlab = "Dimensión (Componente)",
+        ylab = "Valor Propio (Eigenvalue)",
+        names.arg = 1:length(valores_propios),
+        col = "steelblue")
+
+# --- PASO 3: Representación gráfica en la dimensión elegida (k=2) ---
+coordenadas <- mds_resultado$points[, 1:2]
+x <- coordenadas[, 1]
+y <- coordenadas[, 2]
+y <- -y
+plot(x, y,
+     type = "n",
+     asp = 1)
+text(x, y, labels = ciudades, cex = 0.8)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+library(stats)
+datos <- eurodist
+nombres_ciudades <- attr(datos, "Labels")
+
+Delta <- as.matrix(datos)
+n <- nrow(Delta)
+
+Delta_sq <- Delta^2
+
+A_original <- -0.5 * Delta_sq
+
+I <- diag(n)
+ones <- matrix(1, nrow = n, ncol = n)
+H <- I - (1/n) * ones
+
+B_original <- H %*% A_original %*% H
+
+eigen_B_original <- eigen(B_original)
+lambda_min <- min(eigen_B_original$values)
+
+c_aditiva <- 0
+if (lambda_min < 0) {
+  c_aditiva <- -2 * lambda_min
+}
+
+Delta_sq_corregida <- Delta_sq
+Delta_sq_corregida[upper.tri(Delta_sq_corregida, diag = FALSE)] <- Delta_sq_corregida[upper.tri(Delta_sq_corregida, diag = FALSE)] + c_aditiva
+Delta_sq_corregida[lower.tri(Delta_sq_corregida, diag = FALSE)] <- Delta_sq_corregida[lower.tri(Delta_sq_corregida, diag = FALSE)] + c_aditiva
+diag(Delta_sq_corregida) <- 0
+
+A_corregida <- -0.5 * Delta_sq_corregida
+B_corregida <- H %*% A_corregida %*% H
+
+eigen_B_corregida <- eigen(B_corregida)
+
+num_dim_plot <- 2
+coordenadas_mds <- eigen_B_corregida$vectors[, 1:num_dim_plot] %*% 
+  diag(sqrt(pmax(0, eigen_B_corregida$values[1:num_dim_plot])))
+
+rownames(coordenadas_mds) <- nombres_ciudades
+coordenadas_mds[, 2] <- -coordenadas_mds[, 2]
+
+plot(coordenadas_mds, type = "n", asp = 1)
+text(coordenadas_mds, labels = nombres_ciudades, cex = 0.7)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# Ejercicio 2.2: MDS Clásico con Constante Aditiva en el dataset 'eurodist'
+#-------------------------------------------------------------------------------
+
+# --- PASO 1: Cargar los datos ---
+#-------------------------------------------------------------------------------
+# Cargamos la librería 'stats' y el conjunto de datos 'eurodist'
+library(stats)
+datos <- eurodist
+
+# Verificamos que los datos son un objeto de tipo 'dist'
+class(datos)
+
+
+# --- PASO 2: Realizar MDS Clásico con y sin la constante aditiva ---
+#-------------------------------------------------------------------------------
+
+# Primero, realizamos el MDS original para tener una base de comparación.
+# La teoría y el ejemplo de los apuntes nos dicen que la matriz B subyacente
+# no es semidefinida positiva[cite: 72].
+mds_original <- cmdscale(datos, k = nrow(as.matrix(datos)) - 1, eig = TRUE)
+cat("--- Valores propios del MDS original (sin constante aditiva) ---\n")
+# Notar que hay valores propios negativos, confirmando que B no es semidefinida positiva.
+print(round(mds_original$eig, 2))
+
+
+# Ahora, realizamos el MDS aplicando la constante aditiva.
+# La función cmdscale() lo hace automáticamente con el argumento add = TRUE.
+# Este método añade la constante necesaria para eliminar los valores propios negativos.
+mds_aditiva <- cmdscale(datos, k = nrow(as.matrix(datos)) - 1, eig = TRUE, add = TRUE)
+cat("\n--- Valores propios del MDS con constante aditiva ---\n")
+# Ahora, todos los valores propios son no negativos.
+print(round(mds_aditiva$eig, 2))
+
+
+# --- PASO 3: Determinar la dimensión necesaria para explicar los datos ---
+#-------------------------------------------------------------------------------
+
+# Usamos los valores propios del modelo corregido (mds_aditiva).
+valores_propios_corr <- mds_aditiva$eig
+
+# Calculamos la "bondad de ajuste" o varianza explicada.
+varianza_explicada <- valores_propios_corr / sum(valores_propios_corr)
+varianza_acumulada <- cumsum(varianza_explicada)
+
+# Creamos una tabla para una mejor visualización.
+bondad_ajuste <- data.frame(
+  Dimension = 1:length(varianza_explicada),
+  Varianza_Explicada = round(varianza_explicada * 100, 2),
+  Varianza_Acumulada = round(varianza_acumulada * 100, 2)
+)
+
+cat("\n--- Bondad de Ajuste (%) del Modelo Corregido ---\n")
+print(bondad_ajuste)
+
+# Generamos un gráfico de sedimentación (Scree Plot) para la elección de dimensión.
+barplot(valores_propios_corr,
+        main = "Gráfico de Sedimentación (MDS con Constante Aditiva)",
+        xlab = "Dimensión",
+        ylab = "Valor Propio",
+        col = "skyblue")
+
+
+# --- PASO 4: Construir la representación en 2D y comparar ---
+#-------------------------------------------------------------------------------
+
+# Extraemos las coordenadas de las dos primeras dimensiones del modelo corregido.
+coordenadas <- mds_aditiva$points[, 1:2]
+x <- coordenadas[, 1]
+# Hacemos una reflexión en el eje Y para que la orientación sea más familiar.
+y <- -coordenadas[, 2]
+
+# Configuramos la ventana gráfica para mostrar los dos gráficos y compararlos.
+par(mfrow = c(1, 2))
+
+# Gráfico 1: MDS Original (del ejemplo en los apuntes)
+plot(mds_original$points[, 1], -mds_original$points[, 2], type = "n",
+     main = "MDS Original", xlab = "Coordenada 1", ylab = "Coordenada 2", asp = 1)
+text(mds_original$points[, 1], -mds_original$points[, 2],
+     labels = rownames(mds_original$points), cex = 0.8)
+
+# Gráfico 2: MDS con Constante Aditiva
+plot(x, y, type = "n",
+     main = "MDS con Constante Aditiva", xlab = "Coordenada 1", ylab = "Coordenada 2", asp = 1)
+text(x, y, labels = rownames(coordenadas), cex = 0.8)
+
+# Reiniciamos la configuración de la ventana gráfica.
+par(mfrow = c(1, 1))

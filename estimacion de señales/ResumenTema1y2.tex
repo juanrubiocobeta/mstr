@@ -1,0 +1,238 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+\geometry{a4paper, left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{definition}[theorem]{Definición}
+\newtheorem{corollary}[theorem]{Corolario}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{property}[theorem]{Propiedad}
+
+\title{Resumen Teórico Temas 1 y 2}
+\author{Juan Rubio Cobeta \\ \textit{Sistemas Estocásticos. Estimación de Señales}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\vspace{1cm}
+
+La idea de este documento es resumir los apuntes de teoría proporcionados. He intentado hacerlo siguiendo en la medida de posible la estructura de los apuntes originales, sin modificar secciones ni nombres de teoremas.
+
+\newpage
+
+\section{(T.1) Fundamentos de la Teoría de Sistemas Dinámicos}
+El objetivo de la Teoría de Sistemas Dinámicos es estudiar la evolución en el tiempo de un sistema físico. Cuando los factores que influyen en el sistema son aleatorios, se denominan sistemas estocásticos.
+
+\subsection{Etapas en el estudio de un sistema dinámico}
+El estudio de un sistema dinámico se compone de tres etapas fundamentales:
+\begin{enumerate}
+    \item \textbf{Modelización:} Se definen las variables que intervienen en el sistema y las relaciones físicas entre ellas. Se distinguen tres tipos de variables:
+    \begin{itemize}
+        \item \textbf{Variables de estado:} Describen las características internas del sistema.
+        \item \textbf{Variables de entrada:} Representan los estímulos externos.
+        \item \textbf{Variables de salida u observaciones:} Es la información real que se obtiene del sistema.
+    \end{itemize}
+    \item \textbf{Descripción matemática:} Se busca un modelo matemático que describa las relaciones físicas. Puede ser una descripción \textit{entrada-salida} (externa) o una descripción \textit{interna} (con variables de estado).
+    \item \textbf{Análisis del modelo:} Puede ser un análisis \textit{cuantitativo} (cálculo de la respuesta del sistema) o \textit{cualitativo} (estudio de propiedades generales como observabilidad, controlabilidad y estabilidad).
+\end{enumerate}
+
+\subsection{Descripción matemática de un sistema dinámico}
+\subsubsection{Descripción entrada-salida}
+Se trata de encontrar una relación entre las entradas y las salidas, viendo el sistema como una $"$caja negra$"$. Si $u(t) \in \mathbb{R}^p$ es el vector de entradas y $z(t) \in \mathbb{R}^q$ es el vector de salidas, la descripción se realiza mediante un operador funcional $H_{t_0}$:
+\[ z_{[t_0, +\infty)} = H_{t_0} u_{[t_0, +\infty)} \]
+Esta descripción es limitada, ya que no considera las condiciones internas del sistema.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.4\textwidth]{caja_negra.png}
+    \caption{Representación de un sistema como $"$caja negra$"$.}
+\end{figure}
+
+\subsubsection{Descripción con variables de estado}
+Esta descripción proporciona un modelo más completo del sistema.
+\begin{definition}[Estado del sistema]
+El estado de un sistema en un instante $t$ es la cantidad de información necesaria para determinar, junto con las entradas posteriores a $t$, las salidas futuras del sistema. El vector de estado se denota como $x(t) \in \mathbb{R}^n$.
+\end{definition}
+
+Las ecuaciones dinámicas del sistema son:
+\begin{itemize}
+    \item \textbf{Ecuación del estado:} Describe la evolución del estado. Usualmente es una ecuación diferencial de primer orden:
+    \[ \frac{dx(t)}{dt} = h_t(x(t), u(t)) \]
+    \item \textbf{Ecuación de observación:} Especifica la salida en función del estado y la entrada:
+    \[ z(t) = g_t(x(t), u(t)) \]
+\end{itemize}
+
+\section{(T.1) Sistemas Lineales en Tiempo Continuo}
+Un sistema es lineal si las funciones $h_t$ y $g_t$ son lineales en $x(t)$ y $u(t)$. Las ecuaciones dinámicas son:
+\begin{align}
+    \frac{dx(t)}{dt} &= A(t)x(t) + B(t)u(t) \\
+    z(t) &= H(t)x(t) + G(t)u(t)
+\end{align}
+donde $A, B, H, G$ son funciones matriciales de dimensiones apropiadas.
+
+\subsection{Análisis cuantitativo}
+La solución de la ecuación de estado se obtiene a través de la matriz de transición del sistema, $\Phi(t,s)$, que se define a partir de la matriz fundamental $X(t)$ como $\Phi(t,s) = X(t)X^{-1}(s)$. Esta matriz satisface las siguientes propiedades:
+\begin{itemize}
+    \item $\frac{\partial\Phi(t,s)}{\partial t} = A(t)\Phi(t,s)$, con $\Phi(s,s) = I_{n \times n}$.
+    \item $\Phi^{-1}(t,s) = \Phi(s,t)$.
+    \item $\Phi(t,r)\Phi(r,s) = \Phi(t,s)$.
+\end{itemize}
+La solución de la ecuación de estado para $t \ge t_0$ es:
+\[ x(t) = \Phi(t, t_0)x(t_0) + \int_{t_0}^{t} \Phi(t, \tau)B(\tau)u(\tau)d\tau \]
+Y la salida del sistema es:
+\[ z(t) = H(t)x(t) + G(t)u(t) \]
+
+\section{(T.1) Sistemas Lineales en Tiempo Discreto}
+Para sistemas que solo cambian en instantes discretos de tiempo $k \in \mathbb{N} \cup \{0\}$, las ecuaciones son:
+\begin{align}
+    x(k+1) &= A(k)x(k) + B(k)u(k) \\
+    z(k) &= H(k)x(k) + G(k)u(k)
+\end{align}
+La ecuación de estado ahora es una ecuación en diferencias.
+
+\subsection{Análisis cuantitativo}
+La matriz de transición para el caso discreto se define como:
+\[ \Phi(k,s) = A(k-1)A(k-2)\cdots A(s), \quad \text{para } k>s \]
+con $\Phi(k,k) = I_{n \times n}$.
+La solución de la ecuación de estado para $k > k_0$ es:
+\[ x(k) = \Phi(k, k_0)x(k_0) + \sum_{i=k_0}^{k-1} \Phi(k, i+1)B(i)u(i) \]
+
+\section{(T.1) Análisis Cualitativo de Sistemas Lineales}
+\subsection{Observabilidad}
+La observabilidad se refiere a la posibilidad de determinar la trayectoria del estado a partir de las entradas y salidas en un intervalo de tiempo.
+
+\subsubsection{Sistemas continuos}
+Un sistema es observable en $t_0$ si existe un $t_1 \ge t_0$ tal que $x(t_0)$ puede determinarse a partir de $u_{[t_0, t_1]}$ y $z_{[t_0, t_1]}$.
+\begin{theorem}[Condición de observabilidad]
+El sistema es observable en $t_0$ si y solo si existe $t_1 \ge t_0$ tal que la matriz de observabilidad $\mathcal{O}(t_0, t_1)$ es no singular, donde:
+\[ \mathcal{O}(t_0, t_1) = \int_{t_0}^{t_1} \Phi^T(t, t_0)H^T(t)H(t)\Phi(t, t_0)dt \]
+\end{theorem}
+
+\subsubsection{Sistemas discretos}
+Un sistema es observable en $k_0$ si existe $k_1 \ge k_0$ tal que $x(k_0)$ puede determinarse a partir de las secuencias de entrada y salida $\{u(k_0), \dots, u(k_1)\}$ y $\{z(k_0), \dots, z(k_1)\}$.
+\begin{theorem}[Condición de observabilidad]
+El sistema es observable en $k_0$ si y solo si existe $k_1 \ge k_0$ tal que la matriz de observabilidad $\mathcal{O}(k_0, k_1)$ es no singular, donde:
+\[ \mathcal{O}(k_0, k_1) = \sum_{i=k_0}^{k_1} \Phi^T(i, k_0)H^T(i)H(i)\Phi(i, k_0) \]
+\end{theorem}
+
+\subsection{Controlabilidad}
+La controlabilidad se refiere a la posibilidad de transferir el sistema de un estado a otro mediante una entrada adecuada en un tiempo finito.
+
+\subsubsection{Sistemas continuos}
+Un sistema es controlable en $t_0$ si para cualquier estado inicial $x(t_0)$ existe una entrada $u_{[t_0, t_1]}$ que lleva el estado a $x(t_1) = 0$ para algún $t_1 > t_0$.
+\begin{theorem}[Condición de controlabilidad]
+El sistema es controlable en $t_0$ si y solo si existe $t_1 > t_0$ tal que la matriz de controlabilidad $\mathcal{C}(t_0, t_1)$ es no singular, donde:
+\[ \mathcal{C}(t_0, t_1) = \int_{t_0}^{t_1} \Phi(t_0, t)B(t)B^T(t)\Phi^T(t_0, t)dt \]
+\end{theorem}
+
+\subsubsection{Sistemas discretos}
+Un sistema es controlable en $k_0$ si para cualquier $x(k_0)$ existe una secuencia de entrada que lleva el estado a $x(k_1)=0$ para algún $k_1 > k_0$.
+\begin{theorem}[Condición de controlabilidad]
+El sistema es controlable en $k_0$ si y solo si existe $k_1 > k_0$ tal que la matriz de controlabilidad $\mathcal{C}(k_0, k_1)$ es no singular, donde:
+\[ \mathcal{C}(k_0, k_1) = \sum_{i=k_0}^{k_1-1} \Phi(k_0, i+1)B(i)B^T(i)\Phi^T(k_0, i+1) \]
+\end{theorem}
+
+\subsection{Estabilidad}
+La estabilidad se refiere al comportamiento del estado cuando la entrada es nula. Un sistema es estable si sus soluciones no crecen indefinidamente.
+
+\begin{definition}[Estabilidad de Lyapunov]
+Un sistema es estable si para un estado inicial $x(t_0)$ suficientemente próximo a cero, el estado $x(t)$ permanece acotado para todo $t \ge t_0$. Es asintóticamente estable si, además, $\lim_{t \to +\infty} ||x(t)|| = 0$.
+\end{definition}
+
+Para sistemas discretos, la estabilidad se define en términos de la matriz de transición:
+\begin{itemize}
+    \item El sistema es estable si $||\Phi(k, k_0)||$ está uniformemente acotada para $k \ge k_0$.
+    \item Es asintóticamente estable si, además, $\lim_{k \to +\infty} ||\Phi(k, k_0)|| = 0$.
+\end{itemize}
+
+\newpage
+
+\section{(T.2) Fundamentos del Problema de Estimación}
+En los sistemas estocásticos, tanto el estado como las observaciones son de naturaleza aleatoria. El problema fundamental es estimar la trayectoria del estado a partir de las observaciones disponibles. Centrándonos en sistemas discretos, el objetivo es estimar un vector aleatorio (el estado $x(k)$) a partir de un conjunto finito de vectores relacionados (las observaciones).
+
+\subsection{Formulación del problema de estimación}
+Consideremos un proceso estocástico de estado $\{x(k); k \in I\}$ y un conjunto de observaciones $\{z(0), \dots, z(j)\}$. Se busca un estimador de $x(k)$ basado en dichos datos.
+
+\begin{definition}[Estimador]
+Un estimador de $x(k)$ basado en las medidas $\{z(i); i=0,\dots,j\}$, notado como $\hat{x}(k/j)$, es una función $\Phi_k$ de las mismas:
+\[ \hat{x}(k/j) = \Phi_k[z(i); i=0,\dots,j] \]
+Dependiendo de la relación entre $k$ y $j$, el problema se clasifica como:
+\begin{itemize}
+    \item \textbf{Predicción:} si $j < k$.
+    \item \textbf{Filtrado:} si $j = k$.
+    \item \textbf{Suavizamiento:} si $j > k$.
+\end{itemize}
+\end{definition}
+
+Para evaluar la bondad de un estimador, se define el error de estimación:
+\[ \tilde{x}(k/j) = x(k) - \hat{x}(k/j) \]
+El criterio de optimalidad se basa en minimizar una función de pérdida (o penalización), $L[\tilde{x}(k/j)]$, que es una función real, no negativa, convexa y simétrica. Dado el carácter aleatorio del error, el objetivo es minimizar la pérdida media esperada:
+\[ J[\tilde{x}(k/j)] = E\left[ L[\tilde{x}(k/j)] \right] \]
+Este problema es equivalente a minimizar la pérdida media condicional a las observaciones:
+\[ \bar{J}[\tilde{x}(k/j)] = E\left[ L[\tilde{x}(k/j)] | z(0), \dots, z(j) \right] \]
+
+\subsection{Solución del problema de estimación}
+La solución teórica al problema de estimación se simplifica bajo ciertas condiciones.
+
+\begin{theorem}[Sherman]
+Si la distribución condicionada de $x(k)$ dadas las observaciones es simétrica respecto a su media y su función de distribución es convexa, entonces, para cualquier función de pérdida admisible, el estimador óptimo es la esperanza condicionada:
+\[ \hat{x}(k/j) = E[x(k) | z(0), \dots, z(j)] \]
+\end{theorem}
+
+Un caso de particular importancia es cuando los procesos son conjuntamente gaussianos.
+\begin{corollary}[Doob]
+Si los procesos $\{x(k)\}$ y $\{z(i)\}$ son conjuntamente gaussianos, entonces para cualquier función de pérdida admisible, el estimador óptimo de $x(k)$ es la esperanza condicionada.
+\end{corollary}
+
+En el caso gaussiano, el estimador óptimo es lineal y viene dado por:
+\[ \hat{x}(k/j) = E[x(k)] + P_{x(k)Z_j} P_{Z_j Z_j}^{-1} (Z_j - E[Z_j]) \]
+donde $Z_j = (z^T(0), \dots, z^T(j))^T$ es el vector concatenado de observaciones y $P$ denota las matrices de covarianza correspondientes.
+
+\subsubsection{Estimador de Mínimos Cuadrados}
+Si nos centramos en una función de pérdida cuadrática específica, $L[\tilde{x}(k/j)] = \tilde{x}^T(k/j)\tilde{x}(k/j)$, el estimador óptimo se denomina estimador de mínimos cuadrados o de menor error cuadrático medio (ECM).
+
+\begin{theorem}[Doob]
+Si la función de pérdida es cuadrática, el estimador óptimo es la esperanza condicionada.
+\[ \hat{x}(k/j) = E[x(k) | z(0), \dots, z(j)] \]
+\end{theorem}
+Este resultado es más general que el de Sherman en cuanto a la clase de procesos, aunque más restrictivo en cuanto a la función de pérdida.
+
+\subsection{Estimación Lineal Mínimo Cuadrática (ELMC)}
+En la práctica, calcular la esperanza condicionada puede ser computacionalmente inviable. Por ello, se restringe la búsqueda al mejor estimador dentro de la clase de funciones lineales de las observaciones.
+
+En el caso gaussiano, esta restricción no supone una pérdida de generalidad, ya que el estimador óptimo ya es lineal. La solución a este problema se obtiene elegantemente mediante el Teorema de la Proyección Ortogonal.
+
+\begin{theorem}[Teorema de la Proyección Ortogonal]
+Sea $\mathcal{Y}(j)$ el subespacio lineal cerrado generado por las observaciones $\{z(0), \dots, z(j)\}$. El estimador lineal de menor error cuadrático medio de $x(k)$ es la proyección ortogonal de $x(k)$ sobre el subespacio $\mathcal{Y}(j)$.
+\end{theorem}
+
+El estimador $\hat{x}(k/j)$ es, por tanto, el único vector en $\mathcal{Y}(j)$ (es decir, la única combinación lineal de las observaciones) tal que el error de estimación $\tilde{x}(k/j) = x(k) - \hat{x}(k/j)$ es ortogonal a dicho subespacio.
+
+\begin{lemma}[Lema de Proyecciones Ortogonales]
+El estimador lineal de menor error cuadrático medio, $\hat{x}(k/j)$, es la única combinación lineal de $\{z(0), \dots, z(j)\}$ que satisface la condición de ortogonalidad:
+\[ E[(x(k) - \hat{x}(k/j)) \bar{w}^T] = 0, \quad \forall \bar{w} \in \mathcal{Y}(j) \]
+\end{lemma}
+
+Esta condición implica que el error de estimación debe ser incorrelado con cualquier combinación lineal de las observaciones. En particular, debe ser incorrelado con cada uno de los vectores que generan el subespacio, $\{z(0), \dots, z(j)\}$. Esto conduce a la ecuación de Wiener-Hopf:
+\[ E[x(k)z^T(i)] = E[\hat{x}(k/j)z^T(i)], \quad \forall i=0, \dots, j \]
+La resolución de esta ecuación permite determinar el estimador lineal óptimo y es la base para los algoritmos recursivos de estimación, como el filtro de Kalman.
+
+\end{document}

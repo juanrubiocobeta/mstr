@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{graphicx}
+
+\geometry{top=3cm, bottom=3cm, left=2cm, right=2cm}
+
+\begin{document}
+
+\section*{Ejercicio 2:}
+
+Si consideramos $\epsilon=\delta_{ij}-d_{ij}$, estudiar la relación entre $\delta_{ij}-d_{ij}$ y $\delta^2_{ij}-d^2_{ij}$.
+
+\subsection*{Solución:}
+
+Consideramos el error de ajuste lineal ($e$) como la diferencia entre la disimilaridad dada ($\delta_{ij}$) y la distancia estimada ($d_{ij}$):
+\begin{equation}
+    e_{ij} = \delta_{ij} - d_{ij}
+\end{equation}
+
+El objetivo es estudiar la relación entre el error lineal y la diferencia de cuadrados: $\delta_{ij}^2 - d_{ij}^2$.
+
+Aplicando la identidad algebraica de diferencia de cuadrados ($a^2 - b^2 = (a-b)(a+b)$), expandimos la expresión objetivo:
+\begin{equation}
+    \delta_{ij}^2 - d_{ij}^2 = (\delta_{ij} - d_{ij})(\delta_{ij} + d_{ij})
+\end{equation}
+
+Sustituyendo la ecuación (1) en la ecuación (2), obtenemos la relación final:
+\begin{equation}
+    \delta_{ij}^2 - d_{ij}^2 = e_{ij} \cdot (\delta_{ij} + d_{ij})
+\end{equation}
+
+Así, observamos que la diferencia de cuadrados es proporcional al error lineal ponderado por la suma de las magnitudes $(\delta_{ij} + d_{ij})$. Esto implica que, en modelos que minimizan diferencias cuadráticas (como ALSCAL con el criterio SSTRESS), los errores en distancias grandes penalizan la función de pérdida más severamente que los errores de la misma magnitud en distancias pequeñas.
+
+\end{document}

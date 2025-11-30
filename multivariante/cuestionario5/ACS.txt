@@ -1,0 +1,5 @@
+          JIF1     JIF2     JIF3     JIF4
+HDI1        40       15        9       5
+HDI2        30       30       15       7
+HDI3        10       15       10       5
+HDI4         5       10       15       10

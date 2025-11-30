@@ -1,0 +1,352 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+
+% Configuración de márgenes
+\geometry{top=3cm, bottom=3cm, left=2cm, right=2cm}
+
+% Cabecera personalizada
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Ejercicios Propuestos 4}
+\fancyhead[C]{Juan Rubio Cobeta}
+\fancyhead[R]{\today}
+
+\title{Ejercicios Propuestos}
+\author{Juan Rubio Cobeta}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\maketitle
+
+\section{Ejercicio 1}
+
+Sea $\{X(t); t \geq t_0 > 0\}$ el proceso de difusión con momentos infinitesimales $A_1(x,t) = -x/t$, $A_2(x,t) = 1$, definido en $I = \mathbb{R}$.
+
+\subsection{Apartado a)}
+
+Verificar que este proceso es transformable al proceso Wiener estándar, encontrando la transformación del tipo
+$$
+\begin{aligned}
+x' &= \overline{\Psi}(x,t) & y' &= \overline{\Psi}(y,\tau) \\
+t' &= \Phi(t) & \tau' &= \Phi(\tau).
+\end{aligned}
+$$
+y comprobar que su función de densidad de transición es
+$$
+f(x,t|y,\tau) = \frac{t}{\sqrt{2\pi\left(\frac{t^3-\tau^3}{3}\right)}} \exp \left( -\frac{(xt - y\tau)^2}{2\left(\frac{t^3-\tau^3}{3}\right)} \right).
+$$
+
+\subsection*{Solución}
+
+\subsection*{1. Identificación de los momentos infinitesimales}
+
+El proceso de difusión $\{X(t); t \geq t_0 > 0\}$ viene caracterizado por sus momentos infinitesimales dados en el enunciado:
+\begin{equation*}
+    A_1(x,t) = -\frac{x}{t}, \quad A_2(x,t) = 1.
+\end{equation*}
+
+\subsection*{2. Verificación de la condición de reducibilidad}
+
+Para que el proceso sea transformable al proceso de Wiener estándar, deben existir dos funciones continuas $C_1(t)$ y $C_2(t)$ que satisfagan la relación fundamental para los coeficientes de deriva y difusión:
+\begin{equation*}
+    A_1(x,t) = \frac{1}{4}\frac{\partial A_2(x,t)}{\partial x} + \frac{\sqrt{A_2(x,t)}}{2} \left\{ C_1(t) + \int_{z}^{x} \frac{C_2(t)A_2(u,t) + \frac{\partial A_2(u,t)}{\partial t}}{(A_2(u,t))^{3/2}} \, du \right\}.
+\end{equation*}
+Sustituyendo $A_1(x,t) = -x/t$ y $A_2(x,t) = 1$ (cuyas derivadas parciales son nulas), y tomando $z=0$:
+\begin{equation*}
+    -\frac{x}{t} = 0 + \frac{1}{2} \left\{ C_1(t) + \int_{0}^{x} \frac{C_2(t) \cdot 1 + 0}{1} \, du \right\}.
+\end{equation*}
+Simplificando la expresión:
+\begin{equation*}
+    -\frac{x}{t} = \frac{1}{2} C_1(t) + \frac{1}{2} C_2(t) x.
+\end{equation*}
+Igualando los coeficientes de los términos en $x$ y los términos independientes, obtenemos el sistema:
+\begin{align*}
+    \text{Términos en } x: & \quad -\frac{1}{t} = \frac{1}{2} C_2(t) \implies C_2(t) = -\frac{2}{t}, \\
+    \text{Término independiente:} & \quad 0 = \frac{1}{2} C_1(t) \implies C_1(t) = 0.
+\end{align*}
+La existencia de estas funciones confirma que el proceso es transformable al proceso de Wiener.
+
+\subsection*{3. Obtención de la transformación}
+
+Calculamos las funciones de transformación $\Phi(t)$ y $\overline{\Psi}(x,t)$ utilizando las fórmulas integrales correspondientes.
+
+\textit{Cálculo de la transformación temporal $\Phi(t)$:}
+
+\begin{equation*}
+    t' = \Phi(t) = k_1 \int_{t_1}^{t} \exp\left( -\int_{t_0}^{s} C_2(\theta) \, d\theta \right) \, ds + k_3.
+\end{equation*}
+Sustituyendo $C_2(\theta) = -2/\theta$:
+\begin{equation*}
+    \exp\left( -\int_{t_0}^{s} -\frac{2}{\theta} \, d\theta \right) = \exp\left( 2 \ln s - 2 \ln t_0 \right) = \left(\frac{s}{t_0}\right)^2.
+\end{equation*}
+Asumiendo constantes de integración canónicas ($k_1/t_0^2 = 1, k_3 = 0, t_1 = 0$):
+\begin{equation*}
+    \Phi(t) = \int_{0}^{t} s^2 \, ds = \left[ \frac{s^3}{3} \right]_0^t = \frac{t^3}{3}.
+\end{equation*}
+Por tanto:
+\begin{equation*}
+    t' = \frac{t^3}{3}, \quad \tau' = \frac{\tau^3}{3}.
+\end{equation*}
+
+\textit{Cálculo de la transformación espacial $\overline{\Psi}(x,t)$:}
+
+\begin{equation*}
+    x' = \overline{\Psi}(x,t) = \sqrt{k_1} \exp\left( -\frac{1}{2} \int_{t_0}^{t} C_2(s) \, ds \right) \int_{z}^{x} \frac{1}{\sqrt{A_2(u,t)}} \, du.
+\end{equation*}
+El factor exponencial es:
+\begin{equation*}
+    \exp\left( -\frac{1}{2} \int_{t_0}^{t} -\frac{2}{s} \, ds \right) = \exp\left( \ln t - \ln t_0 \right) = \frac{t}{t_0}.
+\end{equation*}
+La integral espacial con $A_2=1$ es simplemente $x$. Ajustando constantes:
+\begin{equation*}
+    \overline{\Psi}(x,t) = xt.
+\end{equation*}
+La transformación queda definida como:
+\begin{equation*}
+    \begin{aligned}
+        x' &= xt, & y' &= y\tau, \\
+        t' &= \frac{t^3}{3}, & \tau' &= \frac{\tau^3}{3}.
+    \end{aligned}
+\end{equation*}
+
+\subsection*{4. Obtención de la función de densidad de transición}
+
+La densidad de transición $f(x,t|y,\tau)$ se relaciona con la densidad del proceso de Wiener estándar $f_W$ mediante:
+\begin{equation*}
+    f(x,t|y,\tau) = f_W(x',t'|y',\tau') \cdot \left| \frac{\partial \overline{\Psi}(x,t)}{\partial x} \right|.
+\end{equation*}
+La densidad de transición del Wiener es:
+\begin{equation*}
+    f_W(x',t'|y',\tau') = \frac{1}{\sqrt{2\pi(t'-\tau')}} \exp\left( -\frac{(x' - y')^2}{2(t' - \tau')} \right).
+\end{equation*}
+Calculamos el Jacobiano y sustituimos las variables transformadas:
+\begin{equation*}
+    \frac{\partial \overline{\Psi}(x,t)}{\partial x} = t, \quad (x'-y')^2 = (xt-y\tau)^2, \quad t'-\tau' = \frac{t^3-\tau^3}{3}.
+\end{equation*}
+Finalmente:
+\begin{equation*}
+    f(x,t|y,\tau) = \frac{1}{\sqrt{2\pi\left(\frac{t^3 - \tau^3}{3}\right)}} \exp\left( -\frac{(xt - y\tau)^2}{2\left(\frac{t^3 - \tau^3}{3}\right)} \right) \cdot |t|.
+\end{equation*}
+Dado que $t > 0$, concluimos con la expresión solicitada:
+\begin{equation*}
+    f(x,t|y,\tau) = \frac{t}{\sqrt{2\pi\left(\frac{t^3-\tau^3}{3}\right)}} \exp \left( -\frac{(xt - y\tau)^2}{2\left(\frac{t^3-\tau^3}{3}\right)} \right).
+\end{equation*}
+
+\subsection{Apartado b)}
+
+Si para el proceso Wiener estándar consideramos la barrera $S_W(t) = a + bt'$, verificar que las barreras $S_X(t)$, calculadas a partir de la transformación anterior, y para las cuales es posible obtener la densidad de tiempo de primer paso de $X(t)$ a través de ellas son de la forma
+$$
+S_X(t) = \frac{A}{t} + Bt^2, \quad A, B \in \mathbb{R}.
+$$
+Comprobar que la densidad de tiempo de primer paso de $X(t)$ a través de $S_X(t)$ es
+$$
+g(S_X(t),t|x_0,t_0) = \frac{3t^2 |A + Bt_0^3 - x_0 t_0|}{(t^3 - t_0^3)\sqrt{2\pi(\frac{t^3}{3} - \frac{t_0^3}{3})}} \exp \left( - \frac{[A + Bt^3 - x_0 t_0]^2}{2(\frac{t^3}{3} - \frac{t_0^3}{3})} \right), \quad x_0 \neq \frac{A}{t_0} + Bt_0^2.
+$$
+\textbf{Indicación:} consultar el ejemplo 4.4.1 y seguir la misma metodología de trabajo.
+
+\subsection*{Solución}
+
+\subsection*{1. Determinación de la barrera transformada $S_X(t)$}
+
+Consideramos la barrera lineal para el proceso de Wiener estándar transformado $W(t')$:
+\begin{equation*}
+    S_W(t') = a + bt', \quad a, b \in \mathbb{R}.
+\end{equation*}
+Utilizando la transformación espacial inversa derivada del Teorema 4.3.3, donde $x = x'/t$ y $t' = t^3/3$, imponemos la condición de paso por la barrera:
+\begin{equation*}
+    S_X(t) = \overline{\Psi}^{-1}(S_W(\Phi(t)), t) = \frac{S_W(t')}{t}.
+\end{equation*}
+Sustituyendo la expresión de $S_W(t')$ y $\Phi(t)$:
+\begin{equation*}
+    S_X(t) = \frac{a + b(t^3/3)}{t} = \frac{a}{t} + \frac{b}{3}t^2.
+\end{equation*}
+Para que esta expresión coincida con la forma enunciada $S_X(t) = \frac{A}{t} + Bt^2$, identificamos los coeficientes:
+\begin{equation*}
+    A = a, \quad B = \frac{b}{3} \implies a = A, \quad b = 3B.
+\end{equation*}
+
+\subsection*{2. Cálculo de la densidad de tiempo de primer paso}
+
+Partimos de la relación entre densidades para procesos transformados:
+\begin{equation*}
+    g_X(S_X(t), t | x_0, t_0) = g_W(S_W(t'), t' | x_0', t_0') \frac{\partial \Phi(t)}{\partial t}.
+\end{equation*}
+La densidad para el proceso de Wiener con barrera lineal es conocida:
+\begin{equation*}
+    g_W(\cdot) = \frac{|a + bt_0' - x_0'|}{\sqrt{2\pi}(t' - t_0')^{3/2}} \exp \left( - \frac{[a + bt' - x_0']^2}{2(t' - t_0')} \right).
+\end{equation*}
+Realizamos las sustituciones necesarias en función de las variables originales $t, x_0$:
+\begin{align*}
+    \frac{\partial \Phi(t)}{\partial t} &= t^2, \\
+    t' - t_0' &= \frac{t^3 - t_0^3}{3}, \\
+    x_0' &= x_0 t_0, \\
+    a + bt_0' - x_0' &= A + 3B\left(\frac{t_0^3}{3}\right) - x_0 t_0 = A + Bt_0^3 - x_0 t_0, \\
+    a + bt' - x_0' &= A + Bt^3 - x_0 t_0.
+\end{align*}
+Sustituimos estos términos en la ecuación general:
+\begin{equation*}
+    g_X = \frac{|A + Bt_0^3 - x_0 t_0|}{\sqrt{2\pi} \left( \frac{t^3 - t_0^3}{3} \right)^{3/2}} \exp \left( - \frac{[A + Bt^3 - x_0 t_0]^2}{2\left(\frac{t^3 - t_0^3}{3}\right)} \right) \cdot t^2.
+\end{equation*}
+Para llegar a la expresión final, simplificamos el denominador del término pre-exponencial:
+\begin{equation*}
+    \left( \frac{t^3 - t_0^3}{3} \right)^{3/2} = \left( \frac{t^3 - t_0^3}{3} \right) \sqrt{\frac{t^3 - t_0^3}{3}}.
+\end{equation*}
+Al sustituirlo, el factor $1/3$ del término lineal pasa al numerador multiplicando:
+\begin{equation*}
+    \frac{t^2}{\frac{1}{3}(t^3 - t_0^3)} = \frac{3t^2}{t^3 - t_0^3}.
+\end{equation*}
+Finalmente, obtenemos la densidad solicitada:
+\begin{equation*}
+    g(S_X(t),t|x_0,t_0) = \frac{3t^2 |A + Bt_0^3 - x_0 t_0|}{(t^3 - t_0^3)\sqrt{2\pi\left(\frac{t^3}{3} - \frac{t_0^3}{3}\right)}} \exp \left( - \frac{[A + Bt^3 - x_0 t_0]^2}{2\left(\frac{t^3}{3} - \frac{t_0^3}{3}\right)} \right).
+\end{equation*}
+Esta expresión es válida para $x_0 \neq \frac{A}{t_0} + Bt_0^2$.
+
+\subsection{Apartado c)}
+
+Para el proceso $X(t)$, escribir la forma que adopta el núcleo de la ecuación integral de Volterra que verifica la densidad de tiempo de primer paso a través de una barrera $S(t)$.
+
+\subsection*{Solución}
+
+El objetivo es determinar la forma explícita del núcleo $\Psi(S(t),t|y,\tau)$ de la ecuación integral de Volterra de segunda especie. Utilizaremos la expresión general para procesos de difusión no homogéneos dada por el Teorema 4.3.5 de los apuntes:
+
+\begin{equation*}
+    \Psi(S(t),t|y,\tau) = \frac{f(S(t),t|y,\tau)}{2} \left[ S'(t) - A_1(S(t),t) + \frac{3}{4} \left. \frac{\partial A_2(x,t)}{\partial x} \right|_{x=S(t)} \right] + \frac{A_2(S(t),t)}{2} \left. \frac{\partial f(x,t|y,\tau)}{\partial x} \right|_{x=S(t)}.
+\end{equation*}
+
+\subsection*{1. Cálculo de los términos asociados a los momentos infinitesimales}
+
+Dados los momentos infinitesimales del proceso:
+\begin{equation*}
+    A_1(x,t) = -\frac{x}{t}, \quad A_2(x,t) = 1.
+\end{equation*}
+Evaluamos estos términos y sus derivadas en la barrera $x = S(t)$:
+\begin{align*}
+    A_1(S(t),t) &= -\frac{S(t)}{t}, \\
+    A_2(S(t),t) &= 1, \\
+    \left. \frac{\partial A_2(x,t)}{\partial x} \right|_{x=S(t)} &= 0.
+\end{align*}
+Sustituyendo en el primer término de la ecuación general (el término entre corchetes):
+\begin{equation*}
+    \left[ S'(t) - \left( -\frac{S(t)}{t} \right) + 0 \right] = S'(t) + \frac{S(t)}{t}.
+\end{equation*}
+
+\subsection*{2. Cálculo de la derivada espacial de la densidad de transición}
+
+La densidad de transición obtenida en el apartado a) es:
+\begin{equation*}
+    f(x,t|y,\tau) = \frac{t}{\sqrt{2\pi\Sigma^2(t,\tau)}} \exp \left( -\frac{(xt - y\tau)^2}{2\Sigma^2(t,\tau)} \right), \quad \text{donde } \Sigma^2(t,\tau) = \frac{t^3-\tau^3}{3}.
+\end{equation*}
+Calculamos la derivada parcial respecto a $x$:
+\begin{equation*}
+    \frac{\partial f(x,t|y,\tau)}{\partial x} = f(x,t|y,\tau) \cdot \frac{\partial}{\partial x} \left[ -\frac{(xt - y\tau)^2}{2\Sigma^2(t,\tau)} \right].
+\end{equation*}
+Aplicando la regla de la cadena:
+\begin{equation*}
+    \frac{\partial}{\partial x} \left[ -\frac{(xt - y\tau)^2}{2\Sigma^2(t,\tau)} \right] = -\frac{1}{2\Sigma^2(t,\tau)} \cdot 2(xt - y\tau) \cdot t = -\frac{t(xt - y\tau)}{\Sigma^2(t,\tau)}.
+\end{equation*}
+Sustituimos $\Sigma^2(t,\tau) = \frac{t^3-\tau^3}{3}$:
+\begin{equation*}
+    \frac{\partial f(x,t|y,\tau)}{\partial x} = - f(x,t|y,\tau) \frac{3t(xt - y\tau)}{t^3-\tau^3}.
+\end{equation*}
+Evaluamos en la barrera $x = S(t)$:
+\begin{equation*}
+    \left. \frac{\partial f(x,t|y,\tau)}{\partial x} \right|_{x=S(t)} = - f(S(t),t|y,\tau) \frac{3t(S(t)t - y\tau)}{t^3-\tau^3}.
+\end{equation*}
+
+\subsection*{3. Construcción del núcleo $\Psi(S(t),t|y,\tau)$}
+
+Sustituimos los resultados obtenidos en la fórmula general:
+\begin{equation*}
+    \Psi(S(t),t|y,\tau) = \frac{f(S(t),t|y,\tau)}{2} \left[ S'(t) + \frac{S(t)}{t} \right] + \frac{1}{2} \left[ - f(S(t),t|y,\tau) \frac{3t(S(t)t - y\tau)}{t^3-\tau^3} \right].
+\end{equation*}
+Extrayendo factor común $\frac{1}{2} f(S(t),t|y,\tau)$, obtenemos la forma final del núcleo:
+\begin{equation*}
+    \Psi(S(t),t|y,\tau) = \frac{1}{2} f(S(t),t|y,\tau) \left[ S'(t) + \frac{S(t)}{t} - \frac{3t(S(t)t - y\tau)}{t^3-\tau^3} \right].
+\end{equation*}
+
+\subsection{Apartado d)}
+
+A partir del apartado anterior, comprobar que las barreras para las cuales hay solución explícita para la ecuación integral, sin tener que resolverla, son del tipo
+$$S(t) = \frac{A}{t} + Bt^2, \quad A, B \in \mathbb{R}.$$
+Para dichas barreras, escribir la forma explícita que adopta la densidad del tiempo de primer paso para este proceso. Comprobar que se llega al mismo resultado que en el apartado b) anterior.
+
+\subsection*{Solución}
+
+El objetivo es determinar para qué tipo de barreras la ecuación integral de Volterra admite una solución explícita inmediata, sin necesidad de resolver la integral, y calcular dicha densidad.
+
+\subsection*{1. Condición para la existencia de solución explícita}
+
+La densidad del tiempo de primer paso satisface la ecuación integral:
+\begin{equation*}
+    g(S(t),t|x_0,t_0) = -2\Psi(S(t),t|x_0,t_0) + 2 \int_{t_0}^t g(S(\tau),\tau|x_0,t_0) \Psi(S(t),t|S(\tau),\tau) \, d\tau.
+\end{equation*}
+Existe una solución explícita directa si el núcleo de la integral se anula idénticamente para todo $t_0 \leq \tau < t$. Es decir, buscamos $S(t)$ tal que:
+\begin{equation*}
+    \Psi(S(t),t|S(\tau),\tau) = 0, \quad \forall \tau < t.
+\end{equation*}
+
+\subsection*{2. Determinación de la forma de la barrera}
+
+Utilizando la expresión del núcleo obtenida en el apartado c), la condición de anulación $\Psi(S(t),t|S(\tau),\tau) = 0$ implica que el término entre corchetes debe ser cero (ya que la densidad $f$ es positiva):
+\begin{equation*}
+    S'(t) + \frac{S(t)}{t} - \frac{3t(S(t)t - S(\tau)\tau)}{t^3 - \tau^3} = 0.
+\end{equation*}
+Para resolver esta ecuación, realizamos el cambio de variable $U(t) = S(t)t$, lo que implica $S(t) = U(t)/t$ y $S'(t) = U'(t)/t - U(t)/t^2$. Sustituyendo:
+\begin{equation*}
+    \left( \frac{U'(t)}{t} - \frac{U(t)}{t^2} \right) + \frac{U(t)}{t^2} - \frac{3t(U(t) - U(\tau))}{t^3 - \tau^3} = 0.
+\end{equation*}
+Simplificando los términos $U(t)/t^2$ y multiplicando por $t$:
+\begin{equation*}
+    U'(t) = \frac{3t^2(U(t) - U(\tau))}{t^3 - \tau^3}.
+\end{equation*}
+Esta ecuación debe cumplirse para todo $\tau$. Proponemos una solución polinómica en $t^3$ de la forma $U(t) = A + Bt^3$:
+\begin{itemize}
+    \item Lado izquierdo: $U'(t) = 3Bt^2$.
+    \item Lado derecho: $\frac{3t^2([A + Bt^3] - [A + B\tau^3])}{t^3 - \tau^3} = \frac{3t^2(B(t^3 - \tau^3))}{t^3 - \tau^3} = 3Bt^2$.
+\end{itemize}
+La igualdad se cumple, por lo que la solución es válida. Recuperamos $S(t)$:
+\begin{equation*}
+    S(t) = \frac{U(t)}{t} = \frac{A + Bt^3}{t} = \frac{A}{t} + Bt^2.
+\end{equation*}
+Queda demostrado que las barreras son del tipo enunciado.
+
+\subsection*{3. Cálculo de la densidad explícita}
+
+Cuando el núcleo se anula, la ecuación integral se reduce a $g(S(t),t|x_0,t_0) = |2\Psi(S(t),t|x_0,t_0)|$.
+Evaluamos el núcleo desde $(x_0, t_0)$ usando la expresión del apartado c):
+\begin{equation*}
+    2\Psi = f(S(t),t|x_0,t_0) \left[ S'(t) + \frac{S(t)}{t} - \frac{3t(S(t)t - x_0 t_0)}{t^3 - t_0^3} \right].
+\end{equation*}
+Calculamos el término entre corchetes, sabiendo que $S(t)t = A + Bt^3$ y $S'(t) + S(t)/t = 3Bt$:
+\begin{align*}
+    [\dots] &= 3Bt - \frac{3t(A + Bt^3 - x_0 t_0)}{t^3 - t_0^3} \\
+            &= 3t \left[ \frac{B(t^3 - t_0^3) - (A + Bt^3 - x_0 t_0)}{t^3 - t_0^3} \right] \\
+            &= 3t \left[ \frac{-(A + Bt_0^3 - x_0 t_0)}{t^3 - t_0^3} \right].
+\end{align*}
+Sustituyendo este factor y la densidad de transición $f(S(t),t|x_0,t_0)$:
+\begin{equation*}
+    g = \left| \frac{t}{\sqrt{2\pi\left(\frac{t^3-t_0^3}{3}\right)}} \exp \left( -\frac{(A + Bt^3 - x_0 t_0)^2}{2\left(\frac{t^3-t_0^3}{3}\right)} \right) \cdot \frac{-3t(A + Bt_0^3 - x_0 t_0)}{t^3 - t_0^3} \right|.
+\end{equation*}
+Agrupando los términos algebraicos fuera de la exponencial:
+\begin{equation*}
+    \frac{t \cdot 3t |A + Bt_0^3 - x_0 t_0|}{\sqrt{2\pi\left(\frac{t^3-t_0^3}{3}\right)} (t^3 - t_0^3)} = \frac{3t^2 |A + Bt_0^3 - x_0 t_0|}{(t^3 - t_0^3)\sqrt{2\pi\left(\frac{t^3}{3} - \frac{t_0^3}{3}\right)}}.
+\end{equation*}
+Finalmente obtenemos:
+\begin{equation*}
+    g(S(t),t|x_0,t_0) = \frac{3t^2 |A + Bt_0^3 - x_0 t_0|}{(t^3 - t_0^3)\sqrt{2\pi\left(\frac{t^3}{3} - \frac{t_0^3}{3}\right)}} \exp \left( -\frac{[A + Bt^3 - x_0 t_0]^2}{2\left(\frac{t^3}{3} - \frac{t_0^3}{3}\right)} \right).
+\end{equation*}
+Este resultado coincide exactamente con el obtenido en el apartado b).
+
+\end{document}

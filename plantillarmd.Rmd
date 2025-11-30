@@ -1,0 +1,35 @@
+---
+title: "Entrega 3"
+author: "Rubio Cobeta, Juan"
+date: "`r format(Sys.time(), '%d de %B de %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+# Configuración inicial del documento
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+```
+
+## EJERCICIO 1:
+
+Efectuar  
+
+### 1. Código de la función
+
+Para 
+
+```{r funcion_ejercicio_1, fig.width=8}
+datos <- eurodist
+res.clasico <- cmdscale(datos, k = 2, eig = TRUE)
+plot(res.clasico$points[, 1], -res.clasico$points[, 2], 
+     type = "n",
+     main = "MDS Clásico", 
+     asp = 1)
+text(res.clasico$points[, 1], -res.clasico$points[, 2],
+     labels = labels(datos), 
+     cex = 0.8)
+```
+
+
+### 2. Interpretación
