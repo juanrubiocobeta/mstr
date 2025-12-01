@@ -349,4 +349,327 @@ Finalmente obtenemos:
 \end{equation*}
 Este resultado coincide exactamente con el obtenido en el apartado b).
 
+\newpage
+
+\section{Ejercicio 2}
+
+El proceso del ejemplo anterior es un caso particular del proceso \textit{Ornstein-Uhlenbeck con factores exógenos}, el cual fue considerado en el tema 3 (ver apuntes) de forma general y con un caso particular (en el caso del ejercicio anterior se ha considerado $g(t) = 1/t$).
+
+\subsection{Apartado a)}
+
+Para el proceso en general, con $g$ una función continua, calcular la expresión del núcleo de la ecuación integral de Volterra para la densidad de tiempo de primer paso a través de una barrera $S(t)$ derivable y comprobar que la expresión es
+$$
+\Psi(S(t), t \mid y, \tau) = \frac{1}{2} f(S(t), t \mid y, \tau) \left[ S'(t) + S(t) \left( g(t) - \frac{\exp \left( 2 \int_{\tau}^{t} g(\theta) \, d\theta \right)}{\int_{\tau}^{t} \exp \left( 2 \int_{\tau}^{s} g(\theta) \, d\theta \right) \, ds} \right) + y \frac{\exp \left( \int_{\tau}^{t} g(\theta) \, d\theta \right)}{\int_{\tau}^{t} \exp \left( 2 \int_{\tau}^{s} g(\theta) \, d\theta \right) \, ds} \right]
+$$
+
+\subsection*{Solución}
+
+El objetivo es deducir la expresión analítica del núcleo $\Psi(S(t), t \mid y, \tau)$ para el proceso de Ornstein-Uhlenbeck generalizado con factores exógenos y comprobar que coincide con la fórmula dada.
+
+\subsection*{1. Caracterización del Proceso}
+
+El proceso de difusión $\{X(t); t \geq t_0\}$ se define a través de sus momentos infinitesimales, generalizando el caso del ejercicio anterior:
+\begin{equation*}
+    A_1(x,t) = -g(t)x, \quad A_2(x,t) = 1,
+\end{equation*}
+donde $g(t)$ es una función continua.
+
+\subsection*{2. Ecuación general del núcleo}
+
+Utilizamos la fórmula general del núcleo para la ecuación integral de Volterra de segunda especie (Teorema 4.3.5), válida para procesos de difusión no homogéneos:
+\begin{equation*}
+    \Psi(S(t),t|y,\tau) = \frac{f(S(t),t|y,\tau)}{2} \left[ S'(t) - A_1(S(t),t) + \frac{3}{4} \left. \frac{\partial A_2}{\partial x} \right|_{x=S(t)} \right] + \frac{A_2(S(t),t)}{2} \left. \frac{\partial f}{\partial x} \right|_{x=S(t)}.
+\end{equation*}
+Sustituyendo los momentos infinitesimales y sus derivadas ($A_1(S(t),t) = -g(t)S(t)$ y $\partial_x A_2 = 0$):
+\begin{equation*}
+    \Psi(S(t),t|y,\tau) = \frac{1}{2} f(S(t),t|y,\tau) \left[ S'(t) + g(t)S(t) \right] + \frac{1}{2} \left. \frac{\partial f(x,t|y,\tau)}{\partial x} \right|_{x=S(t)}.
+\end{equation*}
+
+\subsection*{3. Obtención de la densidad de transición}
+
+El proceso obedece a la Ecuación Diferencial Estocástica $dX_t = -g(t)X_t dt + dW_t$. La solución condicionada $X(\tau)=y$ es un proceso gaussiano con media $\mu(t)$ y varianza $V(t)$:
+
+\textit{Cálculo de la media:}
+\begin{equation*}
+    \mu(t) = y \exp\left( -\int_{\tau}^{t} g(\theta) \, d\theta \right).
+\end{equation*}
+
+\textit{Cálculo de la varianza:}
+Utilizando la propiedad de los procesos de Ornstein-Uhlenbeck generalizados:
+\begin{equation*}
+    V(t) = \int_{\tau}^{t} \exp\left( -2\int_{s}^{t} g(\theta) \, d\theta \right) \, ds.
+\end{equation*}
+Reescribimos el integrando separando los límites para facilitar la factorización posterior:
+\begin{equation*}
+    \exp\left( -2\int_{s}^{t} g(\theta) \, d\theta \right) = \frac{\exp\left( 2\int_{\tau}^{s} g(\theta) \, d\theta \right)}{\exp\left( 2\int_{\tau}^{t} g(\theta) \, d\theta \right)}.
+\end{equation*}
+Por tanto:
+\begin{equation*}
+    V(t) = \exp\left( -2\int_{\tau}^{t} g(\theta) \, d\theta \right) \int_{\tau}^{t} \exp\left( 2\int_{\tau}^{s} g(\theta) \, d\theta \right) \, ds.
+\end{equation*}
+La densidad de transición es:
+\begin{equation*}
+    f(x,t|y,\tau) = \frac{1}{\sqrt{2\pi V(t)}} \exp\left( -\frac{(x - \mu(t))^2}{2 V(t)} \right).
+\end{equation*}
+
+\subsection*{4. Cálculo de la derivada espacial y sustitución}
+
+Calculamos la derivada parcial de $f$ respecto a $x$ evaluada en la barrera $S(t)$:
+\begin{equation*}
+    \left. \frac{\partial f}{\partial x} \right|_{x=S(t)} = - f(S(t),t|y,\tau) \frac{S(t) - \mu(t)}{V(t)}.
+\end{equation*}
+Sustituimos en la expresión del núcleo:
+\begin{equation*}
+    \Psi = \frac{1}{2} f(S(t),t|y,\tau) \left[ S'(t) + g(t)S(t) - \frac{S(t) - \mu(t)}{V(t)} \right].
+\end{equation*}
+Para simplificar el término $\frac{S(t) - \mu(t)}{V(t)}$, definimos:
+\begin{equation*}
+    E(t) = \exp\left( \int_{\tau}^{t} g(\theta) \, d\theta \right), \quad H(t) = \int_{\tau}^{t} \exp\left( 2\int_{\tau}^{s} g(\theta) \, d\theta \right) \, ds.
+\end{equation*}
+Entonces $\mu(t) = y/E(t)$ y $V(t) = H(t)/E(t)^2$. Sustituyendo:
+\begin{equation*}
+    \frac{S(t) - \mu(t)}{V(t)} = \frac{S(t) - \frac{y}{E(t)}}{\frac{H(t)}{E(t)^2}} = \frac{S(t)E(t)^2 - yE(t)}{H(t)} = S(t)\frac{E(t)^2}{H(t)} - y\frac{E(t)}{H(t)}.
+\end{equation*}
+Llevamos esto a la ecuación del núcleo:
+\begin{equation*}
+    \Psi = \frac{1}{2} f \left[ S'(t) + g(t)S(t) - S(t)\frac{E(t)^2}{H(t)} + y\frac{E(t)}{H(t)} \right].
+\end{equation*}
+Agrupando términos en $S(t)$ y recuperando la forma integral de $E(t)$ y $H(t)$:
+\begin{equation*}
+    \Psi(S(t), t \mid y, \tau) = \frac{1}{2} f(S(t), t \mid y, \tau) \left[ S'(t) + S(t) \left( g(t) - \frac{E(t)^2}{H(t)} \right) + y \frac{E(t)}{H(t)} \right].
+\end{equation*}
+Sustituyendo explícitamente las integrales, obtenemos la expresión final solicitada:
+\begin{multline*}
+    \Psi(S(t), t \mid y, \tau) = \frac{1}{2} f(S(t), t \mid y, \tau) \Bigg[ S'(t) + S(t) \left( g(t) - \frac{\exp \left( 2 \int_{\tau}^{t} g(\theta) \, d\theta \right)}{\int_{\tau}^{t} \exp \left( 2 \int_{\tau}^{s} g(\theta) \, d\theta \right) \, ds} \right) + \\
+    + y \frac{\exp \left( \int_{\tau}^{t} g(\theta) \, d\theta \right)}{\int_{\tau}^{t} \exp \left( 2 \int_{\tau}^{s} g(\theta) \, d\theta \right) \, ds} \Bigg].
+\end{multline*}
+
+\subsection{Apartado b)}   
+
+A partir del apartado anterior, comprobar que las barreras para las cuales hay solución explícita para la ecuación integral sin tener que resolverla son el tipo
+$$
+S(t) = \exp \left( - \int g(t) \, dt \right) \left[ A + B \int \exp \left( 2 \int g(t) \, dt \right) \, dt \right]
+$$
+Para dichas barreras, escribir la forma explícita que adopta la densidad del tiempo de primer paso para este proceso. Comprobar que cuando $h(t) = 1/t$, se llega a las mismas barreras obtenidas en el ejercicio anterior.
+
+\subsection*{Solución}
+
+El objetivo es determinar la familia de barreras $S(t)$ para las cuales el núcleo de la ecuación integral se anula (permitiendo una solución explícita) en el caso general, calcular dicha densidad y verificar la consistencia con el ejercicio anterior.
+
+\subsection*{1. Condición de anulación del núcleo}
+
+Para que exista una solución explícita directa, el núcleo $\Psi(S(t), t \mid S(\tau), \tau)$ debe anularse para todo $\tau < t$. Utilizando la expresión del apartado a) e igualando a cero el término entre corchetes:
+
+\begin{equation*}
+    S'(t) + S(t) \left( g(t) - \frac{\exp \left( 2 \int_{\tau}^{t} g(\theta) \, d\theta \right)}{\int_{\tau}^{t} \exp \left( 2 \int_{\tau}^{s} g(\theta) \, d\theta \right) \, ds} \right) + S(\tau) \frac{\exp \left( \int_{\tau}^{t} g(\theta) \, d\theta \right)}{\int_{\tau}^{t} \exp \left( 2 \int_{\tau}^{s} g(\theta) \, d\theta \right) \, ds} = 0.
+\end{equation*}
+
+Para simplificar la notación, definimos el factor integrante $\mathcal{E}(t)$ y la integral acumulada $K(t)$:
+\begin{equation*}
+    \mathcal{E}(t) = \exp\left( \int g(t) \, dt \right), \quad K(t) = \int \mathcal{E}(t)^2 \, dt = \int \exp\left( 2 \int g(t) \, dt \right) \, dt.
+\end{equation*}
+Las propiedades de las integrales definidas se expresan como:
+\begin{equation*}
+    \exp\left( \int_{\tau}^{t} g(\theta) \, d\theta \right) = \frac{\mathcal{E}(t)}{\mathcal{E}(\tau)}, \quad \int_{\tau}^{t} \exp\left( 2 \int_{\tau}^{s} g(\theta) \, d\theta \right) \, ds = \frac{K(t) - K(\tau)}{\mathcal{E}(\tau)^2}.
+\end{equation*}
+Sustituyendo en la condición de anulación y simplificando $\mathcal{E}(\tau)^2$:
+\begin{equation*}
+    S'(t) + g(t)S(t) - \frac{S(t)\mathcal{E}(t)^2}{K(t)-K(\tau)} + \frac{S(\tau)\mathcal{E}(t)\mathcal{E}(\tau)}{K(t)-K(\tau)} = 0.
+\end{equation*}
+Reordenando términos:
+\begin{equation*}
+    S'(t) + g(t)S(t) = \frac{\mathcal{E}(t)}{K(t)-K(\tau)} \left[ S(t)\mathcal{E}(t) - S(\tau)\mathcal{E}(\tau) \right].
+\end{equation*}
+
+\subsection*{2. Resolución de la Ecuación Diferencial}
+
+Realizamos el cambio de variable $U(t) = S(t)\mathcal{E}(t)$. Derivando respecto a $t$:
+\begin{equation*}
+    U'(t) = S'(t)\mathcal{E}(t) + S(t)\mathcal{E}'(t) = \mathcal{E}(t) [S'(t) + g(t)S(t)].
+\end{equation*}
+Sustituyendo en la ecuación simplificada:
+\begin{equation*}
+    \frac{U'(t)}{\mathcal{E}(t)} = \frac{\mathcal{E}(t)}{K(t)-K(\tau)} [U(t) - U(\tau)] \implies \frac{U'(t)}{\mathcal{E}(t)^2} = \frac{U(t) - U(\tau)}{K(t)-K(\tau)}.
+\end{equation*}
+Dado que $K'(t) = \mathcal{E}(t)^2$, tenemos $\frac{U'(t)}{K'(t)} = \frac{U(t) - U(\tau)}{K(t)-K(\tau)}$.
+Esta igualdad implica que la razón de cambio es constante, digamos $B$:
+\begin{equation*}
+    U'(t) = B K'(t) \implies U(t) = A + B K(t).
+\end{equation*}
+Recuperando $S(t) = U(t) \mathcal{E}(t)^{-1}$, obtenemos la forma explícita de la barrera:
+\begin{equation*}
+    S(t) = \exp\left( - \int g(t) \, dt \right) \left[ A + B \int \exp\left( 2 \int g(t) \, dt \right) \, dt \right].
+\end{equation*}
+
+\subsection*{3. Forma explícita de la densidad de primer paso}
+
+La densidad es $g(t) = 2 |\Psi(S(t),t|x_0,t_0)|$. Evaluamos el núcleo simplificado desde $(x_0, t_0)$:
+\begin{equation*}
+     = \frac{\mathcal{E}(t)}{K(t)-K(t_0)} \left[ x_0\mathcal{E}(t_0) - (A + BK(t_0)) \right].
+\end{equation*}
+La densidad de transición $f$ es gaussiana con varianza $V(t) = \frac{K(t)-K(t_0)}{\mathcal{E}(t)^2}$ y media $\mu(t) = \frac{x_0\mathcal{E}(t_0)}{\mathcal{E}(t)}$. Multiplicando $f$ por el corchete (en valor absoluto):
+\begin{equation*}
+    g(S(t),t|x_0,t_0) = \frac{\mathcal{E}(t)^2 |A + BK(t_0) - x_0\mathcal{E}(t_0)|}{(K(t)-K(t_0))\sqrt{2\pi(K(t)-K(t_0))}} \exp \left( - \frac{[A + BK(t) - x_0\mathcal{E}(t_0)]^2}{2(K(t)-K(t_0))} \right).
+\end{equation*}
+
+\subsection*{4. Comprobación para el caso $g(t) = 1/t$}
+
+Si $g(t) = 1/t$, entonces $\mathcal{E}(t) = t$ y $K(t) = t^3/3$. Sustituyendo en la barrera general:
+\begin{equation*}
+    S(t) = \frac{1}{t} \left[ A + B \frac{t^3}{3} \right] = \frac{A}{t} + \frac{B}{3} t^2.
+\end{equation*}
+Esto coincide con las barreras obtenidas en el Ejercicio 1 ($S(t) = A/t + Bt^2$, redefiniendo la constante $B$). Igualmente, la densidad coincide al sustituir estos valores.
+
+\newpage
+
+\section{Ejercicio 3}
+
+Si consideramos el proceso del ejercicio 1:
+
+\subsection{Apartado a)}
+
+Comprobar que la función $k(x,t) = \alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right)$ verifica la condición 4.33 del teorema 4.4.1, por lo que puede construirse un proceso de difusión $Y(t)$ con momentos infinitesimales calculados a partir de 4.31 y 4.32 y con función de densidad calculada a partir de 4.26. Comprobar que dichos momentos son
+$$
+A_1(x,t) = -\left[ \frac{x}{t} + \frac{\beta t \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right)}{\alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right)} \right] \qquad A_2(x,t) = 1,
+$$
+mientras que la función de densidad de transición para $Y(t)$ es
+$$
+f_Y(x, t | x_0, t_0) = \frac{t}{\sqrt{2\pi (\frac{t^3 - t_0^3}{3})}} \frac{\alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right)}{\alpha + \beta \exp \left( - \left[ \frac{t_0^3}{6} + x_0 t_0 \right] \right)} \exp \left( - \frac{(xt - x_0 t_0)^2}{2(\frac{t^3 - t_0^3}{3})} \right).
+$$
+
+\subsection*{Solución}
+
+Consideramos el proceso base $X(t)$ del ejercicio 1, con momentos infinitesimales $\alpha_1(x,t) = -x/t$ y $\alpha_2(x,t) = 1$. El objetivo es verificar que la función $k(x,t)$ cumple la condición necesaria para generar un nuevo proceso $Y(t)$ por factorización, y calcular sus características.
+
+\subsection*{1. Verificación de la condición del Teorema 4.4.1}
+
+La función dada es:
+\begin{equation*}
+    k(x,t) = \alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right).
+\end{equation*}
+Para simplificar la notación, definimos $E(x,t) = \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right)$, de modo que $k(x,t) = \alpha + \beta E(x,t)$.
+La condición 4.33 del teorema establece que $k$ debe satisfacer la ecuación parabólica:
+\begin{equation*}
+    \frac{\partial k}{\partial t} + \alpha_1(x,t)\frac{\partial k}{\partial x} + \frac{1}{2}\alpha_2(x,t)\frac{\partial^2 k}{\partial x^2} = 0.
+\end{equation*}
+
+Calculamos las derivadas parciales necesarias:
+\begin{align*}
+    \frac{\partial k}{\partial x} &= \beta E(x,t) \frac{\partial}{\partial x} \left( - \frac{t^3}{6} - xt \right) = -t \beta E(x,t), \\
+    \frac{\partial^2 k}{\partial x^2} &= \frac{\partial}{\partial x} \left( -t \beta E(x,t) \right) = -t \beta (-t) E(x,t) = t^2 \beta E(x,t), \\
+    \frac{\partial k}{\partial t} &= \beta E(x,t) \frac{\partial}{\partial t} \left( - \frac{t^3}{6} - xt \right) = \beta E(x,t) \left( - \frac{3t^2}{6} - x \right) = -\beta E(x,t) \left( \frac{t^2}{2} + x \right).
+\end{align*}
+
+Sustituimos en el lado izquierdo de la ecuación diferencial (LHS):
+\begin{align*}
+    \text{LHS} &= \left[ -\beta E(x,t) \left( \frac{t^2}{2} + x \right) \right] + \left( -\frac{x}{t} \right) \left[ -t \beta E(x,t) \right] + \frac{1}{2}(1) \left[ t^2 \beta E(x,t) \right] \\
+    &= -\frac{t^2}{2}\beta E(x,t) - x\beta E(x,t) + x\beta E(x,t) + \frac{t^2}{2}\beta E(x,t).
+\end{align*}
+Agrupando términos semejantes:
+\begin{equation*}
+    \text{LHS} = \left( -\frac{t^2}{2} + \frac{t^2}{2} \right)\beta E(x,t) + (-x + x)\beta E(x,t) = 0.
+\end{equation*}
+La condición se verifica idénticamente, garantizando la existencia del proceso $Y(t)$.
+
+\subsection*{2. Cálculo de los Momentos Infinitesimales}
+
+Aplicamos las fórmulas de transformación 4.31 y 4.32:
+
+\textit{Varianza infinitesimal:}
+\begin{equation*}
+    A_2(x,t) = \alpha_2(x,t) = 1.
+\end{equation*}
+
+\textit{Media infinitesimal:}
+\begin{equation*}
+    A_1(x,t) = \alpha_1(x,t) + \frac{1}{k(x,t)} \frac{\partial k(x,t)}{\partial x} \alpha_2(x,t).
+\end{equation*}
+Sustituyendo los valores calculados:
+\begin{equation*}
+    A_1(x,t) = -\frac{x}{t} + \frac{1}{\alpha + \beta E(x,t)} (-t \beta E(x,t)) \cdot 1.
+\end{equation*}
+Reagrupando y extrayendo el signo negativo:
+\begin{equation*}
+    A_1(x,t) = -\left[ \frac{x}{t} + \frac{\beta t \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right)}{\alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right)} \right].
+\end{equation*}
+
+\subsection*{3. Cálculo de la Densidad de Transición}
+
+La densidad de $Y(t)$ se obtiene mediante la relación de factorización 4.26, siendo $\phi$ la densidad del proceso base $X(t)$:
+\begin{equation*}
+    f_Y(x, t | x_0, t_0) = \frac{k(x,t)}{k(x_0,t_0)} \phi(x, t | x_0, t_0).
+\end{equation*}
+Sustituyendo las expresiones explícitas:
+\begin{equation*}
+    f_Y = \frac{\alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right)}{\alpha + \beta \exp \left( - \left[ \frac{t_0^3}{6} + x_0 t_0 \right] \right)} \cdot \frac{t}{\sqrt{2\pi\left(\frac{t^3-t_0^3}{3}\right)}} \exp \left( - \frac{(xt - x_0 t_0)^2}{2\left(\frac{t^3-t_0^3}{3}\right)} \right).
+\end{equation*}
+Reordenando para coincidir con el enunciado:
+\begin{equation*}
+    f_Y(x, t | x_0, t_0) = \frac{t}{\sqrt{2\pi (\frac{t^3 - t_0^3}{3})}} \frac{\alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right)}{\alpha + \beta \exp \left( - \left[ \frac{t_0^3}{6} + x_0 t_0 \right] \right)} \exp \left( - \frac{(xt - x_0 t_0)^2}{2(\frac{t^3 - t_0^3}{3})} \right).
+\end{equation*}
+
+\subsection{Apartado b)}
+
+Comprobar que para este nuevo proceso, la densidad de tiempo de primer paso a través de la barrera
+$$
+S(t) = \frac{A}{t} + Bt^2, \quad A, B \in \mathbb{R}
+$$
+es
+$$
+g(S(t), t | x_0, t_0) = \frac{3t^2 |A + B t_0^3 - x_0 t_0|}{(t^3 - t_0^3)\sqrt{2\pi \left(\frac{t^3 - t_0^3}{3}\right)}} \frac{\alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + Bt^3 + A \right] \right)}{\alpha + \beta \exp \left( - \left[ \frac{t_0^3}{6} + x_0 t_0 \right] \right)} \exp \left( - \frac{\left[ A + B t^3 - x_0 t_0 \right]^2}{2 \left( \frac{t^3 - t_0^3}{3} \right)} \right).
+$$
+
+\subsection*{Solución}
+
+El objetivo es determinar la densidad de tiempo de primer paso $g_Y(S(t), t | x_0, t_0)$ para el proceso $Y(t)$ a través de la barrera $S(t) = \frac{A}{t} + Bt^2$, utilizando los resultados obtenidos para el proceso base $X(t)$.
+
+\subsection*{1. Fundamento Teórico}
+
+Aplicando el Teorema 4.4.2, las densidades de tiempo de primer paso a través de la misma barrera $S(t)$ verifican:
+\begin{equation*}
+    g_Y(S(t), t | x_0, t_0) = \frac{k(S(t), t)}{k(x_0, t_0)} g_X(S(t), t | x_0, t_0).
+\end{equation*}
+
+\subsection*{2. Elementos Previos}
+
+Del Ejercicio 1 (apartados b y d), conocemos la densidad de tiempo de primer paso del proceso base $X(t)$ para la barrera dada:
+\begin{equation*}
+    g_X(S(t), t | x_0, t_0) = \frac{3t^2 |A + B t_0^3 - x_0 t_0|}{(t^3 - t_0^3)\sqrt{2\pi \left(\frac{t^3 - t_0^3}{3}\right)}} \exp \left( - \frac{\left[ A + B t^3 - x_0 t_0 \right]^2}{2 \left( \frac{t^3 - t_0^3}{3} \right)} \right).
+\end{equation*}
+Del apartado 3a), tenemos la función de transformación:
+\begin{equation*}
+    k(x,t) = \alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + xt \right] \right).
+\end{equation*}
+
+\subsection*{3. Cálculo del factor de transformación}
+
+Evaluamos la función $k(x,t)$ en los puntos de interés.
+
+Denominador (punto inicial):
+\begin{equation*}
+    k(x_0, t_0) = \alpha + \beta \exp \left( - \left[ \frac{t_0^3}{6} + x_0 t_0 \right] \right).
+\end{equation*}
+
+Numerador (en la barrera):
+Sustituimos $x = S(t) = \frac{A}{t} + Bt^2$ en el exponente:
+\begin{equation*}
+    \frac{t^3}{6} + S(t)t = \frac{t^3}{6} + \left( \frac{A}{t} + Bt^2 \right)t = \frac{t^3}{6} + A + Bt^3.
+\end{equation*}
+Por tanto:
+\begin{equation*}
+    k(S(t), t) = \alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + Bt^3 + A \right] \right).
+\end{equation*}
+
+\subsection*{4. Construcción de la densidad $g_Y$}
+
+Multiplicamos la densidad base $g_X$ por el cociente de las funciones $k$:
+\begin{equation*}
+    g_Y = \left[ \frac{\alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + Bt^3 + A \right] \right)}{\alpha + \beta \exp \left( - \left[ \frac{t_0^3}{6} + x_0 t_0 \right] \right)} \right] g_X(S(t), t | x_0, t_0).
+\end{equation*}
+Sustituyendo $g_X$ y reordenando los términos para coincidir con la estructura del enunciado:
+\begin{equation*}
+    g(S(t), t | x_0, t_0) = \frac{3t^2 |A + B t_0^3 - x_0 t_0|}{(t^3 - t_0^3)\sqrt{2\pi \left(\frac{t^3 - t_0^3}{3}\right)}} \frac{\alpha + \beta \exp \left( - \left[ \frac{t^3}{6} + Bt^3 + A \right] \right)}{\alpha + \beta \exp \left( - \left[ \frac{t_0^3}{6} + x_0 t_0 \right] \right)} \exp \left( - \frac{\left[ A + B t^3 - x_0 t_0 \right]^2}{2 \left( \frac{t^3 - t_0^3}{3} \right)} \right).
+\end{equation*}
+Queda comprobado el resultado.
+
 \end{document}

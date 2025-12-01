@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1764265067.91898 "c:/Users/juanr/Desktop/mstr/procesos de difusion/Entrega 4/T4_Rubio_Cobeta_Juan.tex" "T4_Rubio_Cobeta_Juan.pdf" "T4_Rubio_Cobeta_Juan" 1764265070.33409 0
+["pdflatex"] 1764605505.08487 "c:/Users/juanr/Documents/mstr/procesos de difusion/Entrega 4/T4_Rubio_Cobeta_Juan.tex" "T4_Rubio_Cobeta_Juan.pdf" "T4_Rubio_Cobeta_Juan" 1764605506.68764 0
   "C:/Users/juanr/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1763664193 221096 3e6c9c1e4081d47212cd697bf4728ffc ""
   "C:/Users/juanr/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1740598196 11548 212cbe2e104840edea95e29f65125be3 ""
   "C:/Users/juanr/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1740598130 24225046 4ec3d99d7c9bbc9cfed696e0bc86dc7e ""
@@ -39,6 +39,7 @@
   "C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1247596667 31809 8670ca339bf94e56da1fc21c80635e2a ""
   "C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1247596667 32762 7fee39e011c23b3589931effd97b9702 ""
   "C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb" 1247596666 32915 7bf7720c61a5b3a7ff25b0964421c9b6 ""
   "C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1247596666 32716 08e384dc442464e7285e891af9f45947 ""
   "C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1247596667 37944 359e864bd06cde3b1cf57bb20757fb06 ""
   "C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1247596673 34694 870c211f62cb72718a00e353f14f254d ""
@@ -89,11 +90,11 @@
   "C:/Users/juanr/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refcount.sty" 1576433952 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/juanr/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657800696 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/juanr/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "T4_Rubio_Cobeta_Juan.aux" 1764265069 742 7f7137d734e5d0bf2293dae4189e5faf "pdflatex"
-  "T4_Rubio_Cobeta_Juan.out" 1764265069 573 b7d8c10b8bf9131b47636b260c6c31cc "pdflatex"
-  "T4_Rubio_Cobeta_Juan.tex" 1764265064 17490 e9ce22b11de07b8928f7429b7a7987ce ""
-  "T4_Rubio_Cobeta_Juan.toc" 1764265069 375 325082d0defb663bda8b1837506fdb6a "pdflatex"
-  "c:/Users/juanr/Desktop/mstr/procesos de difusion/Entrega 4/T4_Rubio_Cobeta_Juan.tex" 1764265064 17490 e9ce22b11de07b8928f7429b7a7987ce ""
+  "T4_Rubio_Cobeta_Juan.aux" 1764605506 1435 4e327e24016b3fd119cf01f48febeffa "pdflatex"
+  "T4_Rubio_Cobeta_Juan.out" 1764605506 1249 51d3b9ebd392fa88051f315ac34516a5 "pdflatex"
+  "T4_Rubio_Cobeta_Juan.tex" 1764605504 36639 26f02c7fc1502747ff113e8f323beef2 ""
+  "T4_Rubio_Cobeta_Juan.toc" 1764605506 821 23705bfe9d147b8059c8071e72773bb2 "pdflatex"
+  "c:/Users/juanr/Documents/mstr/procesos de difusion/Entrega 4/T4_Rubio_Cobeta_Juan.tex" 1764605504 36639 26f02c7fc1502747ff113e8f323beef2 ""
   (generated)
   "T4_Rubio_Cobeta_Juan.aux"
   "T4_Rubio_Cobeta_Juan.log"
