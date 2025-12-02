@@ -106,9 +106,9 @@ La convergencia monótona del algoritmo está garantizada por la denominada \tex
 
 Analicemos la implicación de cada término:
 \begin{itemize}
-    \item La primera desigualdad, $f(x^{(t+1)}) \leq g(x^{(t+1)}, x^{(t)})$, es consecuencia directa de la condición de dominancia (11).
+    \item La primera desigualdad, $f(x^{(t+1)}) \leq g(x^{(t+1)}, x^{(t)})$, es consecuencia directa de la condición de dominancia.
     \item La segunda desigualdad, $g(x^{(t+1)}, x^{(t)}) \leq g(x^{(t)}, x^{(t)})$, se deriva de la definición de $x^{(t+1)}$ como el minimizador de $g(\cdot, x^{(t)})$.
-    \item La igualdad final, $g(x^{(t)}, x^{(t)}) = f(x^{(t)})$, resulta de la condición de tangencia (12).
+    \item La igualdad final, $g(x^{(t)}, x^{(t)}) = f(x^{(t)})$, resulta de la condición de tangencia.
 \end{itemize}
 
 Por consiguiente, $f(x^{(t+1)}) \leq f(x^{(t)})$, lo que demuestra que la sucesión de valores de la función objetivo es monótona decreciente. Dado que $f$ está acotada inferiormente (por ser una suma de cuadrados en el caso del Stress), la sucesión converge a un límite.
