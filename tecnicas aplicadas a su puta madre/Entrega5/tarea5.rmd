@@ -1,0 +1,164 @@
+---
+title: "Entrega 5"
+author: "Rubio Cobeta, Juan"
+date: "`r format(Sys.time(), '%d de %B de %Y')`"
+output: 
+  pdf_document:
+    toc: true
+    number_sections: true
+    toc_depth: 3
+lang: es
+---
+
+```{r setup, include=FALSE}
+# Configuración inicial del documento
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+```
+
+\section{EJERCICIO 1}
+
+Primero hacemos en análisis en .rmd con los chunks y después comentamos los resultados:
+
+\subsection{Código de la función}
+
+```{r funcion_ejercicio_1, fig.width=8}
+if(!require(smacof)) install.packages("smacof")
+library(smacof)
+data(kinshipdelta)
+
+res_kin <- smacofSym(kinshipdelta) 
+
+print(res_kin)
+summary(res_kin)
+
+plot(res_kin, plot.type = "conf", main = "Configuración Kinship (2D)")
+plot(res_kin, plot.type = "Shepard", main = "Diagrama de Shepard - Kinship")
+plot(res_kin, plot.type = "resplot", main = "Residuos - Kinship")
+```
+
+\subsection{Interpretación}
+
+A la vista de los resultados numéricos y gráficos obtenidos, se destacan los siguientes puntos:
+
+\subsubsection{Bondad de Ajuste Global}
+El modelo presenta un valor de Stress-1 de 0.264. Según los criterios habituales (Kruskal), este valor indica un ajuste pobre. 
+
+El algoritmo requirió 91 iteraciones para converger, lo que sugiere dificultades para acomodar las disimilaridades observadas en una estructura métrica bidimensional estricta.
+
+Esto se confirma visualmente en el Diagrama de Shepard: aunque existe una tendencia lineal positiva (línea discontinua), la dispersión de los puntos (disparidades vs. distancias) es muy amplia. Esto implica que el modelo métrico lineal no consigue capturar con precisión todas las variaciones de los datos originales.
+
+\subsubsection{Descomposición del Stress (Stress per point)}
+
+
+Analizando la contribución individual al error, observamos que los términos peor representados son:
+
+Grandmother (11.25%)
+Grandfather (11.17%)
+
+Por el contrario, términos como Daughter (4.04%) o Son (4.26%) presentan un ajuste mucho mejor. Esto indica que el modelo tiene dificultades específicas para situar métricamente a la generación de los abuelos respecto al resto de la estructura familiar.
+
+\subsubsection{Interpretación de la Configuración (Mapa Perceptual)}
+
+A pesar del stress elevado, la configuración espacial en 2 dimensiones revela una estructura semántica muy clara y coherente:
+
+Dimensión 1 (Eje Horizontal - Género): Se observa una clara polarización. Los términos femeninos (Aunt, Sister, Mother, Grandmother) se agrupan a la izquierda (coordenadas negativas), mientras que los masculinos (Uncle, Brother, Father, Grandfather) se sitúan a la derecha. 
+El término Cousin, que en inglés es neutro, ocupa una posición intermedia.
+
+Dimensión 2 (Eje Vertical - Generación/Familia Nuclear): Este eje parece ordenar el grado de parentesco. En la parte inferior se agrupan los miembros de la familia nuclear inmediata (Father, Mother, Son, Daughter), mientras que en la parte superior se sitúan los parientes colaterales o extendidos (Uncle, Aunt, Cousin, Nephew).
+
+\subsubsection{Conclusión}
+Aunque el ajuste métrico es deficiente ($Stress > 0.2$), el MDS ha logrado recuperar exitosamente las dimensiones latentes conceptuales que utilizan los sujetos para juzgar el parentesco: el género y la distancia generacional/familiar. Un modelo no métrico (ordinal) probablemente reduciría el stress permitiendo una relación no lineal entre disimilaridades y distancias.
+
+\subsection{Segunda parte del Código}
+
+```{r segunda_parte_ejercicio_1, fig.width=8}
+data(trading)
+res_trad <- smacofSym(trading, ndim = 3, type = "ordinal", ties = "secondary")
+
+print(res_trad)
+summary(res_trad)
+
+plot(res_trad, plot.type = "conf", main = "Configuración Trading (Dim 1 vs 2)")
+plot(res_trad, plot.type = "Shepard", main = "Diagrama de Shepard - Trading")
+plot(res_trad, plot.type = "bubble", main = "Descomposición del Stress (Bubble Plot)")
+```
+
+\subsection{Interpretación}
+
+El análisis de la solución tridimensional para los datos trading arroja las siguientes conclusiones técnicas y sustantivas:
+
+\subsubsection{Evaluación de la Bondad de Ajuste (Global Fit)}
+El modelo ha convergido tras 34 iteraciones con un valor de Stress-1 de 0.106.
+
+Interpretación: Según las reglas heurísticas de Kruskal, un stress de 0.10 se considera "Regular" o "Aceptable" (Fair). Aunque es una mejora sustancial respecto al modelo de parentesco (0.264), indica que todavía existe cierta cantidad de "ruido" o variabilidad en los flujos comerciales que no puede ser explicada perfectamente ni siquiera en 3 dimensiones.
+
+Diagnóstico Visual (Diagrama de Shepard): El gráfico obtenido muestra la característica función en escalón (step function), típica del tratamiento de empates secundario. A diferencia del ajuste lineal, aquí las disparidades se ajustan por bloques. La dispersión de los puntos alrededor de la línea de regresión monótona es moderada, validando el valor de Stress de 0.106: el modelo captura la tendencia general pero admite desviaciones locales.
+
+\subsubsection{Análisis de Residuos y Estabilidad (Stress por Punto)}
+
+El gráfico de burbujas (Bubble Plot) y la tabla de descomposición del Stress revelan heterogeneidad en el ajuste:
+
+Puntos Críticos: Los países con mayor contribución al error son Brasil (11.67%) y China (10.89%). Esto sugiere que los patrones comerciales de estas naciones son idiosincrásicos y no se alinean bien con la estructura de bloques dominante. China, en el contexto de los datos (probablemente Guerra Fría), mantenía relaciones complejas tanto con el bloque soviético como con occidente, lo que dificulta su ubicación geométrica precisa.
+
+Puntos bien representados: Checoslovaquia (1.30%) y Alemania del Este (2.25%) presentan un stress mínimo, lo que indica que su patrón de comercio está muy claramente definido y es consistente con la estructura del modelo (fuertemente integrados en el bloque soviético).
+
+\subsubsection{Interpretación de la Configuración Espacial (Latent Structure)}
+
+Al examinar las coordenadas y el gráfico de configuración (Dim 1 vs Dim 2) , emergen dimensiones latentes interpretables geopolíticamente:
+
+Dimensión 1 (Eje Horizontal - Bloques Políticos): Esta dimensión discrimina casi perfectamente los bloques de la Guerra Fría.
+
+Valores Negativos: El bloque comunista/socialista (Checoslovaquia, URSS, Alemania del Este, Hungría, Polonia).
+
+Valores Positivos: El bloque occidental/capitalista (Canadá, Brasil, Australia, Nueva Zelanda).
+
+Nota: Países como China (-0.04) o Italia (-0.02) se sitúan cerca del origen en este eje, indicando una posición más ambigua o puente en esta dimensión específica.
+
+Dimensión 2 (Eje Vertical - Potencia Industrial/Desarrollo):
+
+Parte Inferior (Negativos): Las grandes potencias industriales de la época (Japón, USA, Reino Unido, Alemania Occidental, URSS).
+
+Parte Superior (Positivos): Países con economías más periféricas o en desarrollo en ese contexto (Egipto, India, Suecia, Hungría).
+
+Dimensión 3 (Análisis de Coordenadas): Aunque no visible en el plano 2D principal, las coordenadas revelan que esta dimensión se utiliza principalmente para acomodar a los outliers. China tiene una carga extremadamente negativa (-0.82) y Italia una muy positiva (0.73). Esto confirma que la tercera dimensión es necesaria para explicar las excepciones que generaban stress: las rutas comerciales específicas de China e Italia que no obedecen a la lógica simple de "Bloque Político" vs "Potencia Industrial".
+
+\subsubsection{Conclusión Final}
+
+La solución MDS ordinal tridimensional es robusta. Ha logrado sintetizar una compleja matriz de flujos económicos en un mapa legible que refleja la geopolítica bipolar del siglo XX, aislando en la tercera dimensión y en los valores de stress residual a aquellos actores (China, Brasil) que desafiaban la lógica de bloques estricta.
+
+\subsubsection{Representación Adicional Gráfica 3D}
+```{r plot_3d_trading, fig.width=8}
+library(scatterplot3d)
+coords <- res_trad$conf
+s3d <- scatterplot3d(coords, 
+              pch = 19,
+              color = "darkblue",
+              main = "MDS 3D - Datos de Comercio",
+              xlab = "Dimensión 1 (Bloques)", 
+              ylab = "Dimensión 2 (Desarrollo)", 
+              zlab = "Dimensión 3 (Excepciones)",
+              angle = 45)
+text(s3d$xyz.convert(coords), 
+     labels = rownames(coords), 
+     cex = 0.7, 
+     pos = 3)
+```
+
+Como complemento al análisis numérico, la representación gráfica en 3D permite desglosar la varianza que el modelo bidimensional no lograba capturar (reflejada en el Stress de 0.106). La visualización revela una estructura espacial que define la geopolítica comercial de la época mediante tres ejes ortogonales claros:
+
+\subsubsection{Validación de los Bloques Políticos (Dimensión 1 - Eje X)}
+La visualización 3D confirma la separación radical observada en 2D. Existe un "vacío" central que separa el bloque socialista (izquierda: URSS, Checoslovaquia, Alemania del Este) del bloque capitalista (derecha). La distancia entre estos dos clústeres es la fuente principal de disimilaridad en los datos.
+
+\subsubsection{Jerarquía Económica (Dimensión 2 - Profundidad)}
+Este eje aporta un matiz de desarrollo industrial. En el plano frontal se agrupan las potencias industriales consolidadas (Japón, EE. UU., Reino Unido, Alemania Occidental), mientras que las economías en desarrollo o periféricas (Egipto, India, Brasil) se desplazan hacia el fondo del cubo. Esto sugiere que el comercio no solo se regía por afinidad política, sino por la capacidad industrial y volumen de mercado.
+
+\subsubsection{La Dimensión de las "Excepciones" (Dimensión 3 - Eje Z / Vertical)}
+Esta es la aportación crítica del gráfico 3D que justifica el modelo.
+
+El caso de China (Valor negativo extremo): En el gráfico 2D, China aparecía cerca del centro, lo cual era engañoso. La tercera dimensión revela que China es un *outlier* estructural (se hunde en el eje Z). Esto refleja su posición única tras la ruptura sino-soviética: no estaba integrada en el bloque occidental, pero tampoco operaba ya bajo la órbita estricta de la URSS. Su "lejanía" comercial es vertical, no horizontal.
+
+El caso de Italia (Valor positivo extremo): Italia se eleva por encima del plano principal. Esto indica patrones de comercio idiosincrásicos (posiblemente un fuerte comercio intra-europeo o acuerdos específicos) que la diferencian del núcleo anglosajón (USA/UK/Canadá), a pesar de pertenecer al mismo bloque político.
+
+\subsubsection{Conclusión Visual}
+El gráfico 3D demuestra que intentar "aplastar" la realidad del comercio mundial en dos dimensiones forzaba a actores como China o Italia a parecer más "promedio" de lo que eran. La tercera dimensión actúa como un eje de "especificidad", absorbiendo las particularidades nacionales que escapan a la lógica de bloques de la Guerra Fría.
