@@ -106,9 +106,9 @@ La convergencia monótona del algoritmo está garantizada por la denominada \tex
 
 Analicemos la implicación de cada término:
 \begin{itemize}
-    \item La primera desigualdad, $f(x^{(t+1)}) \leq g(x^{(t+1)}, x^{(t)})$, es consecuencia directa de la condición de dominancia (11).
+    \item La primera desigualdad, $f(x^{(t+1)}) \leq g(x^{(t+1)}, x^{(t)})$, es consecuencia directa de la condición de dominancia.
     \item La segunda desigualdad, $g(x^{(t+1)}, x^{(t)}) \leq g(x^{(t)}, x^{(t)})$, se deriva de la definición de $x^{(t+1)}$ como el minimizador de $g(\cdot, x^{(t)})$.
-    \item La igualdad final, $g(x^{(t)}, x^{(t)}) = f(x^{(t)})$, resulta de la condición de tangencia (12).
+    \item La igualdad final, $g(x^{(t)}, x^{(t)}) = f(x^{(t)})$, resulta de la condición de tangencia.
 \end{itemize}
 
 Por consiguiente, $f(x^{(t+1)}) \leq f(x^{(t)})$, lo que demuestra que la sucesión de valores de la función objetivo es monótona decreciente. Dado que $f$ está acotada inferiormente (por ser una suma de cuadrados en el caso del Stress), la sucesión converge a un límite.
@@ -122,7 +122,7 @@ La simplicidad de este enfoque radica en la elección inteligente de $g(x, y)$. 
 La robustez del algoritmo SMACOF reside en la descomposición analítica del funcional de Stress y en la linealización de su componente cóncavo mediante desigualdades matriciales.
 
 \subsection{Descomposición del Stress en Componentes Convexos y Cóncavos}
-Expandiendo el término cuadrático de la Ecuación (6), el Stress puede descomponerse en tres componentes aditivos:
+Expandiendo el término cuadrático de la Ecuación (3), el Stress puede descomponerse en tres componentes aditivos:
 \begin{equation}
     \sigma(X) = \sum_{i<j} w_{ij}\delta_{ij}^2 + \sum_{i<j} w_{ij}d_{ij}^2(X) - 2\sum_{i<j} w_{ij}\delta_{ij}d_{ij}(X)
 \end{equation}
@@ -191,10 +191,10 @@ Esta actualización garantiza que $\sigma(X^{(t+1)}) \leq \sigma(X^{(t)})$, aseg
 
 \section{Generalizaciones y Restricciones Configuracionales}
 
-El marco teórico de SMACOF admite una flexibilidad notable para incorporar información *a priori* o manejar estructuras de datos no estándar. Analizamos aquí tres extensiones críticas: la imposición de restricciones lineales, el modelado de diferencias individuales y el análisis de matrices rectangulares.
+El marco teórico de SMACOF admite una flexibilidad notable para incorporar información a priori o manejar estructuras de datos no estándar. Analizamos aquí tres extensiones críticas: la imposición de restricciones lineales, el modelado de diferencias individuales y el análisis de matrices rectangulares.
 
 \subsection{Optimización bajo Restricciones Lineales Externas}
-En el MDS confirmatorio, se puede restringir el espacio de búsqueda de la configuración $X$ a un subespacio lineal generado por un conjunto de variables predictoras. Sea $Z \in \mathbb{R}^{n \times q}$ ($q \ge p$) una matriz de diseño fija. Imponemos la restricción dura:
+En el MDS confirmatorio, se puede restringir el espacio de búsqueda de la configuración $X$ a un subespacio lineal generado por un conjunto de variables predictoras. Sea $Z \in \mathbb{R}^{n \times q}$ ($q \ge p$) una matriz de diseño fija. Imponemos la restricción:
 \begin{equation}
     X = ZC
 \end{equation}
@@ -282,7 +282,7 @@ Bajo este enfoque, la transformación $f$ debe preservar la igualdad estricta. S
 
 \subsubsection{Enfoque Primario (Restricción Débil)}
 Este es el enfoque predeterminado en la mayoría de las implementaciones modernas. Permite que la transformación rompa los empates para optimizar el ajuste. La condición se relaja a una desigualdad no estricta dentro de los bloques de empates. Si $\delta_{ij} = \delta_{kl}$, el orden relativo entre $\hat{d}_{ij}$ y $\hat{d}_{kl}$ es libre y determinado únicamente por la magnitud de las distancias $d_{ij}(X)$ y $d_{kl}(X)$.
-Formally, el algoritmo PAVA se aplica solo entre bloques de disimilitudes distintas, permitiendo variación intra-bloque.
+Formalmente, el algoritmo PAVA se aplica solo entre bloques de disimilitudes distintas, permitiendo variación intra-bloque.
 
 La convergencia global del algoritmo SMACOF no métrico está asegurada, ya que tanto el paso de actualización de configuración (mayorización) como el paso de actualización de disparidades (proyección) reducen monótonamente el valor de la función de Stress.
 
