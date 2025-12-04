@@ -16,6 +16,8 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 ```
 
+\newpage
+
 \section{EJERCICIO 1}
 
 Primero hacemos en análisis en .rmd con los chunks y después comentamos los resultados:
@@ -37,7 +39,7 @@ plot(res_kin, plot.type = "Shepard", main = "Diagrama de Shepard - Kinship")
 plot(res_kin, plot.type = "resplot", main = "Residuos - Kinship")
 ```
 
-\subsection{Interpretación}
+\subsection{Interpretación de Resultados}
 
 A la vista de los resultados numéricos y gráficos obtenidos, se destacan los siguientes puntos:
 
@@ -84,14 +86,14 @@ plot(res_trad, plot.type = "Shepard", main = "Diagrama de Shepard - Trading")
 plot(res_trad, plot.type = "bubble", main = "Descomposición del Stress (Bubble Plot)")
 ```
 
-\subsection{Interpretación}
+\subsection{Interpretación de Resultados}
 
 El análisis de la solución tridimensional para los datos trading arroja las siguientes conclusiones técnicas y sustantivas:
 
 \subsubsection{Evaluación de la Bondad de Ajuste (Global Fit)}
 El modelo ha convergido tras 34 iteraciones con un valor de Stress-1 de 0.106.
 
-Interpretación: Según las reglas heurísticas de Kruskal, un stress de 0.10 se considera "Regular" o "Aceptable" (Fair). Aunque es una mejora sustancial respecto al modelo de parentesco (0.264), indica que todavía existe cierta cantidad de "ruido" o variabilidad en los flujos comerciales que no puede ser explicada perfectamente ni siquiera en 3 dimensiones.
+Interpretación: Según las reglas heurísticas de Kruskal, un stress de 0.10 se considera "Regular" o "Aceptable". Aunque es una mejora sustancial respecto al modelo de parentesco (0.264), indica que todavía existe cierta cantidad de "ruido" o variabilidad en los flujos comerciales que no puede ser explicada perfectamente ni siquiera en 3 dimensiones.
 
 Diagnóstico Visual (Diagrama de Shepard): El gráfico obtenido muestra la característica función en escalón (step function), típica del tratamiento de empates secundario. A diferencia del ajuste lineal, aquí las disparidades se ajustan por bloques. La dispersión de los puntos alrededor de la línea de regresión monótona es moderada, validando el valor de Stress de 0.106: el modelo captura la tendencia general pero admite desviaciones locales.
 
@@ -162,3 +164,64 @@ El caso de Italia (Valor positivo extremo): Italia se eleva por encima del plano
 
 \subsubsection{Conclusión Visual}
 El gráfico 3D demuestra que intentar "aplastar" la realidad del comercio mundial en dos dimensiones forzaba a actores como China o Italia a parecer más "promedio" de lo que eran. La tercera dimensión actúa como un eje de "especificidad", absorbiendo las particularidades nacionales que escapan a la lógica de bloques de la Guerra Fría.
+
+\newpage
+
+\section{EJERCICIO 2}
+
+\subsection{Código de la función}
+
+```{r ejercicio_2, fig.width=8}
+data(perception) 
+res <- smacofIndDiff(perception) 
+res 
+summary(res) 
+res.id <- smacofIndDiff(perception, constraint = "identity") 
+res.diag <- smacofIndDiff(perception, constraint = "indscal") 
+res.idio <- smacofIndDiff(perception, constraint = "idioscal")
+print(res.id)
+print(res.diag)
+print(res.idio)
+
+plot(res, plot.type = "conf", main = "Configuración Perception (2D)")
+plot(res, plot.type = "Shepard", main = "Diagrama de Shepard - Perception")
+```
+
+\subsection{Interpretación de Resultados}
+
+El objetivo del presente análisis es revelar la estructura latente en las percepciones de los sujetos y evaluar la naturaleza de las diferencias individuales. Para ello, se ha aplicado el algoritmo SMACOF bajo diferentes restricciones geométricas.
+
+\subsubsection{Selección del Modelo y Principio de Parsimonia}
+
+Para determinar la naturaleza de las diferencias individuales, se ajustaron tres modelos jerárquicos. La comparación de los valores de *Stress-1* permite identificar la complejidad necesaria para explicar los datos:
+
+* **Modelo Identidad (Homogeneidad):** $\sigma = 0.206$. Asume que todos los individuos perciben la configuración de manera idéntica. Es el modelo con peor ajuste.
+* **Modelo INDSCAL (Pesos Diagonales):** $\sigma = 0.166$. Permite que cada sujeto pondere las dimensiones de forma diferencial. La reducción significativa del Stress respecto al modelo de identidad confirma la existencia de diferencias individuales en la importancia atribuida a cada dimensión.
+* **Modelo IDIOSCAL (Pesos Idiosincráticos):** $\sigma = 0.166$. Permite la rotación individual de los ejes.
+
+**Decisión:** Dado que el modelo IDIOSCAL no reduce el error en comparación con el modelo INDSCAL (ambos mantienen $\sigma = 0.166$), se selecciona el modelo **INDSCAL** basándose en el principio de parsimonia. Esto implica teóricamente que los ejes dimensionales recuperados son fijos y psicológicamente reales para todos los sujetos; las diferencias individuales radican exclusivamente en el peso que cada sujeto otorga a dichas dimensiones, sin necesidad de rotaciones cognitivas privadas.
+
+\subsubsection{Bondad de Ajuste Global}
+
+El modelo final presenta un valor de Stress-1 de **0.166**. En el contexto del MDS de tres vías, donde se busca una configuración de compromiso para múltiples matrices simultáneamente, este valor se considera un ajuste aceptable . El modelo logra capturar la estructura estructural dominante de los datos a pesar de la variabilidad inherente a las diferencias individuales.
+
+Asimismo, la inspección del **Diagrama de Shepard** revela una fuerte linealidad entre las disimilitudes observadas y las distancias en la configuración (disparidades). La ausencia de patrones no lineales o escalones pronunciados valida el uso de un enfoque métrico, indicando que las disimilitudes originales poseen propiedades de escala de intervalo o razón.
+
+\subsubsection{Interpretación del Espacio Común (Joint Space)}
+
+La configuración grupal en dos dimensiones muestra una disposición espacial altamente estructurada en forma de retícula.
+
+* **Dimensionalidad Ortogonal:** La clara separación de los estímulos tanto vertical como horizontalmente sugiere que los objetos son percibidos en base a dos atributos latentes independientes. La ortogonalidad visual refuerza la validez del modelo INDSCAL: los ejes representan características fundamentales distintivas.
+* **Análisis de Residuos por Objeto:** Al descomponer el Stress por puntos, se observa que la mayor parte de la distorsión se concentra en el **objeto 13** (contribución al stress: 9.31%) y el **objeto 4** (8.24%). Esto indica que la ubicación de estos estímulos en el espacio común es la que genera mayor desacuerdo o inconsistencia entre los sujetos. Por el contrario, objetos como el 11, 10 y 16 presentan los niveles más bajos de error (<5%), evidenciando un alto consenso grupal sobre su percepción.
+
+\subsubsection{Conclusión}
+
+El análisis valida una estructura bidimensional robusta. Las diferencias perceptuales entre los sujetos no se deben a una conceptualización diferente de los estímulos (rotación), sino a la distinta importancia que cada individuo otorga a las dos características latentes definidas por los ejes del espacio común.
+
+\newpage
+
+\section{EJERCICIO 3}
+
+Este ejercicio no he podido hacerlo ya que el software de SPSS no es libre ni gratuito. Comencé la prueba gratis al hacer la primera entrega donde se requería, y resulta que a fecha de hacer esta ya se ha acabado la licencia. El método de la VPN de la UGR que me han comentado algunos compaleros no debe de funcionar para todo el mundo, y a mi en particular no me ha conectado correctamente. Es por eso que me he visto incapacitado para hacer el ejercicio. 
+
+Pienso que debería ser más fácil utilizar los software necesarios para las asignaturas sin tener que pagar licencias o depender de VPNs (software libre como R o Python). Espero que no influya significativamente en mi nota (ya de por sí baja). Los otros dos ejercicios los he hecho todo lo completos que he podido para compensar. Ya lo siento.
