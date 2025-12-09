@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Rubio Cobeta, Juan">
+
+<title>Entrega 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="actividad3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="actividad3_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="actividad3_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="actividad3_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="actividad3_files/libs/quarto-html/popper.min.js"></script>
+<script src="actividad3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="actividad3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="actividad3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="actividad3_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="actividad3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="actividad3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="actividad3_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link active" data-scroll-target="#ejercicio-1"><span class="header-section-number">1</span> Ejercicio 1:</a>
+  <ul class="collapse">
+  <li><a href="#apartado-1" id="toc-apartado-1" class="nav-link" data-scroll-target="#apartado-1"><span class="header-section-number">1.1</span> Apartado 1:</a></li>
+  <li><a href="#apartado-2" id="toc-apartado-2" class="nav-link" data-scroll-target="#apartado-2"><span class="header-section-number">1.2</span> Apartado 2:</a></li>
+  <li><a href="#apartado-3" id="toc-apartado-3" class="nav-link" data-scroll-target="#apartado-3"><span class="header-section-number">1.3</span> Apartado 3:</a></li>
+  <li><a href="#apartado-4" id="toc-apartado-4" class="nav-link" data-scroll-target="#apartado-4"><span class="header-section-number">1.4</span> Apartado 4:</a></li>
+  <li><a href="#apartado-5" id="toc-apartado-5" class="nav-link" data-scroll-target="#apartado-5"><span class="header-section-number">1.5</span> Apartado 5:</a></li>
+  <li><a href="#apartado-6" id="toc-apartado-6" class="nav-link" data-scroll-target="#apartado-6"><span class="header-section-number">1.6</span> Apartado 6:</a></li>
+  </ul></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2"><span class="header-section-number">2</span> Ejercicio 2:</a>
+  <ul class="collapse">
+  <li><a href="#parte-manual" id="toc-parte-manual" class="nav-link" data-scroll-target="#parte-manual"><span class="header-section-number">2.1</span> Parte Manual</a></li>
+  <li><a href="#parte-automática" id="toc-parte-automática" class="nav-link" data-scroll-target="#parte-automática"><span class="header-section-number">2.2</span> Parte automática</a></li>
+  </ul></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3"><span class="header-section-number">3</span> Ejercicio 3</a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-de-uso-entrenando-una-neurona" id="toc-ejemplo-de-uso-entrenando-una-neurona" class="nav-link" data-scroll-target="#ejemplo-de-uso-entrenando-una-neurona"><span class="header-section-number">3.1</span> Ejemplo de uso: Entrenando una Neurona</a></li>
+  <li><a href="#fundamentación-matemática" id="toc-fundamentación-matemática" class="nav-link" data-scroll-target="#fundamentación-matemática"><span class="header-section-number">3.2</span> Fundamentación Matemática</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Entrega 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Rubio Cobeta, Juan </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de diciembre de 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div style="page-break-after: always;"></div>
+<section id="ejercicio-1" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="ejercicio-1"><span class="header-section-number">1</span> Ejercicio 1:</h2>
+<section id="apartado-1" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="apartado-1"><span class="header-section-number">1.1</span> Apartado 1:</h3>
+<div id="ej1_1" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1
+2
+3
+4
+5
+6
+7
+8
+9
+10</code></pre>
+</div>
+</div>
+<p>Diferencias con R: En Python, la función range(a, b) genera una secuencia que excluye el límite superior (b), por lo que debemos escribir range(1, 11) para llegar hasta el 10. En R, la sintaxis equivalente 1:10 es inclusiva en ambos extremos. Además, Python define la estructura del bucle mediante indentación obligatoria, mientras que R utiliza llaves {}.</p>
+</section>
+<section id="apartado-2" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="apartado-2"><span class="header-section-number">1.2</span> Apartado 2:</h3>
+<div id="ej1_2" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>numeros <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(numeros[::<span class="op">-</span><span class="dv">1</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
+</div>
+</div>
+<p>Diferencias con R: En Python, la inversión de una lista se realiza habitualmente mediante slicing con un paso negativo (lista[::-1]) o usando el método .reverse(). En R, existe una función específica llamada rev() para invertir vectores. Además, nótese que la lista en Python se define explícitamente con corchetes [], mientras que en R usamos la función de concatenación c().</p>
+</section>
+<section id="apartado-3" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="apartado-3"><span class="header-section-number">1.3</span> Apartado 3:</h3>
+<div id="ej1_3" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(i)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2
+4
+6
+8
+10</code></pre>
+</div>
+</div>
+<p>Diferencias con R: La principal diferencia sintáctica aquí es el operador módulo (resto de la división): en Python se utiliza el símbolo %, mientras que en R se utiliza %%. Además, al igual que en los bucles, la estructura condicional if en Python depende de la indentación y termina en dos puntos :, mientras que en R requiere el uso de paréntesis para la condición y llaves para el bloque de código.</p>
+</section>
+<section id="apartado-4" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="apartado-4"><span class="header-section-number">1.4</span> Apartado 4:</h3>
+<div id="ej1_4" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>datos <span class="op">=</span> {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nombre"</span>: <span class="st">"Juan"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"edad"</span>: <span class="dv">25</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ciudad"</span>: <span class="st">"Granada"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(datos[<span class="st">"ciudad"</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Granada</code></pre>
+</div>
+</div>
+<p>Diferencias con R: En Python, esta estructura de datos clave-valor se denomina diccionario y se define con llaves {}. Para acceder a los valores usamos corchetes con la clave: datos[“ciudad”]. En R, la estructura equivalente es una lista con nombres (named list), que se crea con list(clave = valor). Además, en R es común acceder a los elementos usando el operador $ (ej. datos$ciudad), algo que no existe en los diccionarios estándar de Python.</p>
+</section>
+<section id="apartado-5" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="apartado-5"><span class="header-section-number">1.5</span> Apartado 5:</h3>
+<div id="ej1_5" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calcular_cuadrado(numero):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> numero <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>numero_aleatorio <span class="op">=</span> random.randint(<span class="dv">1</span>, <span class="dv">50</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(numero_aleatorio)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(calcular_cuadrado(numero_aleatorio))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>30
+900</code></pre>
+</div>
+</div>
+<p>Diferencias con R: Para definir funciones en Python utilizamos la palabra clave def seguida del nombre, paréntesis y dos puntos :, mientras que en R asignamos el resultado de function() a una variable (nombre &lt;- function(…)). Otra diferencia clave es el operador de potencia: en Python es exclusivamente **, mientras que en R se admite tanto ^ como el operador anterior. Por último, para generar aleatorios en Python estándar necesitamos importar el módulo random, mientras que R dispone de funciones nativas como sample() cargadas por defecto.</p>
+</section>
+<section id="apartado-6" class="level3" data-number="1.6">
+<h3 data-number="1.6" class="anchored" data-anchor-id="apartado-6"><span class="header-section-number">1.6</span> Apartado 6:</h3>
+<div id="ej1_6" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verificar_palindromo(texto):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    texto_limpio <span class="op">=</span> texto.lower()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> texto_limpio <span class="op">==</span> texto_limpio[::<span class="op">-</span><span class="dv">1</span>]:</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span>texto<span class="sc">}</span><span class="ss">' SI es un palíndromo."</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span>texto<span class="sc">}</span><span class="ss">' NO es un palíndromo."</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>verificar_palindromo(<span class="st">"Reconocer"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>verificar_palindromo(<span class="st">"Estadística"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'Reconocer' SI es un palíndromo.
+'Estadística' NO es un palíndromo.</code></pre>
+</div>
+</div>
+<p>Diferencias con R: El manejo de cadenas en Python es orientado a objetos: usamos métodos como .lower() que pertenecen al propio objeto string. En R, usaríamos funciones externas como tolower(texto). La diferencia más notable es la inversión: en Python es trivial con [::-1]. En R base no existe una función directa para invertir una cadena de texto completa; se requiere un proceso más verboso dividiendo los caracteres, invirtiéndolos y volviéndolos a unir (paste(rev(strsplit(x, ““)[[1]]), collapse=”“)) o el uso de paquetes como stringi.</p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="ejercicio-2" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ejercicio-2"><span class="header-section-number">2</span> Ejercicio 2:</h2>
+<section id="parte-manual" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="parte-manual"><span class="header-section-number">2.1</span> Parte Manual</h3>
+<div id="72dbbdb7" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="ej2_pca_paso1_2" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Cargar el conjunto de datos</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'women_track_records.csv'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Eliminar filas con valores faltantes</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>df_clean <span class="op">=</span> df.dropna()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dimensiones originales: </span><span class="sc">{</span>df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dimensiones tras limpiar: </span><span class="sc">{</span>df_clean<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Primeras filas:"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_clean.head())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dimensiones originales: (55, 8)
+Dimensiones tras limpiar: (54, 8)
+
+Primeras filas:
+     COUNTRY     X1     X2     X3    X4    X5    X6      X7
+0  Argentina  11.61  22.94  54.50  2.15  4.43  9.79  178.52
+1  Australia  11.20  22.35  51.80  1.98  4.13  9.08  152.37
+2    Austria  11.43  23.09  50.62  1.99  4.22  9.34  159.37
+3    Belgium  11.41  23.04  52.00  2.00  4.14  8.88  157.85
+4    Bermuda  11.46  23.05  53.30  2.16  4.58  9.81  169.98</code></pre>
+</div>
+</div>
+<div id="ej2_pca_paso3_4" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_clean.drop(<span class="st">'COUNTRY'</span>, axis<span class="op">=</span><span class="dv">1</span>).values</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>paises <span class="op">=</span> df_clean[<span class="st">'COUNTRY'</span>].values</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Estandarización </span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>media <span class="op">=</span> np.mean(X, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>desv_std <span class="op">=</span> np.std(X, axis<span class="op">=</span><span class="dv">0</span>, ddof<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>X_std <span class="op">=</span> (X <span class="op">-</span> media) <span class="op">/</span> desv_std</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Matriz de Covarianza</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>cov_matriz <span class="op">=</span> np.cov(X_std, rowvar<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Media de las primeras variables:"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(np.mean(X_std, axis<span class="op">=</span><span class="dv">0</span>), <span class="dv">2</span>))</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Forma de la matriz de covarianza:"</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cov_matriz.shape)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Primeras filas de la matriz de covarianza:"</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(cov_matriz[:<span class="dv">3</span>, :<span class="dv">3</span>], <span class="dv">2</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Media de las primeras variables:
+[ 0.  0. -0.  0.  0.  0.  0.]
+
+Forma de la matriz de covarianza:
+(7, 7)
+
+Primeras filas de la matriz de covarianza:
+[[1.   0.88 0.71]
+ [0.88 1.   0.71]
+ [0.71 0.71 1.  ]]</code></pre>
+</div>
+</div>
+<div id="ej2_pca_paso5_6_7" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>val_propios, vec_propios <span class="op">=</span> np.linalg.eig(cov_matriz)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>indices_ordenados <span class="op">=</span> np.argsort(val_propios)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>val_propios_ord <span class="op">=</span> val_propios[indices_ordenados]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>vec_propios_ord <span class="op">=</span> vec_propios[:, indices_ordenados]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>top_2_vectores <span class="op">=</span> vec_propios_ord[:, :<span class="dv">2</span>]</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>varianza_explicada <span class="op">=</span> val_propios_ord <span class="op">/</span> np.<span class="bu">sum</span>(val_propios_ord) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>proyeccion_paso_a_paso <span class="op">=</span> np.dot(X_std, top_2_vectores)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Varianza explicada por los 2 primeros componentes:"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CP1: </span><span class="sc">{</span>varianza_explicada[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CP2: </span><span class="sc">{</span>varianza_explicada[<span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total acumulado: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(varianza_explicada[:<span class="dv">2</span>])<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Primeras 3 filas de los datos proyectados:"</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(proyeccion_paso_a_paso[:<span class="dv">3</span>, :], <span class="dv">4</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Varianza explicada por los 2 primeros componentes:
+CP1: 72.46%
+CP2: 8.53%
+Total acumulado: 80.99%
+
+Primeras 3 filas de los datos proyectados:
+[[ 0.4271 -0.354 ]
+ [-1.9101 -0.2417]
+ [-1.3126 -0.2323]]</code></pre>
+</div>
+</div>
+<div id="cell-ej2_pca_paso8_plot" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x_coords <span class="op">=</span> proyeccion_paso_a_paso[:, <span class="dv">0</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>y_coords <span class="op">=</span> proyeccion_paso_a_paso[:, <span class="dv">1</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_coords, y_coords, color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, pais <span class="kw">in</span> <span class="bu">enumerate</span>(paises):</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    plt.annotate(pais, (x_coords[i], y_coords[i]), </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                 fontsize<span class="op">=</span><span class="dv">8</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, xytext<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">2</span>), textcoords<span class="op">=</span><span class="st">'offset points'</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="ss">f'Componente Principal 1 (</span><span class="sc">{</span>varianza_explicada[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">%)'</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="ss">f'Componente Principal 2 (</span><span class="sc">{</span>varianza_explicada[<span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">%)'</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'grey'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'grey'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="actividad3_files/figure-html/ej2_pca_paso8_plot-output-1.png" id="ej2_pca_paso8_plot" class="quarto-figure quarto-figure-center anchored figure-img" width="880" height="651"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="parte-automática" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="parte-automática"><span class="header-section-number">2.2</span> Parte automática</h3>
+<div id="ej2_pca_sklearn_calculo" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>X_std_sklearn <span class="op">=</span> scaler.fit_transform(X)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>proyeccion_sklearn <span class="op">=</span> pca.fit_transform(X_std_sklearn)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>varianza_sklearn <span class="op">=</span> pca.explained_variance_ratio_ <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Varianza explicada por los 2 componentes:"</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CP1: </span><span class="sc">{</span>varianza_sklearn[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CP2: </span><span class="sc">{</span>varianza_sklearn[<span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total acumulado: </span><span class="sc">{</span><span class="bu">sum</span>(varianza_sklearn)<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Primeras 3 filas de los datos proyectados (Sklearn):"</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(proyeccion_sklearn[:<span class="dv">3</span>, :], <span class="dv">4</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Varianza explicada por los 2 componentes:
+CP1: 72.46%
+CP2: 8.53%
+Total acumulado: 80.99%
+
+Primeras 3 filas de los datos proyectados (Sklearn):
+[[ 0.4311  0.3574]
+ [-1.928   0.244 ]
+ [-1.3249  0.2345]]</code></pre>
+</div>
+</div>
+<div id="cell-ej2_pca_sklearn_plot" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>x_coords_sk <span class="op">=</span> proyeccion_sklearn[:, <span class="dv">0</span>]</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>y_coords_sk <span class="op">=</span> proyeccion_sklearn[:, <span class="dv">1</span>]</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_coords_sk, y_coords_sk, color<span class="op">=</span><span class="st">'green'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, pais <span class="kw">in</span> <span class="bu">enumerate</span>(paises):</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    plt.annotate(pais, (x_coords_sk[i], y_coords_sk[i]), </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                 fontsize<span class="op">=</span><span class="dv">8</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, xytext<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">2</span>), textcoords<span class="op">=</span><span class="st">'offset points'</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="ss">f'Componente Principal 1 (</span><span class="sc">{</span>varianza_sklearn[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">%)'</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="ss">f'Componente Principal 2 (</span><span class="sc">{</span>varianza_sklearn[<span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">%)'</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'grey'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'grey'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="actividad3_files/figure-html/ej2_pca_sklearn_plot-output-1.png" id="ej2_pca_sklearn_plot" class="quarto-figure quarto-figure-center anchored figure-img" width="880" height="651"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Como avisa la teoría, algún eje sale invertido, pero es normal y totalmente corercto.</p>
+<p>Tal como se puede apreciar en los resultados, la librería hace el trabajo manual perfectamente ya que las cifras son practicamente las mismas.</p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="ejercicio-3" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="ejercicio-3"><span class="header-section-number">3</span> Ejercicio 3</h2>
+<p>Para este ejercicio he seleccionado TensorFlow, una biblioteca de código abierto desarrollada por Google, orientada a la computación numérica y al aprendizaje automático a gran escala (Deep Learning).</p>
+<p>A diferencia de <em>Scikit-learn</em>, que se enfoca en algoritmos tradicionales, TensorFlow permite construir y entrenar Redes Neuronales Artificiales capaces de resolver problemas complejos como reconocimiento de imágenes o procesamiento de lenguaje natural. Su API de alto nivel, Keras, facilita la creación de modelos apilando capas de neuronas.</p>
+<section id="ejemplo-de-uso-entrenando-una-neurona" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="ejemplo-de-uso-entrenando-una-neurona"><span class="header-section-number">3.1</span> Ejemplo de uso: Entrenando una Neurona</h3>
+<p>A continuación, creamos una red neuronal mínima (una sola neurona) para que aprenda por sí sola la función lineal <span class="math inline">\(y = 2x - 1\)</span> a partir de ejemplos, sin programar la fórmula explícitamente.</p>
+<div id="ej3_tensorflow" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">'TF_CPP_MIN_LOG_LEVEL'</span>] <span class="op">=</span> <span class="st">'2'</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Datos de entrenamiento (X) y resultados esperados (Y)</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># La relación es Y = 2X - 1</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>x_train <span class="op">=</span> np.array([<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>, <span class="fl">4.0</span>], dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> np.array([<span class="op">-</span><span class="fl">3.0</span>, <span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">3.0</span>, <span class="fl">5.0</span>, <span class="fl">7.0</span>], dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Definición del Modelo (Red Neuronal)</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sequential: Las capas van una tras otra</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Dense(1): Una capa con 1 sola neurona</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># input_shape=[1]: Recibe 1 solo valor de entrada</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential([</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    tf.keras.layers.Dense(units<span class="op">=</span><span class="dv">1</span>, input_shape<span class="op">=</span>[<span class="dv">1</span>])</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Compilación</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimizador: 'sgd' (Descenso de Gradiente Estocástico)</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de pérdida: 'mean_squared_error' (Error Cuadrático Medio)</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'sgd'</span>, loss<span class="op">=</span><span class="st">'mean_squared_error'</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Entrenamiento</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Epochs: Cuántas veces repasa los datos (500 veces)</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="co"># verbose=0: Para que no imprima las 500 líneas en el PDF</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(x_train, y_train, epochs<span class="op">=</span><span class="dv">500</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Predicción</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Le pedimos que prediga el valor para x = 10.0</span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Debería ser: 2*10 - 1 = 19</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>prediccion <span class="op">=</span> model.predict(np.array([<span class="fl">10.0</span>]), verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"La red neuronal predice que para X=10, Y será: </span><span class="sc">{</span>prediccion[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"(El valor real matemático es 19.0)"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\juanr\AppData\Local\Programs\Python\Python313\Lib\site-packages\keras\src\layers\core\dense.py:92: UserWarning:
+
+Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>La red neuronal predice que para X=10, Y será: 18.9858
+(El valor real matemático es 19.0)</code></pre>
+</div>
+</div>
+</section>
+<section id="fundamentación-matemática" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="fundamentación-matemática"><span class="header-section-number">3.2</span> Fundamentación Matemática</h3>
+<p>He aquí una breve explicación de la teoría detrás de esta implementación:</p>
+<p>Lo que hemos ejecutado anteriormente es una optimización numérica rigurosa. Al definir una capa <code>Dense(1)</code> sin función de activación sobre una entrada escalar, estamos construyendo un modelo de regresión lineal simple:</p>
+<p><span class="math display">\[\hat{y} = w \cdot x + b\]</span></p>
+<p>Donde <span class="math inline">\(w\)</span> es el peso (<em>kernel</em>) y <span class="math inline">\(b\)</span> es el sesgo (<em>bias</em>). El objetivo de TensorFlow es encontrar los valores óptimos <span class="math inline">\(w \approx 2\)</span> y <span class="math inline">\(b \approx -1\)</span>.</p>
+<p><strong>1. La Función de Coste (Loss Function)</strong></p>
+<p>Al compilar con <code>loss='mean_squared_error'</code>, definimos la función objetivo <span class="math inline">\(J(w,b)\)</span> que el sistema debe minimizar. Para <span class="math inline">\(N\)</span> observaciones, esta función calcula el promedio de los errores al cuadrado:</p>
+<p><span class="math display">\[J(w,b) = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 = \frac{1}{N} \sum_{i=1}^{N} (y_i - (w x_i + b))^2\]</span></p>
+<p><strong>2. El Algoritmo de Optimización (SGD)</strong></p>
+<p>El argumento <code>optimizer='sgd'</code> implementa el Descenso de Gradiente Estocástico. En cada época (<em>epoch</em>), TensorFlow calcula las derivadas parciales (el gradiente) de la función de coste respecto a los parámetros entrenables mediante diferenciación automática (<em>Backpropagation</em>):</p>
+<p><span class="math display">\[\frac{\partial J}{\partial w} = \frac{2}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)(-x_i) \quad ; \quad \frac{\partial J}{\partial b} = \frac{2}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)(-1)\]</span></p>
+<p><strong>3. Regla de Actualización</strong></p>
+<p>Finalmente, los parámetros se actualizan iterativamente moviéndose en la dirección opuesta al gradiente, controlados por una tasa de aprendizaje (<span class="math inline">\(\eta\)</span>):</p>
+<p><span class="math display">\[w_{nuevo} = w_{actual} - \eta \cdot \frac{\partial J}{\partial w}\]</span></p>
+<p><span class="math display">\[b_{nuevo} = b_{actual} - \eta \cdot \frac{\partial J}{\partial b}\]</span></p>
+<p>Tras 500 repeticiones (épocas) de este proceso matemático, los valores convergen a los coeficientes de la recta generadora de los datos.</p>
+<p>Es de esperar que cuantas más sean estas repeticiones, más cerca estará el valor del real teórico.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
