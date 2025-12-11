@@ -1,23 +1,17 @@
+library(readxl)
+# 1. Cargar datos
+datos <- read_excel("datos_culturales.xlsx")
+datos_num <- datos[, -1] # Eliminar columna de nombres
 
-datos <- read.csv("datos_culturales.xlsx", header=TRUE, sep=",")
+# 2. Ejecutar K-means para k=3 y k=4 (usamos nstart alto para estabilidad)
+set.seed(123) # Semilla para reproducibilidad
+km3 <- kmeans(datos_num, centers = 3, nstart = 25)
+km4 <- kmeans(datos_num, centers = 4, nstart = 25)
 
-rownames(datos) <- datos[, 1] 
-datos_numericos <- datos[, -1] 
+# 3. Calcular el porcentaje de varianza explicada (Betweenss / Totss)
+prop3 <- (km3$betweenss / km3$totss) * 100
+prop4 <- (km4$betweenss / km4$totss) * 100
 
-dist_manhattan <- dist(datos_numericos, method = "manhattan")
-
-matriz_m <- as.matrix(dist_manhattan)
-
-valor_ceuta_rioja <- matriz_m["Ceuta y Melilla", "Rioja (La)"]
-
-max_total <- max(matriz_m)
-
-cat("Distancia Manhattan entre Ceuta y Melilla y La Rioja:", valor_ceuta_rioja, "\n")
-cat("Distancia Máxima en toda la matriz:", max_total, "\n")
-
-if (valor_ceuta_rioja == max_total) {
-  cat("CONCLUSIÓN: Es la distancia más elevada.\n")
-  cat("En un cluster jerárquico, los elementos MÁS LEJANOS (distancia máxima) se unen LOS ÚLTIMOS.\n")
-} else {
-  cat("No es la distancia máxima.\n")
-}
+# 4. Imprimir resultados
+cat("Para 3 centros (k=3):", round(prop3, 1), "%\n")
+cat("Para 4 centros (k=4):", round(prop4, 1), "%\n")
