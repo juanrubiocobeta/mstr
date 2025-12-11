@@ -642,7 +642,7 @@ Las ecuaciones deterministas que gobiernan la evolución de la covarianza son:
 ```{r ejercicio1_apartado_e, fig.width=10, fig.height=6}
 library(tidyverse)
 
-# --- Parámetros del Sistema ---
+# Parámetros del Sistema
 N_iter <- 50
 Phi <- 0.95
 H <- 1
@@ -650,32 +650,22 @@ Q <- 0.1
 R <- 0.5
 P0 <- 1
 
-# Valores de probabilidad p a evaluar
 p_values <- c(0.1, 0.3, 0.5, 0.7, 0.9, 1.0)
 
-# Función para calcular la trayectoria de varianza dado un p
+# Función
 calc_variance_evolution <- function(p_in, N, Phi, H, Q, R, P0) {
   # Inicialización
   P_pred <- P0
   D <- P0
   var_history <- numeric(N + 1)
-  
-  # Bucle temporal
   for (k in 1:(N + 1)) {
-    # 1. Covarianza Innovación Pi(k)
     term1 <- p_in * (1 - p_in) * H * D * H
     term2 <- p_in^2 * H * P_pred * H
     Pi_val <- term1 + term2 + R
-    
-    # 2. Ganancia K(k)
     K_val <- p_in * P_pred * H * (1/Pi_val)
-    
-    # 3. Varianza de Filtrado P(k/k) -> ESTO ES LO QUE GUARDAMOS
     # P(k/k) = P(k/k-1) - p K H P(k/k-1)
     P_filt <- P_pred - p_in * K_val * H * P_pred
     var_history[k] <- P_filt
-    
-    # 4. Predicciones para k+1
     P_pred <- Phi * P_filt * Phi + Q
     D <- Phi * D * Phi + Q
   }
@@ -683,9 +673,8 @@ calc_variance_evolution <- function(p_in, N, Phi, H, Q, R, P0) {
   return(var_history)
 }
 
-# --- Ejecución para todos los valores de p ---
+# Ejecución para todos los valores de p
 results_list <- list()
-
 for (val in p_values) {
   trayectoria <- calc_variance_evolution(val, N_iter, Phi, H, Q, R, P0)
   results_list[[as.character(val)]] <- data.frame(
@@ -694,21 +683,16 @@ for (val in p_values) {
     Probabilidad = as.factor(val)
   )
 }
-
-# Unir todos los resultados en un solo dataframe
 df_comparison <- bind_rows(results_list)
 
-# --- Visualización ---
+# Visualización
 p_comparison <- ggplot(df_comparison, aes(x = Tiempo, y = Varianza, color = Probabilidad)) +
   geom_line(linewidth = 1) +
-  labs(title = "Análisis de Sensibilidad: Varianza del Error de Filtrado vs Probabilidad p",
-       subtitle = "Evolución de P(k/k) para distintas probabilidades de presencia de señal",
-       y = "Varianza del Error P(k/k)",
+  labs(y = "Varianza del Error P(k/k)",
        color = "Probabilidad p(k)") +
   theme_minimal() +
   scale_color_viridis_d(option = "plasma", end = 0.9, direction = -1) +
   theme(legend.position = "right")
-
 print(p_comparison)
 ```
 
@@ -719,7 +703,7 @@ La gráfica obtenida muestra la evolución temporal de la varianza del error de 
 **1. Monotonicidad Inversa respecto a la Incertidumbre**
 Se observa una relación estrictamente monótona decreciente entre la probabilidad $p$ y la varianza del error en estado estacionario ($P_{\infty}$).
 $$\text{Si } p_1 > p_2 \implies P_{\infty}(p_1) < P_{\infty}(p_2)$$
-Esto es consistente con la teoría de la información: un mayor valor de $p$ implica una mayor relación señal-a-ruido efectiva y una mayor frecuencia de actualizaciones de información válida. El caso límite $p=1$ (curva azul oscuro) corresponde al **Filtro de Kalman estándar**, estableciendo la cota inferior teórica de la varianza del error (aprox. $0.28$ en este sistema).
+Esto es consistente con la teoría de la información: un mayor valor de $p$ implica una mayor relación señal-a-ruido efectiva y una mayor frecuencia de actualizaciones de información válida. El caso límite $p=1$ (curva azul oscuro) corresponde al Filtro de Kalman estándar, estableciendo la cota inferior teórica de la varianza del error (aprox. $0.28$ en este sistema).
 
 **2. Inflación de la Covarianza por el Término Bernoulli**
 La degradación del desempeño para valores bajos de $p$ (ej. curva amarilla $p=0.1$) no se debe solo a la "ausencia" de datos, sino a la incertidumbre intrínseca añadida a la innovación. Recordando la expresión de la covarianza de la innovación:
@@ -728,11 +712,13 @@ El término $p(1-p)$ alcanza su máximo en $p=0.5$, introduciendo un ruido adici
 
 **3. Velocidad de Convergencia**
 La tasa de convergencia hacia el régimen estacionario es directamente proporcional a $p$.
-* Para **$p \approx 1$**: La reducción de la incertidumbre inicial $P_0$ es drástica en las primeras 3-4 iteraciones, indicando una alta ganancia de filtrado.
-* Para **$p \approx 0.1$**: La curva es mucho más suave. El estimador requiere un horizonte temporal mucho más amplio para reducir la incertidumbre inicial, ya que la "cantidad de información" que extrae en cada paso es mínima.
+
+Para **$p \approx 1$**: La reducción de la incertidumbre inicial $P_0$ es drástica en las primeras 3-4 iteraciones, indicando una alta ganancia de filtrado.
+
+Para **$p \approx 0.1$**: La curva es mucho más suave. El estimador requiere un horizonte temporal mucho más amplio para reducir la incertidumbre inicial, ya que la "cantidad de información" que extrae en cada paso es mínima.
 
 **Conclusión**
-El análisis confirma que la probabilidad de falsa alarma ($1-p$) actúa como un factor limitante estructural en la precisión del sistema. Incluso con un número infinito de observaciones, la incertidumbre en el mecanismo de observación impide alcanzar el rendimiento del filtro óptimo gaussiano estándar ($p=1$), estabilizándose el error en niveles superiores cuantificables mediante las ecuaciones de Riccati modificadas utilizadas en este estudio.
+El análisis confirma que la probabilidad de falsa alarma ($1-p$) actúa como un factor limitante estructural en la precisión del sistema. Incluso con un número infinito de observaciones, la incertidumbre en el mecanismo de observación impide alcanzar el rendimiento del filtro óptimo gaussiano estándar ($p=1$), estabilizándose el error en niveles superiores cuantificables mediante las ecuaciones de Riccati modificadas utilizadas.
 
 \newpage
 
