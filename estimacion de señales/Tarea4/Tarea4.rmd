@@ -627,23 +627,6 @@ En este apartado estudiamos la sensibilidad del Estimador Lineal Mínimo Cuadrá
 
 Para ello, evaluamos la evolución recursiva de la varianza del error de filtrado $P(k/k)$ para un conjunto de valores $p \in \{0.1, 0.3, 0.5, 0.7, 0.9, 1.0\}$, manteniendo constantes el resto de parámetros del sistema.
 
-Las ecuaciones deterministas que gobiernan la evolución de la covarianza son:
-
-1.  **Evolución del segundo momento del estado:**
-    $$D(k+1) = \Phi D(k) \Phi^T + \Gamma Q \Gamma^T, \quad D(0)=P_0$$
-
-2.  **Covarianza de la innovación (dependiente de $p$):**
-    $$\Pi(k) = p(1-p)H D(k) H^T + p^2 H P(k/k-1) H^T + R$$
-
-3.  **Ganancia del filtro:**
-    $$K(k) = p P(k/k-1) H^T \Pi^{-1}(k)$$
-
-4.  **Actualización de la varianza del error (Filtrado):**
-    $$P(k/k) = P(k/k-1) - p K(k) H P(k/k-1)$$
-
-5.  **Predicción de la varianza:**
-    $$P(k+1/k) = \Phi P(k/k) \Phi^T + \Gamma Q \Gamma^T$$
-
 ```{r ejercicio1_apartado_e, fig.width=10, fig.height=6, out.width="70%", fig.align="center"}
 library(tidyverse)
 
@@ -659,7 +642,6 @@ p_values <- c(0.1, 0.3, 0.5, 0.7, 0.9, 1.0)
 
 # Función
 calc_variance_evolution <- function(p_in, N, Phi, H, Q, R, P0) {
-  # Inicialización
   P_pred <- P0
   D <- P0
   var_history <- numeric(N + 1)
@@ -706,16 +688,19 @@ print(p_comparison)
 La gráfica obtenida muestra la evolución temporal de la varianza del error de estimación a posteriori, $P(k/k)$, parametrizada por la probabilidad de presencia de señal $p \in \{0.1, ..., 1.0\}$. El análisis de estas curvas permite extraer conclusiones fundamentales sobre la robustez y los límites teóricos del estimador:
 
 **1. Monotonicidad Inversa respecto a la Incertidumbre**
+
 Se observa una relación estrictamente monótona decreciente entre la probabilidad $p$ y la varianza del error en estado estacionario ($P_{\infty}$).
 $$\text{Si } p_1 > p_2 \implies P_{\infty}(p_1) < P_{\infty}(p_2)$$
 Esto es consistente con la teoría de la información: un mayor valor de $p$ implica una mayor relación señal-a-ruido efectiva y una mayor frecuencia de actualizaciones de información válida. El caso límite $p=1$ (curva azul oscuro) corresponde al Filtro de Kalman estándar, estableciendo la cota inferior teórica de la varianza del error (aprox. $0.28$ en este sistema).
 
 **2. Inflación de la Covarianza por el Término Bernoulli**
+
 La degradación del desempeño para valores bajos de $p$ (ej. curva amarilla $p=0.1$) no se debe solo a la "ausencia" de datos, sino a la incertidumbre intrínseca añadida a la innovación. Recordando la expresión de la covarianza de la innovación:
 $$\Pi(k) = \underbrace{p(1-p)HD(k)H^T}_{\text{Ruido Multiplicativo}} + \underbrace{p^2 H P(k/k-1) H^T}_{\text{Incertidumbre Estado}} + R$$
 El término $p(1-p)$ alcanza su máximo en $p=0.5$, introduciendo un ruido adicional dependiente de la energía del estado ($D(k)$). Para $p$ muy bajos (como $0.1$), el término $R$ domina relativamente y la ganancia del filtro $K(k)$ se vuelve muy pequeña, provocando que la varianza $P(k/k)$ se reduzca muy lentamente y se mantenga cercana a la varianza de predicción en bucle abierto.
 
 **3. Velocidad de Convergencia**
+
 La tasa de convergencia hacia el régimen estacionario es directamente proporcional a $p$.
 
 Para **$p \approx 1$**: La reducción de la incertidumbre inicial $P_0$ es drástica en las primeras 3-4 iteraciones, indicando una alta ganancia de filtrado.
@@ -723,6 +708,7 @@ Para **$p \approx 1$**: La reducción de la incertidumbre inicial $P_0$ es drás
 Para **$p \approx 0.1$**: La curva es mucho más suave. El estimador requiere un horizonte temporal mucho más amplio para reducir la incertidumbre inicial, ya que la "cantidad de información" que extrae en cada paso es mínima.
 
 **Conclusión**
+
 El análisis confirma que la probabilidad de falsa alarma ($1-p$) actúa como un factor limitante estructural en la precisión del sistema. Incluso con un número infinito de observaciones, la incertidumbre en el mecanismo de observación impide alcanzar el rendimiento del filtro óptimo gaussiano estándar ($p=1$), estabilizándose el error en niveles superiores cuantificables mediante las ecuaciones de Riccati modificadas utilizadas.
 
 
@@ -816,14 +802,17 @@ ggplot(df_total, aes(x=Tiempo)) +
 La comparación visual de las realizaciones para $p=0.2$ y $p=0.9$ valida el comportamiento teórico del modelo de observaciones inciertas propuesto.
 
 **1. Dinámica Determinista del Estado**
+
 En ambas gráficas, la trayectoria del estado $x(k)$ (línea azul continua) exhibe una oscilación perfecta de periodo 2. Esto confirma la simplificación analítica de la ecuación de estado $x(k+1) = (-1)^{2k+1}x(k) \equiv -x(k)$. Al ser un sistema libre de ruido de proceso ($Q=0$) y con matriz de transición unitaria en magnitud ($|\Phi|=1$), la energía del estado se conserva indefinidamente ($|x(k)| = |x_0|$), comportándose como un oscilador marginalmente estable.
 
 **2. Régimen de Alta Incertidumbre ($p=0.2$)**
+
 El panel izquierdo ilustra un escenario de observabilidad intermitente. Dado que la probabilidad de falsa alarma es dominante ($1-p = 0.8$), la mayoría de las observaciones $z(k)$ son realizaciones puras del ruido de medida $v(k) \sim \mathcal{N}(0, 0.5)$, mostrándose descorrelacionadas del estado (puntos rojos cercanos a cero).
 
 Implicación: La escasez de información válida obliga al estimador a confiar casi exclusivamente en la predicción del modelo dinámico durante largos intervalos, lo que teóricamente ralentizará la reducción de la varianza del error a posteriori.
 
 **3. Régimen de Alta Fiabilidad ($p=0.9$)**
+
 El panel derecho muestra un escenario de cuasi-certidumbre. La secuencia de observaciones rastrea fielmente la alternancia de signo del estado. Las discrepancias entre la observación (punto rojo) y el estado real (vértice azul) son atribuibles únicamente al ruido aditivo $v(k)$.
 
 Implicación: La alta densidad de información permite actualizaciones frecuentes del estimador, sugiriendo que la varianza del error convergerá rápidamente a un valor cercano al límite teórico del filtro de Kalman estándar (caso $p=1$).
@@ -960,7 +949,7 @@ for (k in 1:(N_iter + 1)) {
   }
 }
 
-# Algoritmo de Suavizamiento (L=5) ---
+# Algoritmo de Suavizamiento (L=5)
 L_target <- 5 # Queremos estimar x(5)
 L_idx <- L_target + 1
 
@@ -1232,6 +1221,7 @@ A diferencia del sistema del Ejercicio 1, donde las varianzas convergían a dist
 **Justificación Teórica:** Al ser la varianza del ruido del proceso nula ($Q=0$), el sistema no introduce nueva entropía o incertidumbre en su evolución temporal. La incertidumbre total se limita al conocimiento del estado inicial $x_0$. El filtro de Kalman actúa aquí como un acumulador de información puro: cada nueva observación válida reduce la incertidumbre remanente sobre $x_0$. En el límite de infinitas observaciones ($k \to \infty$), el error de estimación se desvanece por completo.
 
 **2. Influencia de $p$ en la Velocidad de Convergencia**
+
 Si bien todas las curvas comparten el mismo destino final (varianza nula), la probabilidad $p$ determina la velocidad a la que se alcanza dicho estado:
 
 **Régimen de alta información ($p \approx 1$):** La curva azul oscuro muestra una caída abrupta, eliminando la incertidumbre práctica en menos de 10 iteraciones.
@@ -1239,4 +1229,5 @@ Si bien todas las curvas comparten el mismo destino final (varianza nula), la pr
 **Régimen de baja información ($p \approx 0.1$):** La curva amarilla desciende lentamente. La escasez de actualizaciones válidas obliga al estimador a requerir un horizonte temporal mucho más extenso para "triangular" la trayectoria determinista del estado con la misma precisión.
 
 **Conclusión**
+
 En ausencia de ruido de proceso, la incertidumbre en las observaciones ($p < 1$) no impone un límite fundamental a la precisión final del estimador (que es perfecta en el límite), sino que impone una penalización en el tiempo necesario para alcanzar dicha precisión.
