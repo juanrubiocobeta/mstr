@@ -20,7 +20,7 @@ I decided to pursue this Master's degree to bridge the gap between theoretical s
 
 ## Disclaimer
 
-Please note that this is a *monorep for academic storage. 
+Please note that this is a monorep for academic storage. 
 
 * It is not a single deployed application or a polished final product.
 * The structure follows the subjects and modules of the Master's program.
