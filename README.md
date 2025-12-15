@@ -6,7 +6,7 @@
 
 ## About This Repository
 
-Welcome! This repository serves as a **central storage** for my progress during the **Master's Degree in Applied Statistics** at the **University of Granada (UGR)**.
+Welcome! This repository serves as a central storage for my progress during the **Master's Degree in Applied Statistics** at the University of Granada (UGR).
 
 Here you will find code snippets, practical exercises, notes, and small projects developed throughout the program.
 
@@ -20,12 +20,8 @@ I decided to pursue this Master's degree to bridge the gap between theoretical s
 
 ## Disclaimer
 
-Please note that this is a **"monorepo" for academic storage**. 
+Please note that this is a monorep for academic storage. 
 
-* It is **not** a single deployed application or a polished final product.
+* It is not a single deployed application or a polished final product.
 * The structure follows the subjects and modules of the Master's program.
 * Some scripts might be experimental or part of ongoing coursework.
-
----
-
-*This repository tracks my journey in advanced statistical learning.*
