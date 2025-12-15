@@ -1,0 +1,166 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla, es-nodecimaldot]{babel} % Para correcta separación de sílabas en español
+
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[most]{tcolorbox}
+
+\geometry{top=3cm, bottom=3cm, left=2cm, right=2cm}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\zeros}{\mathbf{0}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\DeclareMathOperator{\rango}{rango}
+\DeclareMathOperator{\diag}{diag}
+
+\newtcolorbox{teoremaBox}[2][]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title={#2},
+    sharp corners=downhill,
+    enhanced,
+    attach boxed title to top left={yshift=-2mm, xshift=2mm},
+    boxed title style={colback=blue!75!black},
+    #1
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Actividad 1 Recuperación}
+\fancyhead[C]{Juan Rubio Cobeta}
+\fancyhead[R]{\today}
+
+\title{Actividad 1 Recuperación: \\ Caracterización de Matrices Euclídeas}
+\author{Juan Rubio Cobeta}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Introducción y Definiciones Previas}
+
+El objetivo de este documento es formalizar las condiciones necesarias y suficientes para que una matriz de disimilaridades pueda ser representada como una configuración de puntos en un espacio euclídeo.
+
+Sean $n, K \in \mathbb{N}$. Consideremos el espacio de matrices reales $\R^{n \times n}$.
+Denotamos por $\ones \in \R^n$ al vector columna cuyos elementos son todos iguales a la unidad.
+
+Definimos la \textbf{matriz de centrado} $H \in \R^{n \times n}$ como el proyector ortogonal sobre el complemento ortogonal del subespacio generado por $\ones$:
+\begin{equation}
+    H \coloneqq I_n - \frac{1}{n}\ones\ones^T.
+\end{equation}
+La matriz $H$ satisface las siguientes propiedades fundamentales:
+\begin{enumerate}
+    \item \textbf{Simetría:} $H^T = H$.
+    \item \textbf{Idempotencia:} $H^2 = H$.
+    \item \textbf{Centrado:} $H\ones = \zeros$ (y por simetría, $\ones^T H = \zeros^T$).
+\end{enumerate}
+
+\section{Teorema Principal}
+
+\begin{teoremaBox}{Teorema 1: Caracterización de Matrices Euclídeas}
+Sea $D = (d_{rs}) \in \R^{n \times n}$ una matriz de distancias (tal que $d_{rs} \ge 0$, $d_{rr}=0$, $d_{rs}=d_{sr}$). Sea $A \in \R^{n \times n}$ la matriz cuyos elementos están definidos por $a_{rs} = -\frac{1}{2}d_{rs}^2$.
+
+La matriz $D$ es una \textbf{Matriz de Distancia Euclídea} correspondientes a una configuración de puntos en $\R^K$ si y solo si la matriz doblemente centrada
+\begin{equation*}
+    B = HAH
+\end{equation*}
+es semidefinida positiva ($B \succeq 0$) y $\rango(B) \le K$.
+\end{teoremaBox}
+
+Además, se verifican las siguientes propiedades estructurales:
+\begin{enumerate}
+    \item Si $D$ es generada por una configuración $Z \in \R^{n \times K}$, entonces $B$ es la matriz de Gram de la configuración centrada $HZ$.
+    \item Recíprocamente, si $B \succeq 0$, las coordenadas de la configuración $X$ pueden recuperarse mediante la descomposición espectral de $B$.
+\end{enumerate}
+
+\section{Demostración}
+
+La demostración se divide en dos implicaciones lógicas.
+
+\subsection*{Parte I: Necesidad ($\implies$)}
+
+Supongamos que $D$ es una matriz de distancias euclídeas. Esto implica que existen puntos $z_1, \dots, z_n \in \R^K$ tales que $d_{rs} = \norm{z_r - z_s}$. Sea $Z = [z_1, \dots, z_n]^T \in \R^{n \times K}$ la matriz de la configuración.
+
+Utilizando la expansión del producto escalar usual, desarrollamos el cuadrado de la distancia:
+\begin{equation}
+    d_{rs}^2 = \norm{z_r - z_s}^2 = \inner{z_r}{z_r} + \inner{z_s}{z_s} - 2\inner{z_r}{z_s}.
+\end{equation}
+Sea $G = ZZ^T$ la matriz de Gram asociada, donde $g_{rs} = \inner{z_r}{z_s}$, y definamos el vector $\mathbf{g} = \diag(G)$. La ecuación anterior puede expresarse matricialmente como:
+\begin{equation}
+    D^{(2)} = \mathbf{g}\ones^T + \ones\mathbf{g}^T - 2G,
+\end{equation}
+donde $D^{(2)}$ es la matriz de distancias al cuadrado. Dado que $A = -\frac{1}{2}D^{(2)}$, tenemos:
+\begin{equation}
+    A = G - \frac{1}{2}\mathbf{g}\ones^T - \frac{1}{2}\ones\mathbf{g}^T.
+\end{equation}
+Aplicamos ahora el operador de doble centrado $B = HAH$. Recordando que $H\ones = \zeros$, los términos que involucran al vector $\ones$ se anulan:
+\begin{align*}
+    B &= H \left( G - \frac{1}{2}\mathbf{g}\ones^T - \frac{1}{2}\ones\mathbf{g}^T \right) H \\
+      &= HGH - \frac{1}{2}H\mathbf{g}(\ones^T H) - \frac{1}{2}(H\ones)\mathbf{g}^T H \\
+      &= HGH.
+\end{align*}
+Sustituyendo $G = ZZ^T$:
+\begin{equation}
+    B = H(ZZ^T)H = (HZ)(HZ)^T.
+\end{equation}
+Sea $M = HZ$. La expresión $B = MM^T$ demuestra inmediatamente que $B$ es una matriz de Gram y, por consiguiente, es \textbf{simétrica y semidefinida positiva} ($B \succeq 0$). Adicionalmente, $\rango(B) = \rango(HZ) \le \min(n-1, K)$.
+
+\subsection*{Parte II: Suficiencia ($\Longleftarrow$)}
+
+Supongamos ahora que $B$ es semidefinida positiva con $\rango(B) = K$. Por el \textbf{Teorema Espectral} para matrices simétricas reales, existe una descomposición ortogonal:
+\begin{equation}
+    B = U \Lambda U^T,
+\end{equation}
+donde $\Lambda = \diag(\lambda_1, \dots, \lambda_n)$ con autovalores $\lambda_1 \ge \dots \ge \lambda_K > 0 = \dots = 0$.
+
+Construimos la matriz de coordenadas $X \in \R^{n \times K}$ como:
+\begin{equation}
+    X = U_K \Lambda_K^{1/2},
+\end{equation}
+donde $U_K$ contiene los primeros $K$ autovectores y $\Lambda_K = \diag(\lambda_1, \dots, \lambda_K)$.
+Entonces $B = XX^T$, lo que implica que $b_{rs} = \inner{x_r}{x_s}$.
+
+Debemos verificar que la distancia euclídea inducida por esta configuración $X$ recupera la matriz original $D$. Calculamos la distancia al cuadrado entre las filas $x_r$ y $x_s$:
+\begin{equation} \label{eq:dist_proof}
+    \norm{x_r - x_s}^2 = b_{rr} + b_{ss} - 2b_{rs}.
+\end{equation}
+Para relacionar esto con $A$, expandimos la relación $B = HAH$ elemento a elemento. Si denotamos las medias por fila, columna y global de $A$ como $\bar{a}_{r\cdot}$, $\bar{a}_{\cdot s}$ y $\bar{a}_{\cdot\cdot}$ respectivamente:
+\begin{equation}
+    b_{rs} = a_{rs} - \bar{a}_{r\cdot} - \bar{a}_{\cdot s} + \bar{a}_{\cdot\cdot}.
+\end{equation}
+Sustituyendo en (\ref{eq:dist_proof}):
+\begin{align*}
+    \norm{x_r - x_s}^2 &= (a_{rr} - \bar{a}_{r\cdot} - \bar{a}_{\cdot r} + \bar{a}_{\cdot\cdot}) \\
+                       &+ (a_{ss} - \bar{a}_{s\cdot} - \bar{a}_{\cdot s} + \bar{a}_{\cdot\cdot}) \\
+                       &- 2(a_{rs} - \bar{a}_{r\cdot} - \bar{a}_{\cdot s} + \bar{a}_{\cdot\cdot}).
+\end{align*}
+Al simplificar algebraicamente, todos los términos de medias se cancelan. Además, dado que $d_{rr}=0 \implies a_{rr}=0$, obtenemos:
+\begin{equation}
+    \norm{x_r - x_s}^2 = -2a_{rs} = -2\left(-\frac{1}{2}d_{rs}^2\right) = d_{rs}^2.
+\end{equation}
+Por lo tanto, $\norm{x_r - x_s} = d_{rs}$. Esto demuestra que existe una configuración $X$ en $\R^K$ que genera exactamente las distancias $D$.
+
+\section{Observaciones Finales}
+
+\begin{itemize}
+    \item \textbf{Centrado de la configuración:}
+    De la identidad $B\ones = HAH\ones = H A \zeros = \zeros$, y sabiendo que $B = XX^T$, se deduce que $XX^T\ones = \zeros$. Multiplicando por la izquierda por $(X^T X)^{-1}X^T$ (asumiendo rango completo), obtenemos $X^T\ones = \zeros$. Esto implica que la suma de las filas de $X$ es el vector nulo; es decir, la configuración recuperada tiene su baricentro en el origen.
+
+    \item \textbf{Unicidad (Isometría):}
+    Si existiese otra configuración $Y$ tal que $YY^T = B = XX^T$, entonces existe una matriz ortogonal $Q \in O(K)$ tal que $Y = XQ$. La solución es única salvo rotaciones y reflexiones.
+\end{itemize}
+
+\end{document}
