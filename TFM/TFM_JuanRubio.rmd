@@ -1,0 +1,158 @@
+---
+output: 
+  pdf_document:
+    number_sections: true
+    latex_engine: pdflatex
+    keep_tex: false
+geometry: "left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm"
+fontsize: 12pt
+lang: es-ES
+header-includes:
+  - \usepackage{setspace}
+  - \onehalfspacing
+  - \usepackage{fancyhdr}
+  - \usepackage{graphicx}
+  - \usepackage{titlesec}
+  # Formato de los capítulos para que se parezca al original (Centrado y con número)
+  - \titleformat{\chapter}[display]{\normalfont\huge\bfseries\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+  # Quitar la cabecera por defecto y poner la numeración abajo o arriba según gusto (aquí limpia)
+  - \pagestyle{plain} 
+---
+
+\begin{titlepage}
+
+    \vspace{2cm}
+
+    \centering
+    {\Large Máster en Estadística Aplicada}\\[0.5cm]
+    {\large Departamento de Estadística e Investigación Operativa}\\[0.5cm]
+    {\large Universidad de Granada}
+    
+    \vspace{2cm}
+    
+    \includegraphics[width=0.5\textwidth]{ugr.png} 
+    
+    \vspace{2cm}
+    
+    {\large Trabajo fin de máster}\\[1cm]
+    
+    {\large Estimación KDE: fundamentos y aplicaciones}
+    
+    \vspace{2cm}
+    
+    {\large Juan Rubio Cobeta}\\[0.5cm]
+    
+    {\large Granada, \today}
+    
+\end{titlepage}
+
+\newpage
+
+\thispagestyle{empty}
+
+\begin{titlepage}
+    \centering
+
+    \vspace{0.5cm}
+
+    {\large Máster en Estadística Aplicada}\\[0.5cm]
+
+    {\large Departamento de Estadística e Investigación Operativa}\\[0.5cm]
+
+    {\large Universidad de Granada}
+
+    \vspace{2cm}
+
+    \includegraphics[width=0.4\textwidth]{ugr.png} 
+
+    \vspace{2cm}
+
+    \begin{center}
+    \textbf{Trabajo de investigación presentado por Don Juan Rubio y dirigido por la profesora Dña. Maria Dolores Martínez Miranda.}
+    \end{center}
+
+    \vspace{2cm}
+
+    \begin{center}
+        VºBº
+    \end{center}
+
+    \vspace{2cm}
+
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \vspace{0.5cm}
+        \textbf{Maria Dolores Martínez Miranda}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \vspace{0.5cm}
+        \textbf{Juan Rubio Cobeta}
+    \end{minipage}
+\end{titlepage}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\pagenumbering{arabic} 
+
+# Introducción y Motivación
+
+## Contexto y Justificación
+
+La inferencia estadística constituye el pilar fundamental para la extracción de conocimiento a partir de datos observados. En el contexto del Máster en Estadística Aplicada de la Universidad de Granada, este trabajo aborda uno de los problemas centrales de la disciplina: la estimación de la función de densidad de probabilidad subyacente a una variable aleatoria, sin imponer restricciones fuertes sobre su forma funcional.
+
+Tradicionalmente, la estadística clásica ha abordado este problema desde un enfoque **paramétrico**. Bajo este paradigma, se asume que los datos provienen de una familia conocida de distribuciones $\mathcal{P} = \{f(x; \theta) : \theta \in \Theta\}$, como la distribución Normal, Gamma o Weibull. En tal escenario, el problema de estimación se reduce drásticamente a la inferencia de un vector de parámetros finito-dimensional $\theta$. Si bien este enfoque es potente y eficiente cuando el modelo asumido es correcto, presenta una debilidad crítica: la **rigidez**. La realidad de los fenómenos estocásticos complejos raramente se ajusta con precisión a estas formas ideales. La imposición de una estructura paramétrica incorrecta conlleva un *sesgo de especificación* sistemático que puede invalidar cualquier análisis posterior, ocultando características locales importantes.
+
+Como respuesta a esta limitación, surge la **estadística no paramétrica** y, específicamente, los métodos de suavizado. La filosofía subyacente es permitir que los datos "hablen por sí mismos" (*data-driven approach*), dejando que sea la propia estructura de la muestra la que determine la forma de la densidad estimada $\hat{f}$.
+
+Históricamente, el **histograma** ha sido la herramienta precursora en esta tarea. A pesar de su ubicuidad, el histograma padece de defectos teóricos y prácticos notables:
+
+1.  Es una función discontinua, lo que impide el uso de herramientas de cálculo diferencial.
+
+2.  Su forma depende excesivamente de la elección del origen de la partición y del ancho de los intervalos.
+
+3.  Carece de propiedades de eficiencia en dimensiones altas.
+
+Para solventar estas deficiencias, Rosenblatt (1956) y Parzen (1962) formalizaron el **Estimador de Densidad Tipo Núcleo** (Kernel Density Estimator o KDE). Este estimador generaliza la idea del histograma colocando una "masa de probabilidad" suave (el núcleo) sobre cada observación, proporcionando una estimación diferenciable e integrable a uno.
+
+## Motivación Práctica
+
+La relevancia de estudiar el estimador KDE trasciende el interés puramente teórico; su aplicación es crítica en escenarios donde detectar desviaciones sutiles respecto a la normalidad es vital para la gestión de riesgos. Este trabajo toma como caso de estudio central el índice **Standard & Poor's 500 (S&P 500)**, considerado el barómetro más representativo del mercado bursátil global.
+
+Una de las "hechos estilizados" más documentados en la econometría financiera es que la distribución de los rendimientos de los activos **no es Normal**: presenta colas más pesadas (*leptocurtosis*) y asimetrías que los modelos gaussianos subestiman sistemáticamente. Ignorar estas características, especialmente durante periodos de crisis financiera, lleva a una infravaloración del riesgo de eventos extremos (cisnes negros).
+
+El uso de la Estimación de Densidad Tipo Núcleo permite capturar la forma real de la distribución de los rendimientos del S&P 500 sin supuestos previos. Esto es fundamental para:
+
+1.  **Cálculo de métricas de riesgo:** Obtener estimaciones más precisas del Valor en Riesgo (VaR) y del *Expected Shortfall* en las colas de la distribución.
+
+2.  **Detección de regímenes de mercado:** Visualizar cómo la densidad de los rendimientos cambia de forma bimodal o se aplana en periodos de alta volatilidad, comportamientos que un modelo paramétrico estático no podría revelar.
+
+La aplicación práctica de este trabajo (Capítulo 7) demostrará cómo el KDE ofrece una radiografía superior del comportamiento del mercado en comparación con el ajuste de una curva de campana tradicional.
+
+## Objetivos y Estructura del Trabajo
+
+El objetivo principal de este Trabajo Fin de Máster es presentar una revisión teórica rigurosa, exhaustiva y autocontenida de la estimación de densidad tipo núcleo, analizando sus propiedades asintóticas, los desafíos de la selección del ancho de banda y su aplicación a datos financieros reales.
+
+Para garantizar una exposición clara y detallada, la memoria se estructura en los siguientes capítulos:
+
+* **Capítulo 2:** Se establecen los **preliminares probabilísticos**, fijando la notación y recordando definiciones clave sobre convergencia estocástica y funciones de distribución.
+* **Capítulo 3:** Se dedica a la construcción formal del **Estimador Núcleo Univariante**, definiendo los requisitos analíticos de la función núcleo $K$ y presentando las familias de núcleos más usuales.
+* **Capítulo 4:** Aborda las **propiedades estadísticas** del estimador. Se descompone el error de estimación (MISE) en sesgo y varianza, demostrando el compromiso (*trade-off*) necesario.
+* **Capítulo 5:** Trata el problema central de la práctica del KDE: la **selección del ancho de banda** ($h$). Se discuten métodos como la Regla de Silverman y la Validación Cruzada (LSCV).
+* **Capítulo 6:** Extiende los conceptos al caso **multivariante**, discutiendo brevemente la "maldición de la dimensionalidad".
+* **Capítulo 7:** Presenta la **aplicación práctica** al índice S&P 500. Se realizará un análisis exploratorio y se aplicarán los estimadores desarrollados teóricamente para modelar la distribución de sus rendimientos, comparando los resultados obtenidos mediante diferentes selecciones de ancho de banda.
+* Finalmente, se presentan las **conclusiones** y líneas de trabajo futuro.
+\newpage 
+
+# Conceptos Básicos y Notación
+
+Aquí pegaremos las definiciones de probabilidad, densidad, esperanza, etc.
+
+# El Estimador de Densidad Tipo Núcleo
+
+Aquí definiremos el estimador y pondremos los gráficos de los núcleos en R.
