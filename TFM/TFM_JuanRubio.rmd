@@ -147,12 +147,316 @@ Para garantizar una exposición clara y detallada, la memoria se estructura en l
 * **Capítulo 6:** Extiende los conceptos al caso **multivariante**, discutiendo brevemente la "maldición de la dimensionalidad".
 * **Capítulo 7:** Presenta la **aplicación práctica** al índice S&P 500. Se realizará un análisis exploratorio y se aplicarán los estimadores desarrollados teóricamente para modelar la distribución de sus rendimientos, comparando los resultados obtenidos mediante diferentes selecciones de ancho de banda.
 * Finalmente, se presentan las **conclusiones** y líneas de trabajo futuro.
+
+
+
+
+
+
+
+
+
+
 \newpage 
 
-# Conceptos Básicos y Notación
 
-Aquí pegaremos las definiciones de probabilidad, densidad, esperanza, etc.
+
+
+
+
+
+# Preliminares Probabilísticos
+
+El objetivo de este capítulo es establecer el marco matemático y la notación que se utilizarán a lo largo del trabajo. Dado que la estimación de densidad tipo núcleo se fundamenta en propiedades de convergencia de sumas de variables aleatorias, es necesario definir con rigor los conceptos de espacio de probabilidad, variable aleatoria y los modos de convergencia estocástica.
+
+## Fundamentos de Probabilidad
+
+Comenzamos definiendo la estructura formal donde se modelan los experimentos aleatorios.
+
+**Definición 2.1 (Espacio de Probabilidad).**
+
+Un espacio de probabilidad es una terna $(\Omega, \mathcal{F}, \mathbb{P})$, donde:
+
+1.  $\Omega$ es el **espacio muestral**, un conjunto no vacío que contiene todos los posibles resultados del experimento.
+
+2.  $\mathcal{F}$ es una **$\sigma$-álgebra** sobre $\Omega$, es decir, una colección de subconjuntos de $\Omega$ que cumple:
+
+    * $\Omega \in \mathcal{F}$.
+
+    * Si $A \in \mathcal{F}$, entonces su complemento $A^c \in \mathcal{F}$.
+
+    * Si $\{A_n\}_{n=1}^{\infty} \subset \mathcal{F}$, entonces $\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$.
+
+3.  $\mathbb{P}: \mathcal{F} \to [0, 1]$ es una **medida de probabilidad**, que satisface $\mathbb{P}(\Omega) = 1$ y la propiedad de $\sigma$-aditividad para conjuntos disjuntos.
+
+En el contexto de la inferencia estadística, trabajamos con funciones que trasladan la aleatoriedad desde el espacio abstracto $\Omega$ a los números reales.
+
+**Definición 2.2 (Variable Aleatoria Real).**
+
+Dado un espacio de probabilidad $(\Omega, \mathcal{F}, \mathbb{P})$, una función $X: \Omega \to \mathbb{R}$ se dice que es una **variable aleatoria** (v.a.) si es $\mathcal{F}$-medible; es decir, si para todo conjunto de Borel $B \in \mathcal{B}(\mathbb{R})$ (la $\sigma$-álgebra generada por los intervalos abiertos de $\mathbb{R}$), se cumple que la preimagen $X^{-1}(B) \in \mathcal{F}$.
+
+Cada variable aleatoria induce una medida de probabilidad sobre $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$, caracterizada unívocamente por su función de distribución acumulada.
+
+**Definición 2.3 (Función de Distribución).**
+
+La función de distribución (CDF, por sus siglas en inglés) de una variable aleatoria $X$ se define como la función $F: \mathbb{R} \to [0, 1]$ tal que:
+$$F(x) = \mathbb{P}(X \le x) = \mathbb{P}(\{\omega \in \Omega : X(\omega) \le x\}), \quad \forall x \in \mathbb{R}$$
+
+Esta función es no decreciente, continua por la derecha y satisface $\lim_{x \to -\infty} F(x) = 0$ y $\lim_{x \to \infty} F(x) = 1$.
+
+En este trabajo nos centraremos exclusivamente en variables aleatorias **absolutamente continuas**. Formalmente, esto significa que la medida inducida por $X$ es absolutamente continua respecto a la medida de Lebesgue $\mu$ en $\mathbb{R}$. Por el Teorema de Radon-Nikodym, esto garantiza la existencia de una función de densidad.
+
+**Definición 2.4 (Función de Densidad de Probabilidad).**
+
+Se dice que una variable aleatoria $X$ tiene una función de densidad de probabilidad (PDF) $f$, si existe una función no negativa e integrable tal que para todo conjunto de Borel $B \in \mathcal{B}(\mathbb{R})$:
+$$\mathbb{P}(X \in B) = \int_{B} f(t) \, dt$$
+
+Como consecuencia inmediata, la relación entre la función de distribución y la densidad viene dada por:
+$$F(x) = \int_{-\infty}^{x} f(t) \, dt$$
+
+Además, si $f$ es continua en $x$, entonces por el Teorema Fundamental del Cálculo se cumple que:
+$$f(x) = F'(x) = \frac{d}{dx} F(x)$$
+
+El objetivo central de la estimación de densidad no paramétrica es estimar esta función $f$ desconocida a partir de una muestra aleatoria simple $X_1, \dots, X_n$ distribuida según $F$.
+
+## Momentos
+
+Una vez definida la densidad de probabilidad, las características numéricas más relevantes de una variable aleatoria son sus momentos. Estos valores resumen la información contenida en la densidad, describiendo aspectos como la localización, la dispersión o la forma de la distribución. En el contexto de la estimación tipo núcleo, el cálculo de esperanzas y varianzas de transformaciones de la variable aleatoria constituirá la herramienta analítica principal para evaluar la calidad del estimador $\hat{f}$.
+
+**Definición 2.5 (Esperanza Matemática).**
+
+Sea $X$ una variable aleatoria absolutamente continua con función de densidad $f$. Se define la **esperanza matemática** (o valor esperado) de $X$, denotada por $\mathbb{E}[X]$ o $\mu$, como la integral de Lebesgue:
+$$\mathbb{E}[X] = \int_{-\infty}^{\infty} x f(x) \, dx$$
+siempre que la integral sea absolutamente convergente, es decir, $\int_{-\infty}^{\infty} |x| f(x) \, dx < \infty$. Si esta condición no se cumple, la esperanza no existe.
+
+La esperanza es un operador lineal. Dadas dos variables aleatorias $X, Y$ definidas sobre el mismo espacio de probabilidad y constantes $a, b \in \mathbb{R}$, se satisface:
+$$\mathbb{E}[aX + bY] = a\mathbb{E}[X] + b\mathbb{E}[Y]$$
+
+Para el desarrollo de las propiedades del estimador núcleo, raramente trabajaremos directamente con $\mathbb{E}[X]$, sino con la esperanza de funciones de $X$ (específicamente, el núcleo $K$ evaluado en los datos). El siguiente resultado permite calcular dicha esperanza utilizando directamente la densidad original $f$.
+
+**Teorema 2.1 (Esperanza de una función de una v.a.).**
+
+Sea $g: \mathbb{R} \to \mathbb{R}$ una función medible Borel. Si $X$ es una variable aleatoria con densidad $f$, entonces:
+$$\mathbb{E}[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) \, dx$$
+siempre que $\mathbb{E}[|g(X)|] < \infty$.
+
+Este resultado es crucial en este trabajo. Por ejemplo, al calcular el sesgo del estimador, evaluaremos la esperanza de $g(X_i) = \frac{1}{h}K\left(\frac{x-X_i}{h}\right)$, lo que se traducirá directamente en una integral de convolución entre el núcleo y la densidad verdadera.
+
+**Definición 2.6 (Varianza y Momentos Superiores).**
+
+La **varianza** de una variable aleatoria $X$, denotada por $\mathbb{V}(X)$ o $\sigma^2$, es una medida de dispersión cuadrática en torno a la media. Se define como el segundo momento central:
+$$\mathbb{V}(X) = \mathbb{E}\left[ (X - \mathbb{E}[X])^2 \right] = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) \, dx$$
+
+Desarrollando el cuadrado, se obtiene la expresión operativa habitual:
+$$\mathbb{V}(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$$
+
+De forma general, definimos el **$k$-ésimo momento** respecto al origen como $\mu'_k = \mathbb{E}[X^k]$, y el **$k$-ésimo momento central** como $\mu_k = \mathbb{E}[(X-\mu)^k]$. La varianza corresponde a $\mu_2$. La existencia de estos momentos depende del decaimiento de las colas de la densidad $f$; distribuciones de cola pesada (como las observadas en finanzas) pueden carecer de momentos de orden superior.
+
+**Propiedades de la Varianza.**
+
+1.  **No negatividad:** $\mathbb{V}(X) \ge 0$.
+
+2.  **Invarianza por traslación y escala:** Para constantes $a, b \in \mathbb{R}$, $\mathbb{V}(aX + b) = a^2 \mathbb{V}(X)$.
+
+3.  **Aditividad:** Si $X_1, \dots, X_n$ son variables aleatorias independientes dos a dos, entonces la varianza de la suma es la suma de las varianzas:
+    $$\mathbb{V}\left( \sum_{i=1}^n X_i \right) = \sum_{i=1}^n \mathbb{V}(X_i)$$
+Esta última propiedad es fundamental para derivar la varianza del estimador KDE, ya que este se construye como una suma lineal de variables aleatorias independientes.
+
+**Teorema 2.2 (Cambio de Variable en Integración).**
+
+Dado que el análisis asintótico del ancho de banda $h$ implica reescalar la variable aleatoria, recordamos la fórmula de cambio de variable, esencial para las demostraciones del Capítulo 4. Sea $\phi: \mathbb{R} \to \mathbb{R}$ un difeomorfismo. Entonces:
+$$\int_{\mathbb{R}} f(\phi(u)) |\phi'(u)| \, du = \int_{\mathbb{R}} f(x) \, dx$$
+
+En particular, para la transformación lineal $x = \mu + hu$ (con $h > 0$), tenemos $dx = h \, du$. Esto nos permite reescribir integrales de convolución de la forma:
+$$\int_{-\infty}^{\infty} \frac{1}{h} K\left(\frac{x - y}{h}\right) f(y) \, dy = \int_{-\infty}^{\infty} K(u) f(x - hu) \, du$$
+Esta identidad convierte el parámetro de escala $h$ en un argumento de la función $f$, permitiendo posteriormente aplicar desarrollos de Taylor para analizar el comportamiento local del estimador cuando $h \to 0$.
+
+
+## Convergencia Estocástica y Notación de Orden
+
+El comportamiento del estimador de densidad tipo núcleo depende intrínsecamente del tamaño de la muestra $n$. Para analizar sus propiedades asintóticas —es decir, cuando $n \to \infty$— es imprescindible formalizar en qué sentido las aproximaciones estocásticas se acercan a los valores teóricos poblacionales.
+
+Sea $\{X_n\}_{n=1}^{\infty}$ una sucesión de variables aleatorias y $X$ una variable aleatoria, todas ellas definidas sobre un mismo espacio de probabilidad $(\Omega, \mathcal{F}, \mathbb{P})$.
+
+### Modos de Convergencia
+
+Distinguimos tres modos principales de convergencia, ordenados de mayor a menor exigencia sobre la estructura probabilística subyacente.
+
+**Definición 2.7 (Convergencia Casi Segura).**
+
+Se dice que la sucesión $\{X_n\}$ converge **casi seguramente** (o con probabilidad 1) a $X$, denotado por $X_n \xrightarrow{c.s.} X$, si el conjunto de eventos donde la sucesión no converge tiene medida nula:
+$$\mathbb{P}\left( \left\{ \omega \in \Omega : \lim_{n \to \infty} X_n(\omega) = X(\omega) \right\} \right) = 1$$
+Esta es la forma más fuerte de convergencia clásica. En el contexto de estimación, si un estimador $\hat{\theta}_n$ satisface $\hat{\theta}_n \xrightarrow{c.s.} \theta$, se dice que es **fuertemente consistente**.
+
+**Definición 2.8 (Convergencia en Probabilidad).**
+
+La sucesión $\{X_n\}$ converge **en probabilidad** a $X$, denotado por $X_n \xrightarrow{p} X$, si para todo $\epsilon > 0$, la probabilidad de que la distancia entre $X_n$ y $X$ exceda $\epsilon$ tiende a cero:
+$$\lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0$$
+Esta convergencia implica la **consistencia débil** de un estimador. Es una condición más relajada que la casi segura, permitiendo que existan eventos raros donde la discrepancia sea grande, siempre que su probabilidad se desvanezca asintóticamente.
+
+**Definición 2.9 (Convergencia en Distribución).**
+
+Sean $F_n$ y $F$ las funciones de distribución acumuladas de $X_n$ y $X$ respectivamente. Se dice que $X_n$ converge **en distribución** (o en ley) a $X$, denotado por $X_n \xrightarrow{d} X$, si:
+$$\lim_{n \to \infty} F_n(x) = F(x)$$
+para todo punto $x \in \mathbb{R}$ donde $F$ sea continua.
+
+A diferencia de las anteriores, la convergencia en distribución no requiere que las variables estén definidas en el mismo espacio de probabilidad, ya que se refiere únicamente a sus leyes. Es fundamental para la construcción de intervalos de confianza asintóticos mediante el Teorema Central del Límite.
+
+**Teorema 2.3 (Jerarquía y Relaciones).**
+
+Las implicaciones entre los modos de convergencia son las siguientes:
+$$X_n \xrightarrow{c.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X$$
+Las implicaciones inversas no son ciertas en general, salvo en el caso particular en que $X$ es una constante degenerada ($X = c$), donde $X_n \xrightarrow{d} c \implies X_n \xrightarrow{p} c$.
+
+Para operar algebraicamente con límites estocásticos, enunciamos dos resultados clásicos que utilizaremos para simplificar las expresiones del error asintótico.
+
+**Teorema 2.4 (Teorema de la Aplicación Continua y Slutsky).**
+
+Sea $g: \mathbb{R} \to \mathbb{R}$ una función continua.
+
+1.  Si $X_n \xrightarrow{p} X$, entonces $g(X_n) \xrightarrow{p} g(X)$.
+
+2.  Si $X_n \xrightarrow{d} X$, entonces $g(X_n) \xrightarrow{d} g(X)$.
+
+3.  **(Lema de Slutsky):** Si $X_n \xrightarrow{d} X$ e $Y_n \xrightarrow{p} c$, donde $c$ es una constante, entonces:
+    $$X_n + Y_n \xrightarrow{d} X + c, \quad X_n Y_n \xrightarrow{d} cX, \quad \text{y} \quad X_n / Y_n \xrightarrow{d} X/c \; (\text{si } c \neq 0)$$
+
+### Notación de Orden Estocástica ($o_p$ y $O_p$)
+
+En el análisis asintótico del KDE, descompondremos el error en términos principales y términos residuales que se desvanecen rápidamente. Para formalizar la "velocidad" a la que estos términos convergen, generalizamos la notación de Landau ($o$ y $O$) al contexto probabilístico.
+
+Sea $\{X_n\}$ una sucesión de variables aleatorias y $\{a_n\}$ una sucesión de constantes positivas reales.
+
+**Definición 2.10 (Pequeña "o" en probabilidad).**
+
+Escribimos $X_n = o_p(a_n)$ si la razón $X_n / a_n$ converge a cero en probabilidad:
+$$X_n = o_p(a_n) \iff \frac{X_n}{a_n} \xrightarrow{p} 0$$
+Intuitivamente, esto significa que $X_n$ es de un orden asintótico estrictamente menor que $a_n$. Un caso particular importante es $X_n = o_p(1)$, que es equivalente a decir que $X_n \xrightarrow{p} 0$.
+
+**Definición 2.11 (Grande "O" en probabilidad).**
+
+Escribimos $X_n = O_p(a_n)$ si la razón $X_n / a_n$ está **acotada en probabilidad**. Formalmente, esto significa que para todo $\epsilon > 0$, existe una constante finita $M_\epsilon > 0$ y un entero $N_\epsilon$ tales que:
+$$\mathbb{P}\left( \left| \frac{X_n}{a_n} \right| > M_\epsilon \right) < \epsilon, \quad \forall n \ge N_\epsilon$$
+Si $X_n = O_p(1)$, decimos que la sucesión es **estocásticamente acotada**. Cabe destacar que toda sucesión convergente en distribución es $O_p(1)$ (Teorema de Prohorov), lo que implica que $X_n \xrightarrow{d} X \implies X_n = O_p(1)$.
+
+**Álgebra de órdenes estocásticos.**
+
+Estas notaciones simplifican enormemente las demostraciones al permitirnos absorber términos despreciables. Algunas reglas aritméticas que utilizaremos (análogas al caso determinista) son:
+
+1.  $o_p(1) + o_p(1) = o_p(1)$
+2.  $O_p(1) + o_p(1) = O_p(1)$
+3.  $O_p(1) \cdot o_p(1) = o_p(1)$
+4.  Si $X_n = O_p(n^{-\alpha})$ y $Y_n = O_p(n^{-\beta})$, entonces $X_n Y_n = O_p(n^{-(\alpha+\beta)})$.
+
+Gracias a esta notación, en el Capítulo 4 podremos expresar, por ejemplo, que la varianza del estimador decae a una velocidad específica, escribiendo $\mathbb{V}[\hat{f}(x)] = \frac{1}{nh}f(x)R(K) + o_p\left(\frac{1}{nh}\right)$.
+
+
+## Herramientas de Análisis y Aproximación
+
+El análisis de las propiedades del estimador núcleo se basa fundamentalmente en aproximaciones locales de la función de densidad desconocida $f$. Para garantizar la validez de estas aproximaciones, es necesario restringir el espacio de funciones admisibles y disponer de herramientas de cálculo para cuantificar el error de aproximación.
+
+### Clases de Suavidad
+
+La velocidad de convergencia del estimador KDE depende directamente de la "suavidad" de la densidad subyacente. Formalizamos este concepto mediante las clases de diferenciabilidad.
+
+**Definición 2.12 (Espacio $\mathcal{C}^k$).**
+
+Sea $I \subseteq \mathbb{R}$ un intervalo abierto. Definimos $\mathcal{C}^k(I)$ como el conjunto de funciones $g: I \to \mathbb{R}$ que tienen $k$ derivadas continuas en $I$.
+En particular, asumiremos habitualmente que la densidad $f \in \mathcal{C}^2(\mathbb{R})$ y que su segunda derivada $f''$ es acotada y continuo-cuadrada integrable. Esta asunción de regularidad es necesaria para asegurar que la curvatura de la densidad está bien definida en todo punto.
+
+### Desarrollo de Taylor
+
+La herramienta principal para evaluar el sesgo del estimador será la expansión de Taylor. Dado que el estimador núcleo evalúa la densidad en puntos vecinos $x - hu$, necesitaremos aproximar $f(x - hu)$ en términos de $f(x)$ cuando el ancho de banda $h$ tiende a cero.
+
+**Teorema 2.5 (Teorema de Taylor con resto de Peano).**
+
+Sea $g \in \mathcal{C}^k(\mathbb{R})$ definida en un entorno del punto $x$. Para un incremento $t$ suficientemente pequeño, se cumple:
+$$g(x + t) = g(x) + g'(x)t + \frac{g''(x)}{2!}t^2 + \dots + \frac{g^{(k)}(x)}{k!}t^k + o(|t|^k)$$
+donde el término residual $o(|t|^k)$ satisface $\lim_{t \to 0} \frac{o(|t|^k)}{|t|^k} = 0$.
+
+En el contexto del KDE, aplicaremos este teorema con $t = -hu$. Si $f \in \mathcal{C}^2$, la expansión hasta segundo orden resulta:
+$$f(x - hu) = f(x) - h u f'(x) + \frac{1}{2} h^2 u^2 f''(x) + o(h^2)$$
+Esta expresión es la llave maestra que nos permitirá demostrar en el Capítulo 4 que el sesgo del estimador es de orden cuadrático ($O(h^2)$) respecto al ancho de banda.
+
+### Convolución
+
+Finalmente, observamos que el estimador de densidad puede interpretarse matemáticamente como una operación de convolución.
+
+**Definición 2.13 (Convolución).**
+
+Dadas dos funciones integrables $f, g: \mathbb{R} \to \mathbb{R}$, se define su **convolución**, denotada por $(f * g)(x)$, como:
+$$(f * g)(x) = \int_{-\infty}^{\infty} f(y) g(x - y) \, dy$$
+
+Como veremos en el siguiente capítulo, el estimador de densidad es esencialmente la convolución de la función de densidad empírica con la función núcleo reescalada. Esta perspectiva permite utilizar propiedades del análisis armónico (como la Transformada de Fourier) para estudiar la eficiencia del estimador, aunque en este trabajo nos centraremos en el enfoque algebraico directo.
+
+
+\newpage
 
 # El Estimador de Densidad Tipo Núcleo
 
-Aquí definiremos el estimador y pondremos los gráficos de los núcleos en R.
+## Motivación: Del Histograma al Estimador Ingenuo
+
+La construcción del estimador de densidad tipo núcleo surge como una evolución natural necesaria para superar las deficiencias analíticas del histograma clásico. Si bien el histograma es la herramienta exploratoria más ubicua, su formulación matemática presenta limitaciones que lo inhabilitan para la inferencia avanzada.
+
+Consideremos una muestra aleatoria $X_1, \dots, X_n$ de una variable con densidad $f$. El histograma se construye definiendo una partición del soporte en intervalos (o *bins*) $B_j$ de longitud $h$, y contando la frecuencia de observaciones en cada uno. Formalmente, para un $x \in B_j$, el estimador histograma es:
+
+$$\hat{f}_H(x) = \frac{1}{nh} \sum_{i=1}^n \mathbb{I}(X_i \in B_j)$$
+
+Este estimador presenta dos problemas fundamentales:
+
+1.  **Discontinuidad:** $\hat{f}_H$ es una función escalonada, con discontinuidades en los bordes de los intervalos. Esto hace imposible obtener derivadas de la densidad estimada, impidiendo el análisis de puntos de inflexión o la curvatura.
+2.  **Dependencia de la Rejilla:** La forma del histograma cambia drásticamente dependiendo de la elección del punto de origen de la partición $x_0$. Dos estadísticos con los mismos datos podrían llegar a conclusiones visuales distintas simplemente por empezar los intervalos en puntos diferentes.
+
+Para eliminar la arbitrariedad de la rejilla, Rosenblatt (1956) propuso liberar a los intervalos de su posición fija. La idea intuitiva es: en lugar de forzar a $x$ a caer en una caja predefinida, construyamos una caja de ancho $2h$ centrada exactamente en cada $x$.
+
+Matemáticamente, esto se justifica recordando la definición de densidad como la derivada de la función de distribución $F$:
+$$f(x) = F'(x) = \lim_{h \to 0} \frac{F(x+h) - F(x-h)}{2h}$$
+
+Si sustituimos la distribución teórica $F$ por la **Función de Distribución Empírica** $F_n(x) = \frac{1}{n}\sum_{i=1}^n \mathbb{I}(X_i \le x)$, obtenemos el llamado **Estimador Ingenuo** (*Naive Estimator*):
+
+$$\hat{f}_{Naive}(x) = \frac{F_n(x+h) - F_n(x-h)}{2h} = \frac{1}{2nh} \# \{ X_i : x-h < X_i \le x+h \}$$
+
+Podemos reescribir este estimador introduciendo una función de peso o "función núcleo" auxiliar $w(u)$:
+$$\hat{f}_{Naive}(x) = \frac{1}{nh} \sum_{i=1}^n w\left( \frac{x - X_i}{h} \right), \quad \text{donde } w(u) = \frac{1}{2}\mathbb{I}(|u| \le 1)$$
+
+El estimador ingenuo resuelve el problema de la dependencia del origen, pero **no resuelve el problema de la suavidad**. Dado que la función $w(u)$ es rectangular (vale 1/2 dentro del intervalo y 0 fuera), el estimador resultante $\hat{f}_{Naive}$ sigue siendo una función escalonada, presentando saltos discontinuos cada vez que una observación entra o sale de la ventana deslizante $(x-h, x+h)$.
+
+Para obtener una estimación que sea suave y diferenciable (clase $\mathcal{C}^\infty$), es necesario reemplazar la función rectangular $w(\cdot)$ por una función suave $K(\cdot)$ que decaiga gradualmente. Esta generalización da lugar al Estimador de Densidad Tipo Núcleo.
+
+### Ilustración Gráfica
+A continuación, ilustramos visualmente esta transición. La Figura 3.1 muestra cómo el histograma depende de los intervalos fijos, mientras que el estimador ingenuo centra las cajas en los datos pero mantiene la rugosidad. Finalmente, el estimador núcleo (con núcleo Gaussiano) recupera la suavidad de la densidad subyacente.
+
+```{r comparacion-estimadores, echo=FALSE, fig.cap="(a) Histograma, (b) Estimador Ingenuo (Rectangular), (c) Estimador Núcleo Suave (Gaussiano)", fig.align='center', out.width="90%"}
+# Configuración de parámetros gráficos
+par(mfrow=c(1, 3), mar=c(4, 4, 3, 1))
+set.seed(123)
+
+# 1. Generar datos (Mezcla de normales para que sea interesante)
+n <- 100
+datos <- c(rnorm(n*0.6, mean=2, sd=1), rnorm(n*0.4, mean=6, sd=1.5))
+
+# Rango de evaluación
+grid_x <- seq(-2, 11, length.out = 200)
+
+# A. HISTOGRAMA
+hist(datos, breaks=10, prob=TRUE, 
+     main="(a) Histograma", 
+     xlab="x", col="gray90", border="gray40", ylim=c(0, 0.25))
+#lines(density(datos, bw=0.6), col="red", lty=2) # Ref suave
+
+# B. ESTIMADOR INGENUO (Kernel Rectangular)
+# Usamos la función density con kernel rectangular para simular el 'Naive'
+plot(density(datos, kernel="rectangular", bw=0.6), 
+     main="(b) Estimador Ingenuo", 
+     xlab="x", col="blue", lwd=2, ylim=c(0, 0.25), zero.line=FALSE)
+polygon(density(datos, kernel="rectangular", bw=0.6), col=rgb(0,0,1,0.1), border="blue")
+
+# C. ESTIMADOR NÚCLEO (Gaussiano)
+plot(density(datos, kernel="gaussian", bw=0.6), 
+     main="(c) KDE (Gaussiano)", 
+     xlab="x", col="darkgreen", lwd=2, ylim=c(0, 0.25), zero.line=FALSE)
+polygon(density(datos, kernel="gaussian", bw=0.6), col=rgb(0,0.5,0,0.1), border="darkgreen")
+
+# Restaurar par
+par(mfrow=c(1,1))
+```
