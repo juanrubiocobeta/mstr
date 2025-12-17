@@ -15,7 +15,7 @@ header-includes:
   - \usepackage{titlesec}
   # Formato de los capítulos para que se parezca al original (Centrado y con número)
   - \titleformat{\chapter}[display]{\normalfont\huge\bfseries\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-  # Quitar la cabecera por defecto y poner la numeración abajo o arriba según gusto (aquí limpia)
+  # Quitar la cabecera por defecto y poner la numeración abajo o arriba según gusto (aquíFes  limpia)
   - \pagestyle{plain} 
 ---
 
@@ -274,7 +274,7 @@ Esta identidad convierte el parámetro de escala $h$ en un argumento de la funci
 
 ## Convergencia Estocástica y Notación de Orden
 
-El comportamiento del estimador de densidad tipo núcleo depende intrínsecamente del tamaño de la muestra $n$. Para analizar sus propiedades asintóticas —es decir, cuando $n \to \infty$— es imprescindible formalizar en qué sentido las aproximaciones estocásticas se acercan a los valores teóricos poblacionales.
+El comportamiento del estimador de densidad tipo núcleo depende intrínsecamente del tamaño de la muestra $n$. Para analizar sus propiedades asintóticas, es decir, cuando $n \to \infty$, es imprescindible formalizar en qué sentido las aproximaciones estocásticas se acercan a los valores teóricos poblacionales.
 
 Sea $\{X_n\}_{n=1}^{\infty}$ una sucesión de variables aleatorias y $X$ una variable aleatoria, todas ellas definidas sobre un mismo espacio de probabilidad $(\Omega, \mathcal{F}, \mathbb{P})$.
 
