@@ -15,7 +15,7 @@ header-includes:
   - \usepackage{titlesec}
   # Formato de los capítulos para que se parezca al original (Centrado y con número)
   - \titleformat{\chapter}[display]{\normalfont\huge\bfseries\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-  # Quitar la cabecera por defecto y poner la numeración abajo o arriba según gusto (aquí limpia)
+  # Quitar la cabecera por defecto y poner la numeración abajo o arriba según gusto (aquíFes  limpia)
   - \pagestyle{plain} 
 ---
 
@@ -274,7 +274,7 @@ Esta identidad convierte el parámetro de escala $h$ en un argumento de la funci
 
 ## Convergencia Estocástica y Notación de Orden
 
-El comportamiento del estimador de densidad tipo núcleo depende intrínsecamente del tamaño de la muestra $n$. Para analizar sus propiedades asintóticas —es decir, cuando $n \to \infty$— es imprescindible formalizar en qué sentido las aproximaciones estocásticas se acercan a los valores teóricos poblacionales.
+El comportamiento del estimador de densidad tipo núcleo depende intrínsecamente del tamaño de la muestra $n$. Para analizar sus propiedades asintóticas, es decir, cuando $n \to \infty$, es imprescindible formalizar en qué sentido las aproximaciones estocásticas se acercan a los valores teóricos poblacionales.
 
 Sea $\{X_n\}_{n=1}^{\infty}$ una sucesión de variables aleatorias y $X$ una variable aleatoria, todas ellas definidas sobre un mismo espacio de probabilidad $(\Omega, \mathcal{F}, \mathbb{P})$.
 
@@ -449,13 +449,13 @@ hist(datos, breaks=10, prob=TRUE,
 plot(density(datos, kernel="rectangular", bw=0.6), 
      main="(b) Estimador Ingenuo", 
      xlab="x", col="blue", lwd=2, ylim=c(0, 0.25), zero.line=FALSE)
-polygon(density(datos, kernel="rectangular", bw=0.6), col=rgb(0,0,1,0.1), border="blue")
+polygon(density(datos, kernel="rectangular", bw=0.4), col=rgb(0,0,1,0.1), border="blue")
 
 # C. ESTIMADOR NÚCLEO (Gaussiano)
 plot(density(datos, kernel="gaussian", bw=0.6), 
      main="(c) KDE (Gaussiano)", 
      xlab="x", col="darkgreen", lwd=2, ylim=c(0, 0.25), zero.line=FALSE)
-polygon(density(datos, kernel="gaussian", bw=0.6), col=rgb(0,0.5,0,0.1), border="darkgreen")
+polygon(density(datos, kernel="gaussian", bw=0.4), col=rgb(0,0.5,0,0.1), border="darkgreen")
 
 # Restaurar par
 par(mfrow=c(1,1))
