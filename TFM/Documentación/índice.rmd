@@ -1,0 +1,86 @@
+---
+output: 
+  pdf_document:
+    number_sections: true      # Numera las secciones (1, 1.1, 1.1.1)
+    fig_caption: true          # Activa los pies de figura
+    latex_engine: pdflatex     # Motor de compilación estándar
+    keep_tex: false            # No guarda el archivo .tex intermedio
+    toc: false                 # Desactivamos el índice automático aquí (lo ponemos manual con \tableofcontents)
+geometry: "left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm" # Márgenes Estándar UGR
+fontsize: 12pt                 # Tamaño de fuente oficial
+lang: es-ES                    # Idioma (Traduce "Figure" a "Figura", etc.)
+header-includes:
+  # --- FORMATO DE TEXTO ---
+  - \usepackage{setspace}
+  - \onehalfspacing            # Interlineado de 1.5 líneas
+  - \usepackage{indentfirst}   # Sangrar siempre el primer párrafo de sección
+
+  # --- MATEMÁTICAS AVANZADAS ---
+  - \usepackage{amsmath}
+  - \usepackage{amsfonts}
+  - \usepackage{amssymb}
+  - \usepackage{amsthm}        # Para entornos Teorema/Definición
+
+  # --- GRÁFICOS ---
+  - \usepackage{graphicx}
+  - \usepackage{float}         # Para poder usar fig.pos='H' (fijar imágenes)
+
+  # --- ESTILO DE TÍTULOS (ESTILO BACAICOA) ---
+  - \usepackage{titlesec}
+  # Esto hace que "Capítulo X" salga centrado y grande:
+  - \titleformat{\chapter}[display]{\normalfont\huge\bfseries\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+  
+  # --- CABECERAS Y PIES DE PÁGINA ---
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancy}
+  - \fancyhead{}               # Limpia cabecera por defecto
+  - \fancyhead[RO,LE]{\thepage} # Número de página a la derecha (impares) e izq (pares)
+  - \fancyfoot{}               # Limpia el pie de página
+  
+  # --- ENLACES (Para que no salgan recuadros rojos) ---
+  - \usepackage{hyperref}
+  - \hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, citecolor=blue}
+---
+
+# Introducción y Motivación
+
+## Contexto y Justificación
+## Motivación Práctica: Modelización del Mercado Bursátil (S&P 500)
+## Objetivos y Estructura del Trabajo
+# Preliminares Probabilísticos
+
+## Fundamentos de Probabilidad
+## Momentos
+## Convergencia Estocástica y Notación de Orden
+## Herramientas de Análisis y Aproximación
+# El Estimador de Densidad Tipo Núcleo Univariante
+
+## Motivación: Del Histograma al Estimador Ingenuo
+## Definición Formal y Propiedades del Núcleo
+## Tipos de Funciones Núcleo
+## El Papel del Ancho de Banda ($h$)
+# Propiedades Estadísticas del Estimador
+
+## Esperanza y Sesgo (Bias)
+## Varianza del Estimador
+## Error Cuadrático Medio (MSE) y Consistencia
+## Error Global (MISE y AMISE)
+# Selección del Ancho de Banda
+
+## El Ancho de Banda Óptimo Teórico
+## Reglas de Referencia (Plug-in simples)
+## Validación Cruzada (Cross-Validation)
+# Extensión al Caso Multivariante
+
+## Definición en $\mathbb{R}^d$
+## Tipos de Matrices de Anchos de Banda
+## La Maldición de la Dimensionalidad
+# Aplicación Práctica: Análisis del S&P 500
+
+## Descripción de los Datos
+## Análisis Exploratorio
+## Estimación de la Densidad
+## Implicaciones de Riesgo
+# Conclusiones y Líneas Futuras
+
+# Bibliografía {-}
