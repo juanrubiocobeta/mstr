@@ -449,13 +449,13 @@ hist(datos, breaks=10, prob=TRUE,
 plot(density(datos, kernel="rectangular", bw=0.6), 
      main="(b) Estimador Ingenuo", 
      xlab="x", col="blue", lwd=2, ylim=c(0, 0.25), zero.line=FALSE)
-polygon(density(datos, kernel="rectangular", bw=0.6), col=rgb(0,0,1,0.1), border="blue")
+polygon(density(datos, kernel="rectangular", bw=0.4), col=rgb(0,0,1,0.1), border="blue")
 
 # C. ESTIMADOR NÚCLEO (Gaussiano)
 plot(density(datos, kernel="gaussian", bw=0.6), 
      main="(c) KDE (Gaussiano)", 
      xlab="x", col="darkgreen", lwd=2, ylim=c(0, 0.25), zero.line=FALSE)
-polygon(density(datos, kernel="gaussian", bw=0.6), col=rgb(0,0.5,0,0.1), border="darkgreen")
+polygon(density(datos, kernel="gaussian", bw=0.4), col=rgb(0,0.5,0,0.1), border="darkgreen")
 
 # Restaurar par
 par(mfrow=c(1,1))
