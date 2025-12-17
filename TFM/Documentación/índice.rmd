@@ -43,44 +43,44 @@ header-includes:
 ---
 
 # Introducción y Motivación
-
 ## Contexto y Justificación
 ## Motivación Práctica: Modelización del Mercado Bursátil (S&P 500)
 ## Objetivos y Estructura del Trabajo
-# Preliminares Probabilísticos
 
+# Preliminares Probabilísticos
 ## Fundamentos de Probabilidad
 ## Momentos
 ## Convergencia Estocástica y Notación de Orden
 ## Herramientas de Análisis y Aproximación
-# El Estimador de Densidad Tipo Núcleo Univariante
 
+# El Estimador de Densidad Tipo Núcleo Univariante
 ## Motivación: Del Histograma al Estimador Ingenuo
 ## Definición Formal y Propiedades del Núcleo
 ## Tipos de Funciones Núcleo
 ## El Papel del Ancho de Banda ($h$)
-# Propiedades Estadísticas del Estimador
 
+# Propiedades Estadísticas del Estimador
 ## Esperanza y Sesgo (Bias)
 ## Varianza del Estimador
 ## Error Cuadrático Medio (MSE) y Consistencia
 ## Error Global (MISE y AMISE)
-# Selección del Ancho de Banda
 
+# Selección del Ancho de Banda
 ## El Ancho de Banda Óptimo Teórico
 ## Reglas de Referencia (Plug-in simples)
 ## Validación Cruzada (Cross-Validation)
-# Extensión al Caso Multivariante
 
+# Extensión al Caso Multivariante
 ## Definición en $\mathbb{R}^d$
 ## Tipos de Matrices de Anchos de Banda
 ## La Maldición de la Dimensionalidad
-# Aplicación Práctica: Análisis del S&P 500
 
+# Aplicación Práctica: Análisis del S&P 500
 ## Descripción de los Datos
 ## Análisis Exploratorio
 ## Estimación de la Densidad
 ## Implicaciones de Riesgo
+
 # Conclusiones y Líneas Futuras
 
 # Bibliografía {-}
