@@ -433,11 +433,11 @@ Como veremos en el siguiente capítulo, el estimador de densidad es esencialment
 
 # El Estimador de Densidad Tipo Núcleo
 
-## Motivación: Del Histograma al Estimador Ingenuo
+## Motivación: Del Histograma al *Naive Estimator*
 
-La construcción del estimador de densidad tipo núcleo surge como una evolución natural necesaria para superar las deficiencias analíticas del histograma clásico. Si bien el histograma es la herramienta exploratoria más ubicua, su formulación matemática presenta limitaciones que lo inhabilitan para la inferencia avanzada.
+La construcción del estimador de densidad tipo núcleo surge como una evolución natural necesaria para superar las deficiencias analíticas del histograma clásico. Si bien el histograma es la herramienta exploratoria más universal, su formulación matemática presenta limitaciones que lo inhabilitan para la inferencia avanzada.
 
-Consideremos una muestra aleatoria $X_1, \dots, X_n$ de una variable con densidad $f$. El histograma se construye definiendo una partición del soporte en intervalos (o *bins*) $B_j$ de longitud $h$, y contando la frecuencia de observaciones en cada uno. Formalmente, para un $x \in B_j$, el estimador histograma es:
+Consideremos una muestra aleatoria $X_1, \dots, X_n$ de una variable con densidad $f$. El histograma se construye definiendo una partición del soporte en intervalos (*bins*) $B_j$ de longitud $h$, y contando la frecuencia de observaciones en cada uno. Formalmente, para un $x \in B_j$, el estimador histograma es:
 
 $$\hat{f}_H(x) = \frac{1}{nh} \sum_{i=1}^n \mathbb{I}(X_i \in B_j)$$
 
@@ -451,21 +451,21 @@ Para eliminar la arbitrariedad de la rejilla, Rosenblatt (1956) propuso liberar 
 Matemáticamente, esto se justifica recordando la definición de densidad como la derivada de la función de distribución $F$:
 $$f(x) = F'(x) = \lim_{h \to 0} \frac{F(x+h) - F(x-h)}{2h}$$
 
-Si sustituimos la distribución teórica $F$ por la **Función de Distribución Empírica** $F_n(x) = \frac{1}{n}\sum_{i=1}^n \mathbb{I}(X_i \le x)$, obtenemos el llamado **Estimador Ingenuo** (*Naive Estimator*):
+Si sustituimos la distribución teórica $F$ por la **Función de Distribución Empírica** $F_n(x) = \frac{1}{n}\sum_{i=1}^n \mathbb{I}(X_i \le x)$, obtenemos el llamado *Naive Estimator*:
 
 $$\hat{f}_{Naive}(x) = \frac{F_n(x+h) - F_n(x-h)}{2h} = \frac{1}{2nh} \# \{ X_i : x-h < X_i \le x+h \}$$
 
 Podemos reescribir este estimador introduciendo una función de peso o "función núcleo" auxiliar $w(u)$:
 $$\hat{f}_{Naive}(x) = \frac{1}{nh} \sum_{i=1}^n w\left( \frac{x - X_i}{h} \right), \quad \text{donde } w(u) = \frac{1}{2}\mathbb{I}(|u| \le 1)$$
 
-El estimador ingenuo resuelve el problema de la dependencia del origen, pero **no resuelve el problema de la suavidad**. Dado que la función $w(u)$ es rectangular (vale 1/2 dentro del intervalo y 0 fuera), el estimador resultante $\hat{f}_{Naive}$ sigue siendo una función escalonada, presentando saltos discontinuos cada vez que una observación entra o sale de la ventana deslizante $(x-h, x+h)$.
+El Naive Estimator resuelve el problema de la dependencia del origen, pero **no resuelve el problema de la suavidad**. Dado que la función $w(u)$ es rectangular (vale 1/2 dentro del intervalo y 0 fuera), el estimador resultante $\hat{f}_{Naive}$ sigue siendo una función escalonada, presentando saltos discontinuos cada vez que una observación entra o sale de la ventana deslizante $(x-h, x+h)$.
 
 Para obtener una estimación que sea suave y diferenciable (clase $\mathcal{C}^\infty$), es necesario reemplazar la función rectangular $w(\cdot)$ por una función suave $K(\cdot)$ que decaiga gradualmente. Esta generalización da lugar al Estimador de Densidad Tipo Núcleo.
 
 ### Ilustración Gráfica
-A continuación, ilustramos visualmente esta transición. La Figura 3.1 muestra cómo el histograma depende de los intervalos fijos, mientras que el estimador ingenuo centra las cajas en los datos pero mantiene la rugosidad. Finalmente, el estimador núcleo (con núcleo Gaussiano) recupera la suavidad de la densidad subyacente.
+A continuación, ilustramos visualmente esta transición. La Figura 3.1 muestra cómo el histograma depende de los intervalos fijos, mientras que el naive estimator centra las cajas en los datos pero mantiene la rugosidad. Finalmente, el estimador núcleo (con núcleo Gaussiano) recupera la suavidad de la densidad subyacente.
 
-```{r comparacion-estimadores, echo=FALSE, fig.cap="(a) Histograma, (b) Estimador Ingenuo (Rectangular), (c) Estimador Núcleo Suave (Gaussiano)", fig.align='center', out.width='90%'}
+```{r comparacion-estimadores, echo=FALSE, fig.cap="(a) Histograma, (b) Naive Estimator (Rectangular), (c) Estimador Núcleo Suave (Gaussiano)", fig.align='center', out.width='90%'}
 # Configuración de parámetros gráficos
 par(mfrow=c(1, 3), mar=c(4, 4, 3, 1))
 set.seed(123)
@@ -483,10 +483,10 @@ hist(datos, breaks=10, prob=TRUE,
      xlab="x", col="gray90", border="gray40", ylim=c(0, 0.25))
 #lines(density(datos, bw=0.6), col="red", lty=2) # Ref suave
 
-# B. ESTIMADOR INGENUO (Kernel Rectangular)
+# B. Naive Estimator (Kernel Rectangular)
 # Usamos la función density con kernel rectangular para simular el 'Naive'
 plot(density(datos, kernel="rectangular", bw=0.6), 
-     main="(b) Estimador Ingenuo", 
+     main="(b) Naive Estimator", 
      xlab="x", col="blue", lwd=2, ylim=c(0, 0.25), zero.line=FALSE)
 polygon(density(datos, kernel="rectangular", bw=0.4), col=rgb(0,0,1,0.1), border="blue")
 
@@ -721,7 +721,7 @@ Matemáticamente, el ancho de banda actúa como un factor de escala que determin
 
 ### Formulación Matemática del Compromiso Sesgo-Varianza
 
-Consideremos el **Error Cuadrático Medio** (MSE, por sus siglas en inglés) del estimador en un punto $x$ fijo, definido como la esperanza del cuadrado de la diferencia entre el estimador y el valor real:
+Consideremos el **Error Cuadrático Medio** (MSE) del estimador en un punto $x$ fijo, definido como la esperanza del cuadrado de la diferencia entre el estimador y el valor real:
 
 $$MSE[\hat{f}_h(x)] = \mathbb{E}\left[ (\hat{f}_h(x) - f(x))^2 \right]$$
 
@@ -747,14 +747,14 @@ $$h_{opt} = \underset{h > 0}{\text{argmin }} MISE(h)$$
 
 ### Ilustración del Fenómeno
 
-Fenomenológicamente, este equilibrio matemático se manifiesta visualmente en la suavidad de la curva. La elección incorrecta de $h$ conduce a dos patologías opuestas:
+Empíricamente, este equilibrio matemático se manifiesta visualmente en la suavidad de la curva. La elección incorrecta de $h$ conduce a dos patologías opuestas:
 
-* **Infrasuavizado (*Undersmoothing*):** Ocurre cuando $h \ll h_{opt}$. La varianza domina el error. La estimación es ruidosa y presenta falsos picos locales (*spurious modes*) generados por la aleatoriedad de la muestra y no por la estructura de la población.
+* **Infrasuavizado (*Undersmoothing*):** Ocurre cuando $h \ll h_{opt}$. La varianza domina el error. La estimación es ruidosa y presenta falsos picos locales generados por la aleatoriedad de la muestra y no por la estructura de la población.
 * **Sobresuavizado (*Oversmoothing*):** Ocurre cuando $h \gg h_{opt}$. El sesgo domina el error. La estimación es excesivamente plana, ocultando características importantes como la multimodalidad o la asimetría.
 
 La Figura 3.4 ilustra estos regímenes utilizando el núcleo Gaussiano.
 
-```{r efecto-bandwidth, echo=FALSE, fig.cap="Ilustración del Bias-Variance Tradeoff. (a) Infrasuavizado: Dominio de la varianza. (b) Compromiso adecuado. (c) Sobresuavizado: Dominio del sesgo al cuadrado.", fig.align='center', out.width="100%", fig.height=4, fig.width=10}
+```{r efecto-bandwidth, echo=FALSE, fig.cap="Ilustración del Bias-Variance Tradeoff.", fig.align='center', out.width="100%", fig.height=4, fig.width=10}
 # Configuración de datos 
 set.seed(123)
 n <- 100
