@@ -1,4 +1,4 @@
----
+e---
 output: 
   pdf_document:
     number_sections: true      # Numera las secciones (1, 1.1, 1.1.1)
@@ -64,6 +64,8 @@ header-includes:
 ## Varianza del Estimador
 ## Error Cuadrático Medio (MSE) y Consistencia
 ## Error Global (MISE y AMISE)
+
+\newpage
 
 # Selección del Ancho de Banda
 ## El Ancho de Banda Óptimo Teórico
