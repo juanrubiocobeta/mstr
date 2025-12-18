@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.2.26)  17 DEC 2025 18:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.2.26)  18 DEC 2025 20:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -812,7 +812,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [12]
-<TFM_JuanRubio_files/figure-latex/comparacion-estimadores-1.pdf, id=154, 469.75
+<TFM_JuanRubio_files/figure-latex/comparacion-estimadores-1.pdf, id=155, 469.75
 5pt x 325.215pt>
 File: TFM_JuanRubio_files/figure-latex/comparacion-estimadores-1.pdf Graphic fi
 le (type pdf)
@@ -878,7 +878,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [18]
-<TFM_JuanRubio_files/figure-latex/comparacion-nucleos-grid-1.pdf, id=192, 505.8
+<TFM_JuanRubio_files/figure-latex/comparacion-nucleos-grid-1.pdf, id=193, 505.8
 9pt x 505.89pt>
 File: TFM_JuanRubio_files/figure-latex/comparacion-nucleos-grid-1.pdf Graphic f
 ile (type pdf)
@@ -912,13 +912,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [21]
-<TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf, id=221, 722.7pt x 289
+<TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf, id=222, 722.7pt x 289
 .08pt>
 File: TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf Graphic file (typ
 e pdf)
 <use TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf>
 Package pdftex.def Info: TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pd
-f  used on input line 1316.
+f  used on input line 1315.
 (pdftex.def)             Requested size: 457.80486pt x 183.12265pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -938,11 +938,11 @@ L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 16275 strings out of 474486
- 262444 string characters out of 5743755
+ 16277 strings out of 474486
+ 262491 string characters out of 5743755
  1945542 words of memory out of 5000000
- 37998 multiletter control sequences out of 15000+600000
- 629524 words of font info for 180 fonts, out of 8000000 for 9000
+ 38000 multiletter control sequences out of 15000+600000
+ 633883 words of font info for 181 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  63i,12n,67p,1204b,618s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
@@ -961,9 +961,9 @@ Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/
 Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/U
 sers/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/ms
 bm10.pfb>
-Output written on TFM_JuanRubio.pdf (23 pages, 529858 bytes).
+Output written on TFM_JuanRubio.pdf (23 pages, 530414 bytes).
 PDF statistics:
  430 PDF objects out of 1000 (max. 8388607)
  81 named destinations out of 1000 (max. 500000)
- 39184 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 41232 words of extra memory for PDF output out of 42996 (max. 10000000)
 
