@@ -1,6 +1,8 @@
 ---
 output: 
   pdf_document:
+    toc: true
+    toc_depth: 2
     number_sections: true
     latex_engine: pdflatex
     keep_tex: false
