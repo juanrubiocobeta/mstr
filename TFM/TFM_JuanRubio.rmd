@@ -6,6 +6,8 @@ output:
     number_sections: true
     latex_engine: pdflatex
     keep_tex: false
+bibliography: bibliografia.bib  # <--- AÑADE ESTO
+link-citations: yes             # <--- AÑADE ESTO
 geometry: "left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm"
 fontsize: 11pt               # CAMBIO: 11pt es más profesional y compacto
 lang: es-ES
@@ -44,14 +46,23 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
-# Configuración global para que todo el documento sea consistente
+# Configuración global OPTIMIZADA para TFM
 knitr::opts_chunk$set(
-# echo = FALSE,        # No mostrar el código R en el PDF final
-  message = FALSE,     # Ocultar mensajes de carga de paquetes
-  warning = FALSE,     # Ocultar advertencias
-  fig.align = "center",# Centrar todas las gráficas
-  out.width = "70%",   # TAMAÑO PERFECTO: 70% del ancho de página
-  fig.pos = "H"        # Intentar colocar la imagen justo donde la pones
+  echo = TRUE,           # Mostramos código
+  message = FALSE,       # Ocultar mensajes
+  warning = FALSE,       # Ocultar advertencias
+  error = FALSE,         # Que no pare la compilación por errores tontos
+  
+  # --- CONTROL DE TAMAÑO Y ESPACIO ---
+  size = "scriptsize",   # CAMBIO CLAVE: Mucho más pequeño que 'small'
+  collapse = TRUE,       # CAMBIO CLAVE: Junta el código y el output en una sola caja
+  comment = "#>",        # Estética: Pone "#>" en los resultados
+  strip.white = TRUE,    # Elimina líneas blancas sobrantes
+  
+  # --- CONTROL DE GRÁFICOS ---
+  fig.align = "center",
+  out.width = "70%",     # Gráficas contenidas
+  fig.pos = "H"
 )
 ```
 
@@ -159,13 +170,13 @@ Históricamente, el **histograma** ha sido la herramienta precursora en esta tar
 
 3.  Carece de propiedades de eficiencia en dimensiones altas.
 
-Para solventar estas deficiencias, Rosenblatt (1956) y Parzen (1962) formalizaron el **Estimador de Densidad Tipo Núcleo** (Kernel Density Estimator o KDE). Este estimador generaliza la idea del histograma colocando una "masa de probabilidad" suave (el núcleo) sobre cada observación, proporcionando una estimación diferenciable e integrable a uno.
+Para solventar estas deficiencias, @rosenblatt1956 y @parzen1962 formalizaron el **Estimador de Densidad Tipo Núcleo** (Kernel Density Estimator o KDE). Este estimador generaliza la idea del histograma colocando una "masa de probabilidad" suave (el núcleo) sobre cada observación, proporcionando una estimación diferenciable e integrable a uno.
 
 ## Motivación Práctica
 
 La relevancia de estudiar el estimador KDE trasciende el interés puramente teórico; su aplicación es crítica en escenarios donde detectar desviaciones sutiles respecto a la normalidad es vital para la gestión de riesgos. Este trabajo toma como caso de estudio central el índice **Standard & Poor's 500 (S&P 500)**, considerado el barómetro más representativo del mercado bursátil global.
 
-Una de las "hechos estilizados" más documentados en la econometría financiera es que la distribución de los rendimientos de los activos **no es Normal**: presenta colas más pesadas (*leptocurtosis*) y asimetrías que los modelos gaussianos subestiman sistemáticamente. Ignorar estas características, especialmente durante periodos de crisis financiera, lleva a una infravaloración del riesgo de eventos extremos (cisnes negros).
+Uno de los "hechos estilizados" más documentados en la econometría financiera es que la distribución de los rendimientos de los activos no sigue una distribución normal: presenta colas más pesadas (*leptocurtosis*) y asimetrías que los modelos gaussianos subestiman sistemáticamente. Ignorar estas características, especialmente durante periodos de crisis financiera, lleva a una infravaloración del riesgo de eventos extremos (cisnes negros).
 
 El uso de la Estimación de Densidad Tipo Núcleo permite capturar la forma real de la distribución de los rendimientos del S&P 500 sin supuestos previos. Esto es fundamental para:
 
@@ -173,7 +184,7 @@ El uso de la Estimación de Densidad Tipo Núcleo permite capturar la forma real
 
 2.  **Detección de regímenes de mercado:** Visualizar cómo la densidad de los rendimientos cambia de forma bimodal o se aplana en periodos de alta volatilidad, comportamientos que un modelo paramétrico estático no podría revelar.
 
-La aplicación práctica de este trabajo (Capítulo 7) demostrará cómo el KDE ofrece una radiografía superior del comportamiento del mercado en comparación con el ajuste de una curva de campana tradicional.
+La aplicación práctica de este trabajo ([Capítulo 7](#capitulo7)) demostrará cómo el KDE ofrece una radiografía superior del comportamiento del mercado en comparación con el ajuste de una curva de campana tradicional.
 
 ## Objetivos y Estructura del Trabajo
 
@@ -185,26 +196,11 @@ Para garantizar una exposición clara y detallada, la memoria se estructura en l
 * **Capítulo 3:** Se dedica a la construcción formal del **Estimador Núcleo Univariante**, definiendo los requisitos analíticos de la función núcleo $K$ y presentando las familias de núcleos más usuales.
 * **Capítulo 4:** Aborda las **propiedades estadísticas** del estimador. Se descompone el error de estimación (MISE) en sesgo y varianza, demostrando el compromiso (*trade-off*) necesario.
 * **Capítulo 5:** Trata el problema central de la práctica del KDE: la **selección del ancho de banda** ($h$). Se discuten métodos como la Regla de Silverman y la Validación Cruzada (LSCV).
-* **Capítulo 6:** Extiende los conceptos al caso **multivariante**, discutiendo brevemente la "maldición de la dimensionalidad".
+* **Capítulo 6:** Extiende los conceptos al caso **multivariante**.
 * **Capítulo 7:** Presenta la **aplicación práctica** al índice S&P 500. Se realizará un análisis exploratorio y se aplicarán los estimadores desarrollados teóricamente para modelar la distribución de sus rendimientos, comparando los resultados obtenidos mediante diferentes selecciones de ancho de banda.
 * Finalmente, se presentan las **conclusiones** y líneas de trabajo futuro.
 
-
-
-
-
-
-
-
-
-
 \newpage 
-
-
-
-
-
-
 
 # Preliminares Probabilísticos
 
@@ -245,7 +241,7 @@ $$F(x) = \mathbb{P}(X \le x) = \mathbb{P}(\{\omega \in \Omega : X(\omega) \le x\
 
 Esta función es no decreciente, continua por la derecha y satisface $\lim_{x \to -\infty} F(x) = 0$ y $\lim_{x \to \infty} F(x) = 1$.
 
-En este trabajo nos centraremos exclusivamente en variables aleatorias **absolutamente continuas**. Formalmente, esto significa que la medida inducida por $X$ es absolutamente continua respecto a la medida de Lebesgue $\mu$ en $\mathbb{R}$. Por el Teorema de Radon-Nikodym, esto garantiza la existencia de una función de densidad.
+En este trabajo nos centraremos exclusivamente en variables aleatorias **absolutamente continuas**. Formalmente, esto significa que la medida inducida por $X$ es absolutamente continua respecto a la medida de Lebesgue $\mu$ en $\mathbb{R}$. Por el Teorema de Radon-Nikodym [@billingsley1995], esto garantiza la existencia de una función de densidad.
 
 **Definición 2.4 (Función de Densidad de Probabilidad).**
 
@@ -364,8 +360,7 @@ Sea $g: \mathbb{R} \to \mathbb{R}$ una función continua.
 
 ### Notación de Orden Estocástica ($o_p$ y $O_p$)
 
-En el análisis asintótico del KDE, descompondremos el error en términos principales y términos residuales que se desvanecen rápidamente. Para formalizar la "velocidad" a la que estos términos convergen, generalizamos la notación de Landau ($o$ y $O$) al contexto probabilístico.
-
+En el análisis asintótico del KDE, descompondremos el error en términos principales y términos residuales que se desvanecen rápidamente. Para formalizar la "velocidad" a la que estos términos convergen, generalizamos la notación de Landau ($o$ y $O$) al contexto probabilístico [@garcia2025].
 Sea $\{X_n\}$ una sucesión de variables aleatorias y $\{a_n\}$ una sucesión de constantes positivas reales.
 
 **Definición 2.10 (Pequeña "o" en probabilidad).**
@@ -378,7 +373,7 @@ Intuitivamente, esto significa que $X_n$ es de un orden asintótico estrictament
 
 Escribimos $X_n = O_p(a_n)$ si la razón $X_n / a_n$ está **acotada en probabilidad**. Formalmente, esto significa que para todo $\epsilon > 0$, existe una constante finita $M_\epsilon > 0$ y un entero $N_\epsilon$ tales que:
 $$\mathbb{P}\left( \left| \frac{X_n}{a_n} \right| > M_\epsilon \right) < \epsilon, \quad \forall n \ge N_\epsilon$$
-Si $X_n = O_p(1)$, decimos que la sucesión es **estocásticamente acotada**. Cabe destacar que toda sucesión convergente en distribución es $O_p(1)$ (Teorema de Prohorov), lo que implica que $X_n \xrightarrow{d} X \implies X_n = O_p(1)$.
+Si $X_n = O_p(1)$, decimos que la sucesión es **estocásticamente acotada** [@garcia2025]. Cabe destacar que toda sucesión convergente en distribución es $O_p(1)$ (Teorema de Prohorov [@billingsley1995]), lo que implica que $X_n \xrightarrow{d} X \implies X_n = O_p(1)$.
 
 **Álgebra de órdenes estocásticos.**
 
@@ -388,9 +383,6 @@ Estas notaciones simplifican enormemente las demostraciones al permitirnos absor
 2.  $O_p(1) + o_p(1) = O_p(1)$
 3.  $O_p(1) \cdot o_p(1) = o_p(1)$
 4.  Si $X_n = O_p(n^{-\alpha})$ y $Y_n = O_p(n^{-\beta})$, entonces $X_n Y_n = O_p(n^{-(\alpha+\beta)})$.
-
-Gracias a esta notación, en el Capítulo 4 podremos expresar, por ejemplo, que la varianza del estimador decae a una velocidad específica, escribiendo $\mathbb{V}[\hat{f}(x)] = \frac{1}{nh}f(x)R(K) + o_p\left(\frac{1}{nh}\right)$.
-
 
 ## Herramientas de Análisis y Aproximación
 
@@ -428,9 +420,6 @@ Finalmente, observamos que el estimador de densidad puede interpretarse matemát
 Dadas dos funciones integrables $f, g: \mathbb{R} \to \mathbb{R}$, se define su **convolución**, denotada por $(f * g)(x)$, como:
 $$(f * g)(x) = \int_{-\infty}^{\infty} f(y) g(x - y) \, dy$$
 
-Como veremos en el siguiente capítulo, el estimador de densidad es esencialmente la convolución de la función de densidad empírica con la función núcleo reescalada. Esta perspectiva permite utilizar propiedades del análisis armónico (como la Transformada de Fourier) para estudiar la eficiencia del estimador, aunque en este trabajo nos centraremos en el enfoque algebraico directo.
-
-
 \newpage
 
 # El Estimador de Densidad Tipo Núcleo
@@ -448,7 +437,7 @@ Este estimador presenta dos problemas fundamentales:
 1.  **Discontinuidad:** $\hat{f}_H$ es una función escalonada, con discontinuidades en los bordes de los intervalos. Esto hace imposible obtener derivadas de la densidad estimada, impidiendo el análisis de puntos de inflexión o la curvatura.
 2.  **Dependencia de la Rejilla:** La forma del histograma cambia drásticamente dependiendo de la elección del punto de origen de la partición $x_0$. Dos estadísticos con los mismos datos podrían llegar a conclusiones visuales distintas simplemente por empezar los intervalos en puntos diferentes.
 
-Para eliminar la arbitrariedad de la rejilla, Rosenblatt (1956) propuso liberar a los intervalos de su posición fija. La idea intuitiva es: en lugar de forzar a $x$ a caer en una caja predefinida, construyamos una caja de ancho $2h$ centrada exactamente en cada $x$.
+Para eliminar la arbitrariedad de la rejilla, @rosenblatt1956 propuso liberar a los intervalos de su posición fija. La idea intuitiva es: en lugar de forzar a $x$ a caer en una caja predefinida, construyamos una caja de ancho $2h$ centrada exactamente en cada $x$.
 
 Matemáticamente, esto se justifica recordando la definición de densidad como la derivada de la función de distribución $F$:
 $$f(x) = F'(x) = \lim_{h \to 0} \frac{F(x+h) - F(x-h)}{2h}$$
@@ -466,49 +455,27 @@ Para obtener una estimación que sea suave y diferenciable (clase $\mathcal{C}^\
 
 ### Ilustración Gráfica
 A continuación, ilustramos visualmente esta transición. La Figura 3.1 muestra cómo el histograma depende de los intervalos fijos, mientras que el naive estimator centra las cajas en los datos pero mantiene la rugosidad. Finalmente, el estimador núcleo (con núcleo Gaussiano) recupera la suavidad de la densidad subyacente.
+```{r comparacion-estimadores, fig.cap="(a) Histograma, (b) Naive estimator (Rectangular), (c) Gaussian Kernel.", fig.align='center', out.width="100%", fig.height=3.5, fig.width=9}
+par(mfrow=c(1, 3), mar=c(4, 4, 3, 1)); set.seed(123); n <- 100
+datos <- c(rnorm(n*0.6, 2, 1), rnorm(n*0.4, 6, 1.5)); lx <- c(-2, 11); ly <- c(0, 0.25)
 
-```{r comparacion-estimadores, echo=FALSE, fig.cap="(a) Histograma, (b) Naive Estimator (Rectangular), (c) Estimador Núcleo Suave (Gaussiano)", fig.align='center', out.width='90%'}
-# Configuración de parámetros gráficos
-par(mfrow=c(1, 3), mar=c(4, 4, 3, 1))
-set.seed(123)
+hist(datos, breaks=seq(-4, 12, 1), prob=TRUE, main="(a) Histograma", xlab="x", 
+col="gray90", border="gray40", xlim=lx, ylim=ly)
 
-# 1. Generar datos (Mezcla de normales para que sea interesante)
-n <- 100
-datos <- c(rnorm(n*0.6, mean=2, sd=1), rnorm(n*0.4, mean=6, sd=1.5))
+plot(density(datos, kernel="rectangular", bw=0.6), main="(b) Naive estimator", 
+xlab="x", ylab="Densidad", col="blue", lwd=2, xlim=lx, ylim=ly, zero.line=FALSE)
+polygon(density(datos, kernel="rectangular", bw=0.6), col=rgb(0,0,1,0.1), border="blue")
 
-# Rango de evaluación
-grid_x <- seq(-2, 11, length.out = 200)
+plot(density(datos, kernel="gaussian", bw=0.6), main="(c) KDE (Gaussiano)",
+xlab="x", ylab="Densidad", col="darkgreen", lwd=2, xlim=lx, ylim=ly, zero.line=FALSE)
+polygon(density(datos, kernel="gaussian", bw=0.6), col=rgb(0,0.5,0,0.1), border="darkgreen")
 
-# A. HISTOGRAMA
-hist(datos, breaks=10, prob=TRUE, 
-     main="(a) Histograma", 
-     xlab="x", col="gray90", border="gray40", ylim=c(0, 0.25))
-#lines(density(datos, bw=0.6), col="red", lty=2) # Ref suave
-
-# B. Naive Estimator (Kernel Rectangular)
-# Usamos la función density con kernel rectangular para simular el 'Naive'
-plot(density(datos, kernel="rectangular", bw=0.6), 
-     main="(b) Naive Estimator", 
-     xlab="x", col="blue", lwd=2, ylim=c(0, 0.25), zero.line=FALSE)
-polygon(density(datos, kernel="rectangular", bw=0.4), col=rgb(0,0,1,0.1), border="blue")
-
-# C. ESTIMADOR NÚCLEO (Gaussiano)
-plot(density(datos, kernel="gaussian", bw=0.6), 
-     main="(c) KDE (Gaussiano)", 
-     xlab="x", col="darkgreen", lwd=2, ylim=c(0, 0.25), zero.line=FALSE)
-polygon(density(datos, kernel="gaussian", bw=0.4), col=rgb(0,0.5,0,0.1), border="darkgreen")
-
-# Restaurar par
-par(mfrow=c(1,1))
+par(mfrow=c(1, 1))
 ```
-
-\newpage
 
 ## Definición Formal y Propiedades del Núcleo
 
-Tras establecer la motivación intuitiva, procedemos a la construcción rigurosa del estimador. La generalización del histograma mediante el uso de funciones de ponderación suaves fue formalizada independientemente por Rosenblatt (1956) y Parzen (1962), dando lugar al objeto central de este estudio.
-
-### El Estimador de Rosenblatt-Parzen
+Tras establecer la motivación intuitiva, procedemos a la construcción rigurosa del estimador. La generalización del histograma mediante el uso de funciones de ponderación suaves fue formalizada independientemente por @rosenblatt1956 y @parzen1962, dando lugar al objeto central de este estudio: El Estimador de Rosenblatt-Parzen.
 
 **Definición 3.2 (Estimador de Densidad Tipo Núcleo Univariante).**
 Sea $X_1, X_2, \dots, X_n$ una muestra aleatoria simple (i.i.d.) proveniente de una población con función de densidad de probabilidad desconocida $f$. Se define el estimador de densidad tipo núcleo (KDE), denotado por $\hat{f}_h(x)$, como:
@@ -542,7 +509,7 @@ Haciendo el cambio de variable $u = (x-X_i)/h$, tenemos $dx = h du$, por lo que 
 
 Para que $\hat{f}_h(x) \ge 0$ para todo $x$, se requiere:
 $$K(u) \ge 0, \quad \forall u \in \mathbb{R}$$
-Aunque existen núcleos de orden superior que permiten valores negativos para reducir el sesgo asintótico (kernels de corrección de sesgo), estos generan estimaciones que no son densidades válidas *stricto sensu*. En este trabajo, nos restringiremos a núcleos no negativos (Clase $\mathcal{K}_2$).
+Aunque existen núcleos de orden superior que permiten valores negativos para reducir el sesgo asintótico (kernels de corrección de sesgo), estos generan estimaciones que no son densidades válidas. En este trabajo, nos restringiremos a núcleos no negativos (Clase $\mathcal{K}_2$).
 
 **Condición 3: Simetría y Centrado.**
 
@@ -574,146 +541,42 @@ $$\hat{f}_h^{(r)}(x) = \frac{1}{nh^{r+1}} \sum_{i=1}^{n} K^{(r)}\left( \frac{x -
 
 Este resultado implica que si elegimos un núcleo como el Gaussiano ($K \in \mathcal{C}^\infty$), la densidad estimada será una función infinitamente diferenciable, permitiendo no solo estimar la densidad, sino también sus derivadas (gradientes, curvaturas) sin esfuerzo adicional. Por el contrario, un núcleo como el Triangular ($K \in \mathcal{C}^0$) producirá una estimación continua pero no diferenciable en los puntos de la muestra.
 
-### Nota sobre la Generalización Multivariante
-Aunque este capítulo se centra en el caso univariante ($d=1$), la definición 3.2 es fácilmente generalizable a $\mathbb{R}^d$. En dicho caso, el escalar $h$ se sustituye por una matriz de anchos de banda simétrica definida positiva $\mathbf{H}$ (o un vector), y el núcleo $K$ pasa a ser una función $K: \mathbb{R}^d \to \mathbb{R}$. Las propiedades de integración y simetría se mantienen análogas en el espacio vectorial.
-
 ## Tipos de Funciones Núcleo
 
-La elección de la función núcleo $K$ constituye el segundo grado de libertad en el diseño del estimador, junto con el ancho de banda $h$. Si bien, como se demostrará en el análisis asintótico del Capítulo 4, la elección del núcleo tiene una influencia menor en el error cuadrático medio (MISE) que la elección del ancho de banda, esta decisión no es trivial y obedece a criterios de **regularidad analítica** y **eficiencia computacional**.
+Aunque el estimador KDE permite utilizar cualquier función que satisfaga las condiciones de la clase $\mathcal{K}$, en la práctica la elección se restringe a un conjunto de funciones paramétricas estándar. La elección del núcleo determina principalmente las propiedades de diferenciabilidad de la estimación $\hat{f}_h$, teniendo un impacto secundario en la eficiencia estadística comparado con la selección del ancho de banda.
 
-Desde el punto de vista de la eficiencia estadística, se busca un núcleo que minimice el MISE asintótico. Hodgers y Lehmann (1956) y posteriormente Epanechnikov (1969) demostraron que existe una forma funcional óptima que minimiza este error. Sin embargo, la pérdida de eficiencia al utilizar otros núcleos es marginal (apenas un 5-7% de diferencia en el peor de los casos habituales), por lo que en la práctica la elección suele guiarse por las propiedades de suavidad de la estimación resultante $\hat{f}_h$.
+Las formas funcionales de los núcleos más habituales se presentan a continuación. Salvo el núcleo Gaussiano, todos ellos tienen soporte compacto en $[-1, 1]$.
 
-Recordando el **Teorema 3.1**, la estimación $\hat{f}_h$ hereda las propiedades de diferenciabilidad del núcleo $K$. Por tanto:
+\begin{align*}
+\text{Gaussiano:} & \quad K(u) = \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}u^2} \\
+\text{Epanechnikov:} & \quad K(u) = \frac{3}{4}(1 - u^2) \cdot \mathbb{I}(|u| \le 1) \\
+\text{Biweight (Cuártico):} & \quad K(u) = \frac{15}{16}(1 - u^2)^2 \cdot \mathbb{I}(|u| \le 1) \\
+\text{Rectangular:} & \quad K(u) = \frac{1}{2} \cdot \mathbb{I}(|u| \le 1) \\
+\text{Triangular:} & \quad K(u) = (1 - |u|) \cdot \mathbb{I}(|u| \le 1) \\
+\text{Coseno:} & \quad K(u) = \frac{\pi}{4} \cos\left(\frac{\pi}{2}u\right) \cdot \mathbb{I}(|u| \le 1)
+\end{align*}
 
-* Si el objetivo es obtener una densidad suave e infinitamente diferenciable (útil para estimar derivadas de la densidad o buscar modas), se preferirá un núcleo como el **Gaussiano**.
-* Si el objetivo es la eficiencia computacional o minimizar el error cuadrático estricto en un dominio acotado, se preferirá un núcleo de soporte compacto como el de **Epanechnikov**.
+La Figura 3.3 ilustra la diversidad de formas. Mientras que el núcleo **Gaussiano** y el **Biweight** ofrecen perfiles muy suaves (ideales para visualizar densidades continuas), el **Rectangular** y el **Triangular** presentan discontinuidades en la función o en su derivada, siendo menos deseables para aplicaciones que requieran cálculo de gradientes.
 
-A continuación, definimos formalmente los núcleos pertenecientes a la clase $\mathcal{K}_2$ más relevantes en la literatura, detallando sus momentos y normas cuadráticas, valores que serán constantes necesarias para las fórmulas de selección de ancho de banda.
+```{r zoologico-nucleos, fig.cap="Catálogo de núcleos. Fila superior: Núcleos suaves (Gaussiano, Epanechnikov, Biweight). Fila inferior: Núcleos con menor regularidad (Rectangular, Triangular, Coseno).", fig.align='center', fig.height=5, fig.width=8}
+par(mfrow=c(2, 3), mar=c(3, 3, 2, 1))
+u <- seq(-1.5, 1.5, length=5000) 
 
-### 1. Núcleo de Epanechnikov
-Este núcleo es el **óptimo teórico** en el sentido de minimizar el error asintótico medio integrado cuadrático (AMISE). Corresponde a una parábola invertida restringida a un soporte compacto.
+plot_k <- function(x, y, tit, col) {
+  plot(x, y, type="l", lwd=2, col=col, main=tit, ylab="", xlab="", ylim=c(0, 1), xaxt="n")
+  polygon(c(min(x), x, max(x)), c(0, y, 0), col=adjustcolor(col, 0.2), border=NA)
+  axis(1, at=c(-1, 0, 1), labels=c("-1", "0", "1"), cex.axis=0.8); grid()
+}
 
-**Definición:**
-$$K_{Epa}(u) = \frac{3}{4}(1 - u^2) \cdot \mathbb{I}(|u| \le 1)$$
-donde $\mathbb{I}(\cdot)$ es la función indicadora.
+y_g <- dnorm(u); plot_k(u, y_g, "Gaussiano", "blue")
+y_e <- ifelse(abs(u)<=1, 0.75*(1-u^2), 0); plot_k(u, y_e, "Epanechnikov", "red")
+y_b <- ifelse(abs(u)<=1, (15/16)*(1-u^2)^2, 0); plot_k(u, y_b, "Biweight", "darkorange")
+y_r <- ifelse(abs(u)<=1, 0.5, 0); plot_k(u, y_r, "Rectangular", "darkgreen")
+y_t <- ifelse(abs(u)<=1, 1-abs(u), 0); plot_k(u, y_t, "Triangular", "purple")
+y_c <- ifelse(abs(u)<=1, (pi/4)*cos(pi*u/2), 0); plot_k(u, y_c, "Coseno", "brown")
 
-**Propiedades:**
-
-* **Soporte:** Compacto en $[-1, 1]$. Esto implica que para estimar $f(x)$, solo se utilizan las observaciones $X_i$ tales que $|x - X_i| \le h$, lo que reduce el coste computacional.
-* **Regularidad:** Es una función continua, pero su derivada es discontinua en $u = \pm 1$. Por tanto, $\hat{f}_h$ será continua pero no diferenciable en todo el dominio.
-* **Momentos:**
-    * Varianza del núcleo: $\mu_2(K) = \int_{-1}^{1} u^2 \frac{3}{4}(1-u^2) du = \frac{1}{5}$.
-    * Rugosidad: $R(K) = \int_{-1}^{1} \left[ \frac{3}{4}(1-u^2) \right]^2 du = \frac{3}{5}$.
-
-### 2. Núcleo Gaussiano (Normal)
-Es la elección estándar en la mayoría de software estadístico debido a sus propiedades de suavidad. Corresponde a la función de densidad de la distribución normal estándar.
-
-**Definición:**
-$$K_{Gauss}(u) = \phi(u) = \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{1}{2}u^2\right), \quad u \in \mathbb{R}$$
-
-**Propiedades:**
-
-* **Soporte:** Infinito $(-\infty, \infty)$. Cada observación $X_i$ contribuye a la estimación en cualquier punto $x$, aunque su influencia decae exponencialmente con la distancia.
-* **Regularidad:** Pertenece a la clase $\mathcal{C}^\infty$ (infinitamente diferenciable). Esto garantiza que la estimación $\hat{f}_h$ también sea $\mathcal{C}^\infty$, produciendo curvas visualmente muy agradables sin "picos".
-* **Momentos:**
-    * Varianza del núcleo: $\mu_2(K) = \int_{-\infty}^{\infty} u^2 \phi(u) du = 1$.
-    * Rugosidad: $R(K) = \int_{-\infty}^{\infty} \phi(u)^2 du = \frac{1}{2\sqrt{\pi}} \approx 0.282$.
-
-### 3. Núcleo Uniforme (Rectangular)
-Este núcleo convierte al estimador KDE en el método de "ventana móvil" (*moving average*). Aunque ineficiente para la visualización debido a su falta de suavidad, es útil como referencia teórica.
-
-**Definición:**
-$$K_{Unif}(u) = \frac{1}{2} \cdot \mathbb{I}(|u| \le 1)$$
-
-**Propiedades:**
-
-* **Regularidad:** Es una función discontinua en los bordes del soporte. La estimación resultante será una función escalonada (similar a un histograma suavizado).
-* **Momentos:**
-    * Varianza del núcleo: $\mu_2(K) = \frac{1}{3}$.
-    * Rugosidad: $R(K) = \frac{1}{2}$.
-
-### 4. Núcleo Triangular
-Representa un compromiso lineal entre el núcleo rectangular y el parabólico.
-
-**Definición:**
-$$K_{Tri}(u) = (1 - |u|) \cdot \mathbb{I}(|u| \le 1)$$
-
-**Propiedades:**
-
-* **Regularidad:** Función continua, pero no diferenciable en el origen ($u=0$) ni en los bordes.
-* **Momentos:**
-    * Varianza del núcleo: $\mu_2(K) = \frac{1}{6}$.
-    * Rugosidad: $R(K) = \frac{2}{3}$.
-
-### Resumen de Constantes del Núcleo
-
-Dado que las expresiones del sesgo y la varianza asintótica del estimador dependen explícitamente de las cantidades $\mu_2(K)$ y $R(K)$, resumimos sus valores en la siguiente tabla. Estas constantes determinan el factor de escala necesario para comparar anchos de banda entre diferentes núcleos (concepto de *ancho de banda canónico*).
-
-|     Núcleo ($K$)     |     Expresión $K(u)$     |     Varianza $\mu_2(K)$     |     Rugosidad $R(K)$     |     Eficiencia     |
-|:--- |:--- |:---:|:---:|:---:|
-| **Epanechnikov** | $\frac{3}{4}(1-u^2)\mathbb{I}_{(|u|\le 1)}$ | $1/5$ | $3/5$ | 100% |
-| **Gaussiano** | $\frac{1}{\sqrt{2\pi}}e^{-u^2/2}$ | $1$ | $1/(2\sqrt{\pi})$ | $\approx 95\%$ |
-| **Uniforme** | $\frac{1}{2}\mathbb{I}_{(|u|\le 1)}$ | $1/3$ | $1/2$ | $\approx 93\%$ |
-| **Triangular** | $(1-|u|)\mathbb{I}_{(|u|\le 1)}$ | $1/6$ | $2/3$ | $\approx 99\%$ |
-
-Table: Propiedades y constantes de los núcleos más usuales. La columna eficiencia se refiere a la eficiencia asintótica relativa respecto al núcleo de Epanechnikov.
-
-### Comparación Visual del Efecto del Núcleo
-
-Para ilustrar las diferencias estructurales de cada núcleo, repetimos el experimento reduciendo el tamaño muestral a $n=40$. Esto permite visualizar cómo la forma individual de cada función núcleo contribuye a la suma total, evitando que el solapamiento excesivo enmascare las discontinuidades.
-
-La Figura 3.3 muestra los resultados con un ancho de banda fijo ($h=0.8$):
-\begin{itemize}
-    \item En el gráfico \textbf{(c) (Rectangular)} se aprecia claramente la naturaleza de \textbf{función escalonada} del estimador. Cada observación añade un "bloque", y la suma de bloques resulta en una función con saltos discretos y derivada nula en casi todo punto.
-    \item En el gráfico \textbf{(d) (Triangular)} se observan los \textbf{picos angulosos} en los máximos locales y los cambios bruscos de pendiente, lo que confirma que la estimación no es diferenciable.
-    \item Por el contrario, los núcleos \textbf{Gaussiano (a)} y \textbf{Epanechnikov (b)} producen curvas suaves, siendo el Gaussiano el único que reparte probabilidad en todo el eje real (nótese cómo las colas no tocan el cero).
-\end{itemize}
-
-```{r comparacion-nucleos-grid, echo=FALSE, fig.cap="Efecto de la forma del núcleo con muestra reducida (n=40, h=0.8). Nótese la naturaleza escalonada del núcleo Rectangular (c) y la rugosidad del Triangular (d) frente a la suavidad del Gaussiano (a).", fig.align='center', fig.height=7, fig.width=7}
-set.seed(123)
-n_demo <- 10
-# Mezcla de dos normales
-datos_demo <- c(rnorm(n_demo*0.6, mean=2, sd=1), rnorm(n_demo*0.4, mean=6, sd=1.5))
-h_fijo <- 0.8
-rango_y <- c(0, 0.25)
-resolucion <- 4096 
-
-par(mfrow=c(2, 2), mar=c(4, 4, 3, 1))
-
-# 1. GAUSSIANO
-d_gauss <- density(datos_demo, bw=h_fijo, kernel="gaussian", n=resolucion)
-plot(d_gauss, main="(a) Núcleo Gaussiano (Suave)", 
-     xlab="", ylab="Densidad", col="blue", lwd=2, ylim=rango_y, zero.line=FALSE)
-polygon(d_gauss, col=rgb(0, 0, 1, 0.1), border="blue")
-grid()
-
-# 2. EPANECHNIKOV
-d_epa <- density(datos_demo, bw=h_fijo, kernel="epanechnikov", n=resolucion)
-plot(d_epa, main="(b) N. Epanechnikov (Compacto)", 
-     xlab="", ylab="Densidad", col="red", lwd=2, ylim=rango_y, zero.line=FALSE)
-polygon(d_epa, col=rgb(1, 0, 0, 0.1), border="red")
-grid()
-
-# 3. RECTANGULAR
-d_rect <- density(datos_demo, bw=h_fijo, kernel="rectangular", n=resolucion)
-plot(d_rect, main="(c) N. Rectangular (Escalonado)", 
-     xlab="x", ylab="Densidad", col="darkgreen", lwd=2, ylim=rango_y, zero.line=FALSE)
-# Truco visual: polygon rellena bien los escalones
-polygon(d_rect, col=rgb(0, 0.5, 0, 0.1), border="darkgreen")
-grid()
-
-# 4. TRIANGULAR
-d_tri <- density(datos_demo, bw=h_fijo, kernel="triangular", n=resolucion)
-plot(d_tri, main="(d) N. Triangular (Anguloso)", 
-     xlab="x", ylab="Densidad", col="purple", lwd=2, ylim=rango_y, zero.line=FALSE)
-polygon(d_tri, col=rgb(0.5, 0, 0.5, 0.1), border="purple")
-grid()
-
-# Restaurar configuración gráfica
 par(mfrow=c(1, 1))
 ```
-
-\newpage
 
 ## El Papel del Ancho de Banda ($h$)
 
@@ -756,37 +619,61 @@ Empíricamente, este equilibrio matemático se manifiesta visualmente en la suav
 
 La Figura 3.4 ilustra estos regímenes utilizando el núcleo Gaussiano.
 
-```{r efecto-bandwidth, echo=FALSE, fig.cap="Ilustración del Bias-Variance Tradeoff.", fig.align='center', out.width="100%", fig.height=4, fig.width=10}
-# Configuración de datos 
-set.seed(123)
-n <- 100
-datos <- c(rnorm(n*0.6, mean=2, sd=1), rnorm(n*0.4, mean=6, sd=1.5))
+```{r efecto-bandwidth, fig.cap="Ilustración del Bias-Variance Tradeoff.", fig.align='center', out.width="100%", fig.height=4, fig.width=10}
+set.seed(123); n <- 100; yl <- c(0, 0.35)
+datos <- c(rnorm(n*0.6, 2, 1), rnorm(n*0.4, 6, 1.5))
+par(mfrow=c(1, 3), mar=c(4, 4, 3, 1))
 
-# Configuración gráfica: 1 fila, 3 columnas
-# Ajustamos márgenes (mar) para aprovechar espacio
-par(mfrow=c(1, 3), mar=c(4, 4, 3, 1)) 
-ylim_ref <- c(0, 0.35)
+d1 <- density(datos, bw=0.15, kernel="gaussian")
+plot(d1, main=expression(paste("(a) Infrasuavizado (", h %->% 0, ")")), 
+     xlab="x", ylab="Densidad", col="gray40", lwd=1, ylim=yl, zero.line=FALSE)
+polygon(d1, col=rgb(0,0,0,0.1), border="gray40"); rug(datos, col="black")
 
-# 1. INFRASUAVIZADO
-plot(density(datos, bw=0.15, kernel="gaussian"), 
-     main=expression(paste("(a) Infrasuavizado (", h %->% 0, ")")), 
-     xlab="x", ylab="Densidad", col="gray40", lwd=1, ylim=ylim_ref, zero.line=FALSE)
-polygon(density(datos, bw=0.15, kernel="gaussian"), col=rgb(0,0,0,0.1), border="gray40")
-rug(datos, col="black", ticksize=0.03)
+d2 <- density(datos, bw=0.6, kernel="gaussian")
+plot(d2, main="(b) Balanceado", xlab="x", ylab="Densidad", col="blue", 
+     lwd=2, ylim=yl, zero.line=FALSE)
+polygon(d2, col=rgb(0,0,1,0.1), border="blue"); rug(datos, col="blue")
 
-# 2. ÓPTIMO
-plot(density(datos, bw=0.6, kernel="gaussian"), 
-     main="(b) Balanceado", 
-     xlab="x", ylab="Densidad", col="blue", lwd=2, ylim=ylim_ref, zero.line=FALSE)
-polygon(density(datos, bw=0.6, kernel="gaussian"), col=rgb(0,0,1,0.1), border="blue")
-rug(datos, col="blue", ticksize=0.03)
-
-# 3. SOBRESUAVIZADO
-plot(density(datos, bw=1.5, kernel="gaussian"), 
-     main=expression(paste("(c) Sobresuavizado (", h %->% infinity, ")")), 
-     xlab="x", ylab="Densidad", col="red", lwd=2, ylim=ylim_ref, zero.line=FALSE)
-polygon(density(datos, bw=1.5, kernel="gaussian"), col=rgb(1,0,0,0.1), border="red")
-rug(datos, col="red", ticksize=0.03)
+d3 <- density(datos, bw=1.5, kernel="gaussian")
+plot(d3, main=expression(paste("(c) Sobresuavizado (", h %->% infinity, ")")), 
+     xlab="x", ylab="Densidad", col="red", lwd=2, ylim=yl, zero.line=FALSE)
+polygon(d3, col=rgb(1,0,0,0.1), border="red"); rug(datos, col="red")
 
 par(mfrow=c(1, 1))
 ```
+
+\newpage
+
+# Propiedades Estadísticas del Estimador
+## Esperanza y Sesgo (Bias)
+## Varianza del Estimador
+## Error Cuadrático Medio (MSE) y Consistencia
+## Error Global (MISE y AMISE)
+
+\newpage
+
+# Selección del Ancho de Banda
+## El Ancho de Banda Óptimo Teórico
+## Reglas de Referencia (Plug-in simples)
+## Validación Cruzada (Cross-Validation)
+
+\newpage
+
+# Extensión al Caso Multivariante
+## Definición en $\mathbb{R}^d$
+## Tipos de Matrices de Anchos de Banda
+## La Maldición de la Dimensionalidad
+
+\newpage
+
+# Aplicación Práctica: Análisis del S&P 500 {#capitulo7}
+## Descripción de los Datos
+## Análisis Exploratorio
+## Estimación de la Densidad
+## Implicaciones de Riesgo
+
+\newpage
+
+# Conclusiones y Líneas Futuras
+
+# Bibliografía

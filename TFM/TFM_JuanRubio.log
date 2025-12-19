@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.2.26)  18 DEC 2025 20:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.2.26)  19 DEC 2025 19:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -226,73 +226,22 @@ Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 )
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-))) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty
-Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
-\LTleft=\skip54
-\LTright=\skip55
-\LTpre=\skip56
-\LTpost=\skip57
-\LTchunksize=\count279
-\LTcapwidth=\dimen159
-\LT@head=\box54
-\LT@firsthead=\box55
-\LT@foot=\box56
-\LT@lastfoot=\box57
-\LT@gbox=\box58
-\LT@cols=\count280
-\LT@rows=\count281
-\c@LT@tables=\count282
-\c@LT@chunks=\count283
-\LT@p@ftn=\toks28
-) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
-Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen160
-\lightrulewidth=\dimen161
-\cmidrulewidth=\dimen162
-\belowrulesep=\dimen163
-\belowbottomsep=\dimen164
-\aboverulesep=\dimen165
-\abovetopsep=\dimen166
-\cmidrulesep=\dimen167
-\cmidrulekern=\dimen168
-\defaultaddspace=\dimen169
-\@cmidla=\count284
-\@cmidlb=\count285
-\@aboverulesep=\dimen170
-\@belowrulesep=\dimen171
-\@thisruleclass=\count286
-\@lastruleclass=\count287
-\@thisrulewidth=\dimen172
-) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
-Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
-\col@sep=\dimen173
-\ar@mcellbox=\box59
-\extrarowheight=\dimen174
-\NC@list=\toks29
-\extratabsurround=\skip58
-\backup@length=\skip59
-\ar@cellbox=\box60
-)
-\c@none=\count288
-(C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/tools\calc.sty
-Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count289
-\calc@Bcount=\count290
-\calc@Adimen=\dimen175
-\calc@Bdimen=\dimen176
-\calc@Askip=\skip60
-\calc@Bskip=\skip61
-LaTeX Info: Redefining \setlength on input line 80.
-LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count291
-\calc@Cskip=\skip62
-)
-(C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/footnotehyper\footnoteh
-yper.sty
-Package: footnotehyper 2025/11/15 v1.1f hyperref aware footnote.sty (JFB)
-\FNH@notes=\box61
-\FNH@width=\dimen177
-\FNH@toks=\toks30
+))) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/fancyvrb\fancyvrb.s
+ty
+Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
+\FV@CodeLineNo=\count279
+\FV@InFile=\read2
+\FV@TabBox=\box54
+\c@FancyVerbLine=\count280
+\FV@StepNumber=\count281
+\FV@OutFile=\write3
+) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/framed\framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip54
+\fb@frw=\dimen159
+\fb@frh=\dimen160
+\FrameRule=\dimen161
+\FrameSep=\dimen162
 ) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
@@ -306,18 +255,32 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
 )
-\Gin@req@height=\dimen178
-\Gin@req@width=\dimen179
+\Gin@req@height=\dimen163
+\Gin@req@width=\dimen164
 )
-\pandoc@box=\box62
-(C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
+\pandoc@box=\box55
+\cslhangindent=\skip55
+\csllabelwidth=\skip56
+(C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/tools\calc.sty
+Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count282
+\calc@Bcount=\count283
+\calc@Adimen=\dimen165
+\calc@Bdimen=\dimen166
+\calc@Askip=\skip57
+\calc@Bskip=\skip58
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count284
+\calc@Cskip=\skip59
+) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
 Package: babel 2024/01/07 v24.1 The Babel package
-\babel@savecnt=\count292
-\U@D=\dimen180
+\babel@savecnt=\count285
+\U@D=\dimen167
 \l@unhyphenated=\language79
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
-\bbl@readstream=\read2
-\bbl@dirlevel=\count293
+\bbl@readstream=\read3
+\bbl@dirlevel=\count286
 *************************************
 * Local config file bblopts.cfg used
 *
@@ -328,72 +291,72 @@ File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/babel-spanish\spanish.l
 df
 Language: spanish.ldf 2021/05/27 v5.0q Spanish support from the babel system
-\es@quottoks=\toks31
-\es@quotdepth=\count294
+\es@quottoks=\toks28
+\es@quotdepth=\count287
 ))
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/es\babel
 -spanish.tex
 Package babel Info: Importing font and identification data for spanish
 (babel)             from babel-es.ini. Reported on input line 11.
 )
-\everypar=\toks32
+\everypar=\toks29
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/setspace\setspace.sty
 Package: setspace 2022/12/04 v6.7b set line spacing
 ) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/tools\indentfirst.sty
 Package: indentfirst 2023/07/02 v1.03 Indent first paragraph (DPC)
 ) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/amscls\amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
-\thm@style=\toks33
-\thm@bodyfont=\toks34
-\thm@headfont=\toks35
-\thm@notefont=\toks36
-\thm@headpunct=\toks37
-\thm@preskip=\skip63
-\thm@postskip=\skip64
-\thm@headsep=\skip65
-\dth@everypar=\toks38
+\thm@style=\toks30
+\thm@bodyfont=\toks31
+\thm@headfont=\toks32
+\thm@notefont=\toks33
+\thm@headpunct=\toks34
+\thm@preskip=\skip60
+\thm@postskip=\skip61
+\thm@headsep=\skip62
+\dth@everypar=\toks35
 ) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count295
-\float@exts=\toks39
-\float@box=\box63
-\@float@everytoks=\toks40
-\@floatcapt=\box64
+\c@float@type=\count288
+\float@exts=\toks36
+\float@box=\box56
+\@float@everytoks=\toks37
+\@floatcapt=\box57
 ) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/titlesec\titlesec.sty
 Package: titlesec 2025/01/04 v2.17 Sectioning titles
-\ttl@box=\box65
-\beforetitleunit=\skip66
-\aftertitleunit=\skip67
-\ttl@plus=\dimen181
-\ttl@minus=\dimen182
-\ttl@toksa=\toks41
-\titlewidth=\dimen183
-\titlewidthlast=\dimen184
-\titlewidthfirst=\dimen185
+\ttl@box=\box58
+\beforetitleunit=\skip63
+\aftertitleunit=\skip64
+\ttl@plus=\dimen168
+\ttl@minus=\dimen169
+\ttl@toksa=\toks38
+\titlewidth=\dimen170
+\titlewidthlast=\dimen171
+\titlewidthfirst=\dimen172
 ) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
 Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 
-\f@nch@headwidth=\skip68
-\f@nch@offset@elh=\skip69
-\f@nch@offset@erh=\skip70
-\f@nch@offset@olh=\skip71
-\f@nch@offset@orh=\skip72
-\f@nch@offset@elf=\skip73
-\f@nch@offset@erf=\skip74
-\f@nch@offset@olf=\skip75
-\f@nch@offset@orf=\skip76
-\f@nch@height=\skip77
-\f@nch@footalignment=\skip78
-\f@nch@widthL=\skip79
-\f@nch@widthC=\skip80
-\f@nch@widthR=\skip81
-\@temptokenb=\toks42
+\f@nch@headwidth=\skip65
+\f@nch@offset@elh=\skip66
+\f@nch@offset@erh=\skip67
+\f@nch@offset@olh=\skip68
+\f@nch@offset@orh=\skip69
+\f@nch@offset@elf=\skip70
+\f@nch@offset@erf=\skip71
+\f@nch@offset@olf=\skip72
+\f@nch@offset@orf=\skip73
+\f@nch@height=\skip74
+\f@nch@footalignment=\skip75
+\f@nch@widthL=\skip76
+\f@nch@widthC=\skip77
+\f@nch@widthR=\skip78
+\@temptokenb=\toks39
 )
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less.
 (fancyhdr)                Please consider using the `twoside' option on input l
-ine 93.
+ine 155.
 
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
 Package: hyperref 2023-11-26 v7.01g Hypertext links for LaTeX
@@ -434,11 +397,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 lestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count296
+\c@section@level=\count289
 )
-\@linkdim=\dimen186
-\Hy@linkcounter=\count297
-\Hy@pagecounter=\count298
+\@linkdim=\dimen173
+\Hy@linkcounter=\count290
+\Hy@pagecounter=\count291
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
 File: pd1enc.def 2023-11-26 v7.01g Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
@@ -446,7 +409,7 @@ Now handling font encoding PD1 ...
 ) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count299
+\Hy@SavedSpaceFactor=\count292
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
 File: puenc.def 2023-11-26 v7.01g Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
@@ -460,13 +423,13 @@ Package hyperref Info: Plain pages OFF on input line 4196.
 Package hyperref Info: Backreferencing OFF on input line 4201.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4448.
-\c@Hy@tempcnt=\count300
+\c@Hy@tempcnt=\count293
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4786.
-\XeTeXLinkMargin=\dimen187
+\XeTeXLinkMargin=\dimen174
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 
@@ -475,9 +438,9 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count301
-\Field@Width=\dimen188
-\Fld@charsize=\dimen189
+\Fld@menulength=\count294
+\Field@Width=\dimen175
+\Fld@charsize=\dimen176
 Package hyperref Info: Hyper figures OFF on input line 6065.
 Package hyperref Info: Link nesting OFF on input line 6070.
 Package hyperref Info: Hyper index ON on input line 6073.
@@ -489,9 +452,9 @@ Package hyperref Info: PDF/A mode OFF on input line 6095.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count302
-\c@Item=\count303
-\c@Hfootnote=\count304
+\Hy@abspage=\count295
+\c@Item=\count296
+\c@Hfootnote=\count297
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
@@ -501,8 +464,8 @@ Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
 kage
 with kernel methods
 )
-\Fld@listcount=\count305
-\c@bookmark@seq@number=\count306
+\Fld@listcount=\count298
+\c@bookmark@seq@number=\count299
 
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
 echeck.sty
@@ -515,73 +478,73 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 85.
 )
-\Hy@SectionHShift=\skip82
+\Hy@SectionHShift=\skip79
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 96.
+Package hyperref Info: Option `colorlinks' set `true' on input line 158.
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/tools\verbatim.sty
 Package: verbatim 2023-11-06 v1.5v LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks43
-\verbatim@line=\toks44
-\verbatim@in@stream=\read3
+\every@verbatim=\toks40
+\verbatim@line=\toks41
+\verbatim@in@stream=\read4
 ) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bookmark.sty
 Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
 
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bkm-pdftex.def
 File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO
 )
-\BKM@id=\count307
+\BKM@id=\count300
 )) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/xurl\xurl.sty
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 10
-9.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 17
+1.
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count308
-\l__pdf_internal_box=\box66
+\l__color_backend_stack_int=\count301
+\l__pdf_internal_box=\box59
 ) (TFM_JuanRubio.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
 \openout1 = `TFM_JuanRubio.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 171.
+LaTeX Font Info:    ... okay on input line 171.
 
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count309
-\scratchdimen=\dimen190
-\scratchbox=\box67
-\nofMPsegments=\count310
-\nofMParguments=\count311
-\everyMPshowfont=\toks45
-\MPscratchCnt=\count312
-\MPscratchDim=\dimen191
-\MPnumerator=\count313
-\makeMPintoPDFobject=\count314
-\everyMPtoPDFconversion=\toks46
+\scratchcounter=\count302
+\scratchdimen=\dimen177
+\scratchbox=\box60
+\nofMPsegments=\count303
+\nofMParguments=\count304
+\everyMPshowfont=\toks42
+\MPscratchCnt=\count305
+\MPscratchDim=\dimen178
+\MPnumerator=\count306
+\makeMPintoPDFobject=\count307
+\everyMPtoPDFconversion=\toks43
 )
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
 ase.sty
@@ -627,20 +590,20 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 109.
-Package microtype Info: Applying patch `item' on input line 109.
-Package microtype Info: Applying patch `toc' on input line 109.
-Package microtype Info: Applying patch `eqnum' on input line 109.
-Package microtype Info: Applying patch `footnote' on input line 109.
-Package microtype Info: Applying patch `verbatim' on input line 109.
-LaTeX Info: Redefining \microtypesetup on input line 109.
+LaTeX Info: Redefining \microtypecontext on input line 171.
+Package microtype Info: Applying patch `item' on input line 171.
+Package microtype Info: Applying patch `toc' on input line 171.
+Package microtype Info: Applying patch `eqnum' on input line 171.
+Package microtype Info: Applying patch `footnote' on input line 171.
+Package microtype Info: Applying patch `verbatim' on input line 171.
+LaTeX Info: Redefining \microtypesetup on input line 171.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 109.
+LaTeX Info: Redefining \showhyphens on input line 171.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -648,9 +611,9 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Info: Redefining \. on input line 109.
-LaTeX Info: Redefining \% on input line 109.
-Package hyperref Info: Link coloring OFF on input line 109.
+LaTeX Info: Redefining \. on input line 171.
+LaTeX Info: Redefining \% on input line 171.
+Package hyperref Info: Link coloring OFF on input line 171.
 (TFM_JuanRubio.toc
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -692,8 +655,8 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ))
-\tf@toc=\write3
-\openout3 = `TFM_JuanRubio.toc'.
+\tf@toc=\write4
+\openout4 = `TFM_JuanRubio.toc'.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -706,7 +669,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 anr/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}
 
 {C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}
-]
+] (TFM_JuanRubio.toc)
+\tf@toc=\write5
+\openout5 = `TFM_JuanRubio.toc'.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[2]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -719,7 +693,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.262 
+l.329 
        [1{C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ma
 thsy.enc}{C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm
 .enc}]
@@ -730,6 +704,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.401   F
+         inalmente, se presentan las \textbf{conclusiones} y líneas de trabajo
 [2]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -812,14 +793,21 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [12]
-<TFM_JuanRubio_files/figure-latex/comparacion-estimadores-1.pdf, id=155, 469.75
-5pt x 325.215pt>
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 8
+91.
+(C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 892.
+<TFM_JuanRubio_files/figure-latex/comparacion-estimadores-1.pdf, id=179, 650.43
+pt x 252.945pt>
 File: TFM_JuanRubio_files/figure-latex/comparacion-estimadores-1.pdf Graphic fi
 le (type pdf)
 <use TFM_JuanRubio_files/figure-latex/comparacion-estimadores-1.pdf>
 Package pdftex.def Info: TFM_JuanRubio_files/figure-latex/comparacion-estimador
-es-1.pdf  used on input line 834.
-(pdftex.def)             Requested size: 412.02156pt x 285.24722pt.
+es-1.pdf  used on input line 910.
+(pdftex.def)             Requested size: 457.80486pt x 178.04063pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -827,7 +815,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[13 <./TFM_JuanRubio_files/figure-latex/comparacion-estimadores-1.pdf>]
+[13]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -835,7 +823,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[14]
+[14 <./TFM_JuanRubio_files/figure-latex/comparacion-estimadores-1.pdf>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -852,8 +840,90 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [16]
+<TFM_JuanRubio_files/figure-latex/zoologico-nucleos-1.pdf, id=213, 578.16pt x 3
+61.35pt>
+File: TFM_JuanRubio_files/figure-latex/zoologico-nucleos-1.pdf Graphic file (ty
+pe pdf)
+<use TFM_JuanRubio_files/figure-latex/zoologico-nucleos-1.pdf>
+Package pdftex.def Info: TFM_JuanRubio_files/figure-latex/zoologico-nucleos-1.p
+df  used on input line 1091.
+(pdftex.def)             Requested size: 320.46199pt x 200.28696pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[17]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 1105.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[18 <./TFM_JuanRubio_files/figure-latex/zoologico-nucleos-1.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[19]
+<TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf, id=244, 722.7pt x 289
+.08pt>
+File: TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf Graphic file (typ
+e pdf)
+<use TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf>
+Package pdftex.def Info: TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pd
+f  used on input line 1213.
+(pdftex.def)             Requested size: 457.80486pt x 183.12265pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[20 <./TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[21]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[22]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[23]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[24]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-040.
+293.
 (C:\Users\juanr\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -864,71 +934,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[17{C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}
-]
-Overfull \hbox (2.98904pt too wide) in paragraph at lines 1190--1190
-[]|\T1/lmr/bx/n/10.95 (-20) Epanechnikov|  
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[18]
-<TFM_JuanRubio_files/figure-latex/comparacion-nucleos-grid-1.pdf, id=193, 505.8
-9pt x 505.89pt>
-File: TFM_JuanRubio_files/figure-latex/comparacion-nucleos-grid-1.pdf Graphic f
-ile (type pdf)
-<use TFM_JuanRubio_files/figure-latex/comparacion-nucleos-grid-1.pdf>
-Package pdftex.def Info: TFM_JuanRubio_files/figure-latex/comparacion-nucleos-g
-rid-1.pdf  used on input line 1220.
-(pdftex.def)             Requested size: 320.46199pt x 320.46465pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[19]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[20 <./TFM_JuanRubio_files/figure-latex/comparacion-nucleos-grid-1.pdf>]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 1230.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[21]
-<TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf, id=222, 722.7pt x 289
-.08pt>
-File: TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf Graphic file (typ
-e pdf)
-<use TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf>
-Package pdftex.def Info: TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pd
-f  used on input line 1315.
-(pdftex.def)             Requested size: 457.80486pt x 183.12265pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[22 <./TFM_JuanRubio_files/figure-latex/efecto-bandwidth-1.pdf>] (TFM_JuanRubio
-.aux
+[25{C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}
+] (TFM_JuanRubio.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
@@ -938,13 +945,13 @@ L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 16277 strings out of 474486
- 262491 string characters out of 5743755
+ 16514 strings out of 474486
+ 266005 string characters out of 5743755
  1945542 words of memory out of 5000000
- 38000 multiletter control sequences out of 15000+600000
- 633883 words of font info for 181 fonts, out of 8000000 for 9000
+ 38241 multiletter control sequences out of 15000+600000
+ 621940 words of font info for 169 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 63i,12n,67p,1204b,618s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 63i,12n,67p,1204b,589s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
 b><C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pf
 b><C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.p
@@ -959,11 +966,13 @@ b><C:/Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb
 Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/
 Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/
 Users/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/U
+sers/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C:/U
+sers/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/U
 sers/juanr/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/ms
 bm10.pfb>
-Output written on TFM_JuanRubio.pdf (23 pages, 530414 bytes).
+Output written on TFM_JuanRubio.pdf (27 pages, 688115 bytes).
 PDF statistics:
- 430 PDF objects out of 1000 (max. 8388607)
- 81 named destinations out of 1000 (max. 500000)
- 41232 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 491 PDF objects out of 1000 (max. 8388607)
+ 99 named destinations out of 1000 (max. 500000)
+ 33056 words of extra memory for PDF output out of 35830 (max. 10000000)
 
