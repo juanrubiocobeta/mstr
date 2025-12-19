@@ -46,7 +46,7 @@ header-includes:
 ```{r setup, include=FALSE}
 # Configuración global para que todo el documento sea consistente
 knitr::opts_chunk$set(
-  echo = FALSE,        # No mostrar el código R en el PDF final
+# echo = FALSE,        # No mostrar el código R en el PDF final
   message = FALSE,     # Ocultar mensajes de carga de paquetes
   warning = FALSE,     # Ocultar advertencias
   fig.align = "center",# Centrar todas las gráficas
