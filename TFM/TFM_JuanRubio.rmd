@@ -6,67 +6,50 @@ output:
     number_sections: true
     latex_engine: pdflatex
     keep_tex: false
-bibliography: bibliografia.bib  # <--- AÑADE ESTO
-link-citations: yes             # <--- AÑADE ESTO
+bibliography: bibliografia.bib
+link-citations: yes 
 geometry: "left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm"
-fontsize: 11pt               # CAMBIO: 11pt es más profesional y compacto
+fontsize: 11pt
 lang: es-ES
 header-includes:
-  # --- FORMATO DE TEXTO ---
   - \usepackage{setspace}
-  - \setstretch{1.2}         # CAMBIO: Interlineado 1.2 (elegante y ahorra espacio)
-  - \usepackage{indentfirst} # Sangría en el primer párrafo (estándar español)
-
-  # --- MATEMÁTICAS (Imprescindibles para tu TFM) ---
+  - \setstretch{1.2}
+  - \usepackage{indentfirst}
   - \usepackage{amsmath}
   - \usepackage{amsfonts}
   - \usepackage{amssymb}
-  - \usepackage{amsthm}      # Para entornos de Teorema/Definición
-
-  # --- GRÁFICOS ---
+  - \usepackage{amsthm}
   - \usepackage{graphicx}
-  - \usepackage{float}       # Para fijar imágenes con 'H'
-
-  # --- ESTILO DE TÍTULOS ---
+  - \usepackage{float}
   - \usepackage{titlesec}
-  # Reduzco un poco el tamaño de los títulos para que encajen con 11pt
   - \titleformat{\chapter}[display]{\normalfont\huge\bfseries\centering}{\chaptertitlename\ \thechapter}{15pt}{\Huge}
-  
-  # --- CABECERAS Y PIES ---
   - \usepackage{fancyhdr}
   - \pagestyle{fancy}
-  - \fancyhead{}             # Limpia cabecera por defecto
-  - \fancyhead[RO,LE]{\thepage} # Número de pág arriba a la dcha (impar) e izq (par)
-  - \fancyfoot{}             # Pie vacío (más limpio)
-  
-  # --- ENLACES (Sin cajas rojas) ---
+  - \fancyhead{}
+  - \fancyhead[RO,LE]{\thepage}
+  - \fancyfoot{}
   - \usepackage{hyperref}
   - \hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, citecolor=blue}
-  - \usepackage{verbatim}   # Para incluir código R
+  - \usepackage{verbatim}
 ---
 
 ```{r setup, include=FALSE}
-# Configuración global OPTIMIZADA para TFM
 knitr::opts_chunk$set(
-  echo = TRUE,           # Mostramos código
-  message = FALSE,       # Ocultar mensajes
-  warning = FALSE,       # Ocultar advertencias
-  error = FALSE,         # Que no pare la compilación por errores tontos
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE,
   
-  # --- CONTROL DE TAMAÑO Y ESPACIO ---
-  size = "scriptsize",   # CAMBIO CLAVE: Mucho más pequeño que 'small'
-  collapse = TRUE,       # CAMBIO CLAVE: Junta el código y el output en una sola caja
-  comment = "#>",        # Estética: Pone "#>" en los resultados
-  strip.white = TRUE,    # Elimina líneas blancas sobrantes
+  size = "scriptsize",
+  collapse = TRUE,
+  comment = "#>",
+  strip.white = TRUE,
   
-  # --- CONTROL DE GRÁFICOS ---
   fig.align = "center",
-  out.width = "70%",     # Gráficas contenidas
+  out.width = "70%",
   fig.pos = "H"
 )
 ```
-
-\begin{comment}
 
 \begin{titlepage}
 
@@ -142,8 +125,6 @@ knitr::opts_chunk$set(
 \end{titlepage}
 
 \newpage
-
-\end{comment}
 
 \tableofcontents
 
@@ -675,5 +656,7 @@ par(mfrow=c(1, 1))
 \newpage
 
 # Conclusiones y Líneas Futuras
+
+\newpage
 
 # Bibliografía
