@@ -1,0 +1,18 @@
+SIMULACIÓN DE PROCESOS ESTOCÁSTICOS:
+6 temas, una actividad por tema. plazo para tareas atrasadas al final
+Primer Tema sin entregar (16/1)
+
+BIOESTADÍSTICA:
+8 temas, una actividad por tema. plazo para tareas atrasadas al final. Fecha de entrega todos los martes, empezando  el 20/1. plazo al final para tareas no entregadas.
+
+MINERÍA DE DATOS:
+3 temas, 10% t1, 40% t2, 40% t3. fechas de entregas en prado, empezando el 13/2
+
+ASPECTOS COMPUTACIONALES:
+5 o 7 temas, una actividad por tema, empezando el 24/1
+
+ANÁLISIS DE SERIES TEMPORALES:
+9 temas, una entrega por tema, empezando el 25/1
+
+ANÁLISIS DE DATOS FUNCIONALES:
+5 temas, una actividad por tema. Fechas en un pdf en prado, empezando el 21/1.

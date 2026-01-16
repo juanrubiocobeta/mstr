@@ -64,3 +64,4 @@ ggplot(sp500_plot, aes(x = daily_return)) +
                linewidth = 0.8) +
   coord_cartesian(xlim = c(-0.07, -0.015), 
                   ylim = c(0, 8))
+
