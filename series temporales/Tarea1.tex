@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+
+% Configuración de márgenes
+\geometry{top=3cm, bottom=3cm, left=2cm, right=2cm}
+
+% Cabecera personalizada
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Ejercicios Propuestos 1}
+\fancyhead[C]{Juan Rubio Cobeta}
+\fancyhead[R]{\today}
+
+\title{Ejercicios Propuestos 1}
+\author{Juan Rubio Cobeta}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\maketitle
+
+\section{Ejercicio 1}
+
+Presenta un ejemplo de serie temporal por muestreo y otro por agregación (obtén los datos de internet). 
+
+\subsection{Solución}
+
+Para ilustrar el muestreo, hemos extraído datos financieros del fondo cotizado \textbf{SPY} (ETF que replica el S\&P 500) a traves de yfinance. Específicamente, analizamos la variable del \textit{precio de cierre diario}.
+
+\textbf{Justificación:} 
+Esta serie clasifica como muestreo porque observamos directamente el valor de la magnitud (el nivel de precio) en unos instantes dados y precisos (el momento de cierre de mercado de cada día). El dato no representa una suma de precios, sino una ``fotografía'' del valor en un momento puntual $t$.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{"sp.png"}
+    \caption{Precio de cierre diario del SPY. El comportamiento es continuo y volátil, típico de observaciones puntuales en finanzas.}
+    \label{fig:muestreo}
+\end{figure}
+
+Para la agregación, hemos recopilado datos meteorológicos reales correspondientes a las \textbf{precipitaciones mensuales en Londres} durante el año 2023 de NW3 Weather.
+
+\textbf{Justificación:} 
+Esta serie es un ejemplo de agregación porque lo que se observa es el valor acumulado durante un intervalo de tiempo específico (un mes completo). El dato de ``enero'', por ejemplo, no es una medida instantánea, sino la suma total de la lluvia caída durante todos los días de dicho mes.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{"lluvia.png"}
+    \caption{Precipitaciones mensuales en Londres (2023). Las barras representan la acumulación total de lluvia por intervalo mensual.}
+    \label{fig:agregacion}
+\end{figure}
+
+\newpage
+
+\section{Ejercicio 2}
+
+El dibujo de una serie temporal es un gráfico de Xt frente a t uniendo los puntos secuencialmente mediante líneas. Realiza los gráficos de las
+dos series anteriores y describe las características de comportamiento más
+notables apreciables visualmente en dichos gráficos.
+
+\subsection{Solución}
+
+\subsection*{Análisis del comportamiento visual}
+
+Dado que los gráficos de ambas series ya han sido generados y expuestos en el apartado anterior (ver Figura \ref{fig:muestreo} y Figura \ref{fig:agregacion}), procedemos a describir sus características dinámicas y componentes principales basándonos en dicha visualización.
+
+\subsubsection*{1. Análisis de la Serie por Muestreo (SPY)}
+Observando la \textbf{Figura \ref{fig:muestreo}} (Precio de cierre diario), destacamos las siguientes características:
+\begin{itemize}
+    \item \textbf{Tendencia (Componente Determinista):} Visualmente se aprecia una evolución en el nivel medio de la serie a lo largo del tiempo. No oscila alrededor de un valor fijo constante, sino que presenta tramos de subida y bajada sostenida (tendencias locales), lo que sugiere que la serie no es estacionaria en media.
+    \item \textbf{Volatilidad (Componente Aleatoria):} La línea presenta un comportamiento ``dentado'' o irregular. Existe una fuerte componente de ruido o variabilidad a corto plazo; el valor de hoy a mañana es impredecible con exactitud, característica típica de las series financieras.
+\end{itemize}
+
+\subsubsection*{2. Análisis de la Serie por Agregación (Precipitaciones)}
+En la \textbf{Figura \ref{fig:agregacion}} (Lluvias mensuales), el comportamiento es notablemente distinto:
+\begin{itemize}
+    \item \textbf{Estacionalidad:} A diferencia del precio de la acción, esta serie no muestra una tendencia a crecer indefinidamente. Su característica principal es el comportamiento cíclico o estacional: se observan picos de lluvia en meses específicos y valles en otros, un patrón que tiende a repetirse anualmente.
+    \item \textbf{Irregularidad en la Amplitud:} Aunque el patrón estacional existe, la altura de las barras varía considerablemente de un mes a otro sin una suavidad continua, debido a la naturaleza aleatoria de los fenómenos meteorológicos acumulados.
+\end{itemize}
+
+\newpage
+
+\section{Ejercicio 3}
+
+Presenta un ejemplo de serie temporal múltiple. 
+
+\subsection{Solución}
+
+\subsection*{Ejemplo: Precios de Apertura y Cierre (SPY)}
+
+Para este ejemplo, hemos construido una serie temporal multivariante (bivariante) utilizando dos variables simultáneas del mismo activo financiero (SPY) para el mismo periodo de tiempo:
+\begin{enumerate}
+    \item $X_{1,t}$: Precio de Apertura (\textit{Open}).
+    \item $X_{2,t}$: Precio de Cierre (\textit{Close}).
+\end{enumerate}
+
+\textbf{Justificación y Análisis:}
+Se considera una serie múltiple porque en cada instante $t$ no observamos un valor escalar único, sino un vector de mediciones. 
+
+Como se observa en la \textbf{Figura 3}, graficar ambas series conjuntamente permite analizar la relación dinámica entre ellas. Este enfoque es la base para los objetivos de \textbf{explicación} y causalidad:
+\begin{itemize}
+    \item Visualmente, las líneas se superponen casi a la perfección, lo que indica una \textbf{correlación positiva extremadamente alta}.
+    \item Esto sugiere que el precio de apertura contiene gran parte de la información necesaria para explicar el precio de cierre del mismo día, con un margen de error (volatilidad intradía) reducido.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{multiple.png}
+    \caption{Serie Temporal Múltiple: Comparación evolutiva entre el precio de apertura (naranja discontinuo) y el de cierre (azul continuo).}
+    \label{fig:multiple}
+\end{figure}
+
+\end{document}
