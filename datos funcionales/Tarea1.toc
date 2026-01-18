@@ -1,0 +1,8 @@
+\contentsline {section}{\numberline {1}Definición de Dato Funcional y Objetivos del Análisis}{2}{section.1}%
+\contentsline {section}{\numberline {2}Revisión Bibliográfica de Investigaciones Recientes}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Modelización predictiva en agricultura de precisión}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Análisis de datos espaciales en oncología a nivel de célula única}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Dinámica espaciotemporal de la pandemia COVID-19}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Clasificación de perfiles de consumo energético industrial}{4}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Detección de anomalías funcionales en procesos industriales y de imagen}{5}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Análisis cinemático de corredores recreativos: un enfoque multivariante}{5}{subsection.2.6}%
